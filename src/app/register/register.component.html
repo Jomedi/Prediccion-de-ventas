@@ -1,0 +1,16 @@
+<form (ngSubmit)="newRegister(registerForm)" #registerForm="ngForm">
+    <h2>Crear cuenta</h2><br>
+    <input type="email" name="email" id="" placeholder="E-mail" ngModel required><br><br>
+    <input type="password" name="password" id="" placeholder="Contraseña" ngModel required><br><br>
+    <input type="password" name="passwordr" id="" placeholder="Repetir contraseña" ngModel required><br><br>
+    <input type="text" name="name" id="" placeholder="Nombre" ngModel><br><br>
+    <label class="label">birthDate: </label>
+    <input type="date" name="date" id="" ngModel><br><br>
+    <input type="text" name="address" id="" placeholder="Dirección" ngModel><br><br><br>
+    <label id="Genero">Género<br><br></label><input type="radio" name="gender"id="hombre"value="hombre" ngModel><label for="hombre"> Hombre</label>                
+    <input type="radio" name="gender"id="mujer"value="mujer" ngModel><label for="mujer"> Mujer </label><br><br> 
+    <button id="LoginButton" type="button" (click)="toggleEditor('login')">Login</button>
+    <button type="submit" id="CrearButton">Crear cuenta</button>
+</form>
+
+{{ user | json }}  

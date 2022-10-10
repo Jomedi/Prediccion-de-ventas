@@ -1,0 +1,8 @@
+<form (ngSubmit)="logIn(registerForm)" #registerForm="ngForm">
+    <h2>Login</h2><br>
+    <input type="email" name="email" id="" placeholder="E-mail" ngModel required><br><br>
+    <input type="password" name="password" id="" placeholder="Contraseña" ngModel required><br><br>
+
+    <button id="LoginButton" type="button" (click)="toggleEditor('register')">Crear cuenta</button>
+    <button type="submit" id="CrearButton">Login</button>
+</form>
