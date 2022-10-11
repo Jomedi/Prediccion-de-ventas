@@ -12,7 +12,6 @@ import { Register } from '../register/register';
 })
 export class LoginComponent implements OnInit {
 
-  register = new Register("","")
   constructor(private userService:UserService, private type: AppComponent) { }
 
   ngOnInit(): void {
@@ -24,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   logIn(logInForm:NgForm){
     var formValue = logInForm.value;
-    this.register = new Register(formValue["email"], formValue["password"]);
-    this.userService.signIn(this.register);
+    this.userService.signIn(new Register(formValue.email, formValue.password));
   }
 }

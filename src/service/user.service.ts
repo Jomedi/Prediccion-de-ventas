@@ -14,13 +14,13 @@ export class UserService{
     constructor(private auth : Auth, private dataService: DataService){ }
 
     register(reg:Register){
-        return createUserWithEmailAndPassword(this.auth,reg.email,reg.password);
+        return createUserWithEmailAndPassword(this.auth,reg["email"],reg["password"]);
     }
 
     signIn(reg:Register){
-        return signInWithEmailAndPassword(this.auth,reg.email,reg.password).then(
-            response=>alert("Log in correcto " + response),
-            error=>alert("Error de log in " + error)
+        return signInWithEmailAndPassword(this.auth,reg["email"],reg["password"]).then(
+            response=>alert("Log in correcto " + reg["email"]),
+            error => alert(error)
         )
     }
 
