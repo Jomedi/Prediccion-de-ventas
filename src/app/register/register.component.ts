@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
     
     if(this.validatePassword(formValue["password"],formValue["passwordr"])){
       this.userService.register(formValue).then(response => {
-        alert("Correct register " + formValue["name"]);
+        alert("Correct register: " + formValue["email"]);
         this.userService.writeUserData(this.user);
         registerForm.reset()
       })

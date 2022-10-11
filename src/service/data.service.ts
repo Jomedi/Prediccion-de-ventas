@@ -15,7 +15,7 @@ export class DataService{
 
     saveUser(user:User){
         this.httpClient.post('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json', user).subscribe(
-            response=>alert("Correct insertion: " + user.email),
+            response=>alert("Correct insertion: " + user.name),
             error=>alert("Error: " + error)
         );
     }
