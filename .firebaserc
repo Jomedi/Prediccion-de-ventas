@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "prediccion-de-ventas": {
+      "hosting": {
+        "angular.io-example": [
+          "prediccion-de-ventas"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "prediccion-de-ventas"
+  }
+}
