@@ -4,6 +4,8 @@ import { UserService } from 'src/service/user.service';
 import { AppComponent } from '../app.component';
 import { EditorType } from '../app.component';
 import { Register } from '../register/register';
+import { User } from '../user/user';
+import { UserComponent } from '../user/user.component';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
     var formValue = logInForm.value;
     this.userService.signIn(new Register(formValue.email, formValue.password)).then(response=>{
        this.toggleEditor('user');
+       this.userService.email = formValue.email;
       }).catch(error => console.log(error)); 
   }
 }

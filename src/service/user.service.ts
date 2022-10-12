@@ -14,6 +14,7 @@ export class UserService{
     constructor(private auth : Auth, private dataService: DataService){ }
 
     users:User[]=[];
+    email:string="";
 
     register(reg:Register){
         return createUserWithEmailAndPassword(this.auth,reg["email"],reg["password"]);
@@ -34,9 +35,7 @@ export class UserService{
     getUserData(){
         this.dataService.loadUsers().subscribe(users=>{console.log(users);
         this.users = Object.values(users);
-        console.log(this.users);
-        return this.users.values} );
-        return this.users;
+        console.log(this.users);} );
     }
 
     writeUserData(user:User) {
