@@ -10,7 +10,7 @@ export class DataService{
     }
 
     loadUsers(){
-        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json')
+        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json');
     }
 
     saveUser(user:User){

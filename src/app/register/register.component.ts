@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       this.userService.register(formValue).then(response => {
         alert("Correct register: " + formValue["email"]);
         this.userService.writeUserData(this.user);
-        registerForm.reset()
+        registerForm.reset();
       })
       .catch(error=>alert(error));
     }

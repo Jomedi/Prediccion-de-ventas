@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-export type EditorType = 'register' | 'login';
+export type EditorType = 'register' | 'login' | 'user';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,10 @@ export class AppComponent {
 
   get showLoginEditor(){
     return this.editor === 'login';
+  }
+
+  get showUserEditor(){
+    return this.editor === 'user';
   }
 
   public toggleEditor(type: EditorType) {

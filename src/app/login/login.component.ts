@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
 
   logIn(logInForm:NgForm){
     var formValue = logInForm.value;
-    this.userService.signIn(new Register(formValue.email, formValue.password));
+    this.userService.signIn(new Register(formValue.email, formValue.password)).then(response=>{
+       this.toggleEditor('user');
+      }).catch(error => console.log(error)); 
   }
 }
