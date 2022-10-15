@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
         alert("Correct register: " + formValue["email"]);
         this.userService.writeUserData(this.user);
         registerForm.reset();
+        this.toggleEditor('login');
       })
       .catch(error=>alert(error));
     }

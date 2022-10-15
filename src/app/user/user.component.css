@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+/* @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 *{
     font-family: 'PT Sans', sans-serif;
@@ -68,7 +68,7 @@ input:focus {
 }
 
 .inline-buttons {
-    text-align:right !important; /* cambia"Center" a "left" o "right" si quieres la que alineación sea a la izquierda o derecha */
+    text-align:right !important; /* cambia"Center" a "left" o "right" si quieres la que alineación sea a la izquierda o derecha 
 }
 
 #LoginButton{
@@ -105,4 +105,90 @@ button:hover{
 label {
   position: relative;
 }
+ */
+ #tareas{
+    display:none;
+}
+body{
+    background-color: #e3f2fd;
+}
+nav{
+    background-color: #222268;
+    box-shadow: 0px 0px 15px #222268;
+}
+#iconoNav{
+    color: #e3f2fd; 
+    padding-left: 2em;
+    font-size: 40px;
+}
 
+.alignRight{
+    float: right;
+}
+
+.margenIzq{
+    margin-left: 10px;
+}
+
+.margenTop{
+    margin-top: 1em;
+}
+
+a{
+    text-decoration: none;
+}
+#divContainer{
+    margin-top: 8em;
+}
+
+#eliminarAnadirButton{
+    box-shadow: 0px 0px 4px;
+
+}
+#lista{
+    border: 2px solid #222268;
+    box-shadow: 0px 0px 3px #222268;
+}
+
+#labelident{
+    padding-left: 0.5em;
+    padding-right: 2em;
+    color:#e3f2fd
+}
+
+
+[data-title]:hover:after {
+    opacity:0.9;
+    transition: all 0.5s ease 0.1s;
+    visibility: visible;
+}
+[data-title]:after {
+    content: attr(data-title);
+    background-color: white;
+    color: #222268;
+    font-size: 14px;
+    position: absolute;
+    padding: 3px 20px;
+    bottom: -2em;
+    right: 50%;
+    white-space: nowrap;
+    box-shadow: 0px 0px 3px white;
+    opacity: 0;
+    border: 1px solid white;
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    
+}
+[data-title] {
+    position: relative;
+}
+
+
+#tag{
+    padding: 3px;
+    border: 2px solid darkgray;
+    border-radius: 8px;
+}
+
+ 
