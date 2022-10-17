@@ -56,7 +56,7 @@ input {
 input:focus {
     color: #333;
     background-color: #ffffff;
-    border: 2px solid #da5767;
+    border: 2px solid #222268;
     outline: 0;
     box-shadow: none;
     transition: .3s;
@@ -90,15 +90,15 @@ input:focus {
 button {
     font-size:95%;
     padding: 0.6rem 1.2rem;
-    background: #da5767;
-    border: 2px solid #da5767;
+    background: #222268;
+    border: 2px solid #222268;
     color:#ffffff;
     border-radius: 4px;
 }
 
 button:hover{
-    background-color: #df8c96;
-    border-color: #df8c96;
+    background-color: #585896;
+    border-color: #585896;
     transition: .3s;
 }
 

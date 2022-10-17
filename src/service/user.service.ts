@@ -22,8 +22,7 @@ export class UserService{
 
     signIn(reg:Register){
         return signInWithEmailAndPassword(this.auth,reg["email"],reg["password"]).then(
-            response=> {
-              alert("Log in correcto");     
+            response=> {  
           },
             error =>{
                 alert(error);

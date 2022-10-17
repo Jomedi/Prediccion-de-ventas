@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
   users:User[]=[];
   user:User = new User("","","","","");
   email:string="";
+  profileImage:string = "/assets/images/profileImage.png";
 
   constructor(private uS : UserService, private dataService: DataService) { 
 
