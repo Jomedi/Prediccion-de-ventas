@@ -14,7 +14,7 @@ import { RegisterService } from './register.service';
 export class RegisterComponent implements OnInit {
 
   register = new Register("","")
-  user = new User("","","","","")
+  user = new User("","","","","","")
 
 
   constructor(private registerService: RegisterService, private router: Router, private dataService:DataService) {
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
 
   newRegister(registerForm: NgForm) {
     var formValue = registerForm.value
-    this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"])
+    this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"],formValue["password"])
     
     if(this.validatePassword(formValue["password"],formValue["passwordr"])){
       this.registerService.register(formValue).then(response => {

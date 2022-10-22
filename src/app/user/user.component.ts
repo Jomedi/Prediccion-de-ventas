@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 
 export class UserComponent implements OnInit {
   users:User[]=[];
-  user:User = new User("","","","","");
+  user:User = new User("","","","","","");
   email:string="";
   profileImage:string = "/assets/images/profileImage.png";
 
@@ -21,21 +21,21 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = this.loginService.getIdToken();
-    this.getUserData();
+    this.getUserData(this.email);
     console.log(this.loginService.getIdToken());
     this.noLoginCase();
   }
 
-  getUserData(){
+  getUserData(email:string){
     this.dataService.loadUsers().subscribe(users=>{
       this.users = Object.values(users);
       for(let i = 0; i < this.users.length; i++){
-        if(this.users[i].email == this.email){
+        if(this.users[i].email == email){
           this.user = this.users[i];
         }
       }
     } );
-
+    return this.user;
   }
 
   setEmail(email:string){
@@ -54,6 +54,10 @@ export class UserComponent implements OnInit {
     if(this.email == ""){
       this.router.navigate(['login']);
     }
+  }
+
+  deleteUser(){
+    this.loginService.delUser();
   }
 
 }

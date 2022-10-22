@@ -4,6 +4,7 @@ import { User } from "src/app/user/user";
 import { Register } from "src/app/register/register";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { deleteUser } from "firebase/auth";
 
 @Injectable({
     providedIn: 'root'
@@ -48,5 +49,10 @@ export class LoginService{
             this.cookies.set("email",this.email);
             this.router.navigate(['/login']);
         });
+    }
+
+    delUser(){
+        //add the other delete
+        this.auth.currentUser?.delete();
     }
 }

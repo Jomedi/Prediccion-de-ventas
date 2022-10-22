@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { deleteUser } from "firebase/auth";
 import { User } from "src/app/user/user";
 import { LoginService } from "../login/login.service";
 
@@ -7,11 +8,11 @@ import { LoginService } from "../login/login.service";
 
 export class DataService{
 
-    constructor(private httpClient:HttpClient, private userService:LoginService){
+    constructor(private httpClient:HttpClient, private loginService:LoginService){
     }
 
     loadUsers(){
-        const token = this.userService.getIdToken();
+        const token = this.loginService.getIdToken();
         return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json?auth=' + token);
     }
 
@@ -21,4 +22,13 @@ export class DataService{
             error=>alert("Error: " + error)
         );
     }
+
+    // deleteUser(user:User){
+    //     this.httpClient.
+    //     this.httpClient.delete('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios/', user).subscribe(
+    //         response=>alert("Correct deletion"),
+    //         error=>alert("Error: " + error)
+    //     );
+    // }
+
 }
