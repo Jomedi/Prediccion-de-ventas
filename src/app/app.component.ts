@@ -8,22 +8,22 @@ export type EditorType = 'register' | 'login' | 'user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  editor: EditorType = 'login';
+  // editor: EditorType = 'login';
 
 
-  get showRegisterEditor(){
-    return this.editor === 'register';
-  }
+  // get showRegisterEditor(){
+  //   return this.editor === 'register';
+  // }
 
-  get showLoginEditor(){
-    return this.editor === 'login';
-  }
+  // get showLoginEditor(){
+  //   return this.editor === 'login';
+  // }
 
-  get showUserEditor(){
-    return this.editor === 'user';
-  }
+  // get showUserEditor(){
+  //   return this.editor === 'user';
+  // }
 
-  public toggleEditor(type: EditorType) {
-    this.editor = type;
-  }
+  // public toggleEditor(type: EditorType) {
+  //   this.editor = type;
+  // }
 }

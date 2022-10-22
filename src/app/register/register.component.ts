@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/service/user.service';
 import { NgForm } from '@angular/forms';
 import { Register } from './register';
-import { AppComponent, EditorType } from '../app.component';
 import { User } from '../user/user';
+import { Router } from '@angular/router';
+import { DataService } from '../data/data.service';
+import { RegisterService } from './register.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   user = new User("","","","","")
 
 
-  constructor(private userService: UserService, private type: AppComponent) {
+  constructor(private registerService: RegisterService, private router: Router, private dataService:DataService) {
   }
 
   ngOnInit(): void {
@@ -36,18 +37,17 @@ export class RegisterComponent implements OnInit {
     this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"])
     
     if(this.validatePassword(formValue["password"],formValue["passwordr"])){
-      this.userService.register(formValue).then(response => {
+      this.registerService.register(formValue).then(response => {
         alert("Correct register: " + formValue["email"]);
-        this.userService.writeUserData(this.user);
+        this.dataService.saveUser(this.user);
         registerForm.reset();
-        this.toggleEditor('login');
       })
       .catch(error=>alert(error));
     }
   }
 
-  toggleEditor(edit:EditorType) {
-    this.type.editor = edit;
+  routeToLogin(){
+    this.router.navigate(['/login'])
   }
 
 }

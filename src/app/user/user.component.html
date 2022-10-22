@@ -14,14 +14,20 @@
     <div>
       <img src="../assets/images/profileImage.png" width= "35" alt="foto de perfil"/>
       <span id="labelident" class="navbar-text"> {{user.name}} </span>
-      <a href="user.component.html">
+      <a (click)="logOut()" data-title="Logout">
         <i class="bi bi-box-arrow-right"></i>
       </a>
     </div>
   </div>
 </nav>
 
-<button>Perfil </button><button>X </button><button>X </button><button>X </button>
+
+<ul id= "navBar" class="navbar-nav mt-10 w-25" >
+  <li class="nav-item"><a class="nav-link" href="/">Perfil</a></li>
+  <li class="nav-item"><a class="nav-link" href="/products">Sobre nosotros</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+</ul>
+
 
 <div id="divContainer" class="container offset-30">
   <div class="offset-2 col-8">
@@ -44,7 +50,7 @@
             <span id="tag">{{user.gender}}</span>
           </span><br><br>
           <a href="# ">
-            <button type="button" class="btn btn-outline-secondary alignRight" data-title="marcar como finalizada"><i class="bi bi-tools"></i></button>
+            <button type="button" class="btn btn-outline-secondary alignRight" data-title="modificar"><i class="bi bi-tools"></i></button>
           </a>
         </div>
       </div>

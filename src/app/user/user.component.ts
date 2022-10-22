@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
-import { UserService } from 'src/service/user.service';
-import { DataService } from 'src/service/data.service';
+import { DataService } from 'src/app/data/data.service';
+import { LoginService } from '../login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,18 +16,18 @@ export class UserComponent implements OnInit {
   email:string="";
   profileImage:string = "/assets/images/profileImage.png";
 
-  constructor(private uS : UserService, private dataService: DataService) { 
-
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router) { 
   }
 
   ngOnInit(): void {
-    this.email = this.uS.email;
+    this.email = this.loginService.getIdToken();
     this.getUserData();
+    console.log(this.loginService.getIdToken());
+    this.noLoginCase();
   }
 
   getUserData(){
     this.dataService.loadUsers().subscribe(users=>{
-      console.log(users);
       this.users = Object.values(users);
       for(let i = 0; i < this.users.length; i++){
         if(this.users[i].email == this.email){
@@ -35,13 +36,26 @@ export class UserComponent implements OnInit {
       }
     } );
 
-    
-
   }
 
   setEmail(email:string){
     this.email = email;
   }
+
+  logOut(){
+    this.loginService.logOut();
+  }
+
+  routeToProducts(){
+    this.router.navigate(['/products']);
+  }
+
+  noLoginCase(){
+    if(this.email == ""){
+      this.router.navigate(['login']);
+    }
+  }
+
 }
 
 

@@ -1,16 +1,18 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { User } from "src/app/user/user";
+import { LoginService } from "../login/login.service";
 
 @Injectable()
 
 export class DataService{
 
-    constructor(private httpClient:HttpClient){
+    constructor(private httpClient:HttpClient, private userService:LoginService){
     }
 
     loadUsers(){
-        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json');
+        const token = this.userService.getIdToken();
+        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json?auth=' + token);
     }
 
     saveUser(user:User){

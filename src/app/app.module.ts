@@ -12,17 +12,30 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { provideStorage,getStorage } from '@angular/fire/storage';
-import { DataService } from 'src/service/data.service';
+import { DataService } from 'src/app/data/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from './login/login.service';
+import { RegisterService } from './register/register.service';
+import { ProductsComponent } from './products/products.component';
+
+const appRoutes:Routes=[
+  {path: '', component:UserComponent  },
+  {path: 'login', component:LoginComponent},
+  {path: 'register', component:RegisterComponent},
+  {path: 'products', component:ProductsComponent}
+]
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,10 +47,12 @@ import { UserComponent } from './user/user.component';
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
+
   ],
   providers: [
-    ScreenTrackingService,UserTrackingService,DataService
+    ScreenTrackingService,UserTrackingService,DataService,CookieService,LoginService,RegisterService
   ],
   bootstrap: [AppComponent]
 })
