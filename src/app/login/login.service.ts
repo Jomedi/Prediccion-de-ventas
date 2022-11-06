@@ -1,17 +1,18 @@
 import { Injectable } from "@angular/core";
-import { Auth, signInWithEmailAndPassword } from "@angular/fire/auth";
+import { Auth, signInWithEmailAndPassword, EmailAuthProvider } from "@angular/fire/auth";
 import { User } from "src/app/user/user";
 import { Register } from "src/app/register/register";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-import { deleteUser } from "firebase/auth";
+import {reauthenticateWithCredential} from "@firebase/auth";
+import {deleteUser} from "firebase/auth";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class LoginService{
-    
+
     constructor(private auth : Auth, private router:Router, private cookies:CookieService){ }
 
     users:User[]=[];
@@ -20,7 +21,7 @@ export class LoginService{
 
     signIn(reg:Register){
         return signInWithEmailAndPassword(this.auth,reg["email"],reg["password"]).then(
-            response=> {  
+            response=> {
                 this.auth.currentUser?.getIdToken().then(
                     token=>{
                                 this.token=token;
@@ -31,9 +32,10 @@ export class LoginService{
                 )
           },
             error =>{
-                alert(error);
+                alert(error)
+                console.error(error);
                 throw new(error);
-            } 
+            }
         );
     }
 
@@ -51,8 +53,28 @@ export class LoginService{
         });
     }
 
-    delUser(){
-        //add the other delete
-        this.auth.currentUser?.delete();
+    delUser(user: User, reAuthenticated = true){
+        //this.auth.currentUser?.delete()
+        let currentUser = this.auth.currentUser!;
+        deleteUser(currentUser).then(
+            response=>{
+                console.log("Properly deleted auth user: " + user.email)
+                this.router.navigate(['/login'])
+            },
+            error=>{
+                if (reAuthenticated) {
+                    console.error("Error deleting auth user " + user.email + ' -> ' + error)
+                }else {
+                    let authCredential = EmailAuthProvider.credential(user.email, user.password);
+                    reauthenticateWithCredential(currentUser, authCredential).then(
+                        response => {
+                            console.log("Properly reAuthenticated: " + response)
+                            this.delUser(user)
+                        },
+                        error => console.error("Error reAuthenticating: " + error)
+                    )
+                }
+            }
+        );
     }
 }

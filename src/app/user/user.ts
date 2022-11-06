@@ -5,7 +5,11 @@ export class User{
         public date: string,
         public address: string,
         public gender: string,
-        public password: string
+        public password: string,
+        public key: string
       ) {  }
 
+    static emptyUser(): User {
+        return new this("", "", "", "", "", "", "");
+    }
 }

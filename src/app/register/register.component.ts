@@ -14,7 +14,7 @@ import { RegisterService } from './register.service';
 export class RegisterComponent implements OnInit {
 
   register = new Register("","")
-  user = new User("","","","","","")
+  user = User.emptyUser()
 
 
   constructor(private registerService: RegisterService, private router: Router, private dataService:DataService) {
@@ -34,15 +34,15 @@ export class RegisterComponent implements OnInit {
 
   newRegister(registerForm: NgForm) {
     var formValue = registerForm.value
-    this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"],formValue["password"])
+    this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"],formValue["password"],"")
     
     if(this.validatePassword(formValue["password"],formValue["passwordr"])){
       this.registerService.register(formValue).then(response => {
-        alert("Correct register: " + formValue["email"]);
+        console.log("Correct register: " + formValue["email"]);
         this.dataService.saveUser(this.user);
         registerForm.reset();
       })
-      .catch(error=>alert(error));
+      .catch(error=>console.error(error));
     }
   }
 

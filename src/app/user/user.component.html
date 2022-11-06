@@ -1,7 +1,7 @@
 <!-- <button id="LoginButton" type="button" (click)="toggleEditor('login')">Login</button> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
-    <link rel="icon" href="../assets/images/list-check.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
+<link rel="icon" href="../assets/images/list-check.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
 <label id="tareas">Tareas</label>
 <nav class="navbar fixed-top">
@@ -20,36 +20,6 @@
 
 
 <ul id= "navBar" class="navbar-nav mt-10 w-25" >
-  <li class="nav-item"><a class="nav-link" href="/">Perfil</a></li>
-  <li class="nav-item"><a class="nav-link" href="/products">Sobre nosotros</a></li>
-  <li class="nav-item"><a class="nav-link" (click)="deleteUser()">Delete</a></li>
+  <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
+  <li class="nav-item"><a class="nav-link" href="/products">Productos</a></li>
 </ul>
-
-
-<div id="divContainer" class="divContainer">
-  <div class="offset-2 w-50">
-      <div id="lista" class="card">
-        <div class="card-body">
-          Name: 
-          <span class="margenIzq">
-            <span id="tag">{{user.name}}</span>
-          </span><br><br>
-          Email: <span  class="margenIzq">
-            <span id="tag">{{user.email}}</span>
-          </span><br><br>
-          Address: <span  class="margenIzq">
-            <span id="tag">{{user.address}}</span>
-          </span><br><br>
-          Birthdate: <span class="margenIzq">
-            <span id="tag">{{user.date}}</span>
-          </span><br><br>
-          Gender:<span  class="margenIzq">
-            <span id="tag">{{user.gender}}</span>
-          </span><br><br>
-          <a href="#">
-            <button type="button" class="btn btn-outline-secondary alignRight" data-title="modificar"><i class="bi bi-tools"></i></button>
-          </a>
-        </div>
-      </div>
-  </div>   
-</div>

@@ -1,0 +1,57 @@
+body {
+    background: rgb(99, 39, 120)
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #222268
+}
+
+#deleteUser{
+    font-size:95%;
+    padding: 0.6rem 1.2rem;
+    background: #a31212;
+    border: 2px solid #a31212;
+    color:#ffffff;
+    border-radius: 4px;
+}
+
+#deleteUser:hover{
+    font-size:95%;
+    padding: 0.6rem 1.2rem;
+    background: #d33737;
+    border: 2px solid #d33737;
+    color:#ffffff;
+    border-radius: 4px;
+}
+
+button {
+    font-size:95%;
+    padding: 0.6rem 1.2rem;
+    background: #222268;
+    border: 2px solid #222268;
+    color:#ffffff;
+    border-radius: 4px;
+}
+
+button:hover{
+    background-color: #585896;
+    border-color: #585896;
+    transition: .3s;
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user';
+import { LoginService } from 'src/app/login/login.service';
 import { DataService } from 'src/app/data/data.service';
-import { LoginService } from '../login/login.service';
+import { User } from '../user';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-
-export class UserComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   users:User[]=[];
   user:User = User.emptyUser()
   email:string="";
@@ -78,6 +77,6 @@ export class UserComponent implements OnInit {
   isEditing() {
     return this.editing;
   }
+ 
+
 }
-
-
