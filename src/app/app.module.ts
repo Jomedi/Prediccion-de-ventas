@@ -22,13 +22,15 @@ import { LoginService } from './login/login.service';
 import { RegisterService } from './register/register.service';
 import { ProductsComponent } from './user/products/products.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { AdministrateComponent } from './user/administrate/administrate.component';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
   {path: 'login', component:LoginComponent},
   {path: 'register', component:RegisterComponent},
   {path: 'products', component:ProductsComponent},
-  {path: 'profile', component:ProfileComponent}
+  {path: 'profile', component:ProfileComponent},
+  {path: 'adminProfiles', component:AdministrateComponent}
 ]
 
 @NgModule({
@@ -38,7 +40,8 @@ const appRoutes:Routes=[
     LoginComponent,
     UserComponent,
     ProductsComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdministrateComponent
   ],
   imports: [
     BrowserModule,

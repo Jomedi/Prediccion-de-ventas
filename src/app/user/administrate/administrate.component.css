@@ -1,0 +1,23 @@
+.form-control:focus {
+    box-shadow: none;
+    border-color: #222268
+}
+
+#updateUser {
+    font-size:95%;
+    padding: 0.6rem 1.2rem;
+    background: #222268;
+    border: 2px solid #222268;
+    color:#ffffff;
+    border-radius: 4px;
+}
+
+#updateUser:hover{
+    background-color: #585896;
+    border-color: #585896;
+    transition: .3s;
+}
+
+.labels {
+    font-size: 11px
+}

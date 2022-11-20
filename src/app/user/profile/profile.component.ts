@@ -77,6 +77,5 @@ export class ProfileComponent implements OnInit {
   isEditing() {
     return this.editing;
   }
- 
 
 }

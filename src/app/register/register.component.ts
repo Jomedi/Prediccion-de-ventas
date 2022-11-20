@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
         this.dataService.saveUser(this.user);
         registerForm.reset();
       })
-      .catch(error=>console.error(error));
+      .catch(error=>alert(error));
     }
   }
 

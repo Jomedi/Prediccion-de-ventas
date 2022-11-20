@@ -4,7 +4,7 @@ import { User } from "src/app/user/user";
 import { Register } from "src/app/register/register";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-import {reauthenticateWithCredential} from "@firebase/auth";
+import { reauthenticateWithCredential} from "@firebase/auth";
 import {deleteUser} from "firebase/auth";
 
 @Injectable({

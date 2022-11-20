@@ -56,7 +56,7 @@ export class UserComponent implements OnInit {
   }
 
   noLoginCase(){
-    if(this.email == ""){
+    if(this.email.length < 3){
       this.router.navigate(['login']);
     }
   }
@@ -77,6 +77,15 @@ export class UserComponent implements OnInit {
 
   isEditing() {
     return this.editing;
+  }
+
+  isAdmin(){
+    if(this.user.email === "a@a.es"){
+      return true
+    }
+    else{
+      return false
+    }
   }
 }
 
