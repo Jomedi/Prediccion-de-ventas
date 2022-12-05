@@ -106,7 +106,7 @@ label {
   position: relative;
 }
  */
-#navBar{
+/* #navBar{
     margin:40px;
     padding:20px;
 }
@@ -212,4 +212,7 @@ h1{
     margin-left: 50px;
 }
 
- 
+  */
+body{
+    background-image: url("https://carontestudio.com/img/caronte-web-estudio-logo.png");
+}

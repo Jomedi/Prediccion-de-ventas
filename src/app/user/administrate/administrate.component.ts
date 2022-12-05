@@ -9,10 +9,10 @@ import { User } from '../user';
   styleUrls: ['./administrate.component.css']
 })
 export class AdministrateComponent implements OnInit {
-  users:User[]=[];
+  users:User[]=[]
   user:User = User.emptyUser()
-  editing:boolean = false;
-  email:string = "";
+  editing:boolean = false
+  email:string = ""
 
   constructor(private dataService:DataService, private loginService:LoginService) { }
 

@@ -1,26 +1,44 @@
-<!-- <button id="LoginButton" type="button" (click)="toggleEditor('login')">Login</button> -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
-<link rel="icon" href="../assets/images/list-check.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
-
-
-<label id="tareas">Tareas</label>
-<nav class="navbar fixed-top navbar-light bg-dark">
+<nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <i id="iconoNav" class="bi bi-ui-checks"></i>
-    <h1>Predicción de ventas</h1>
-    <div>
-      <img src="../assets/images/profileImage.png" width= "35" alt="foto de perfil"/>
-      <span id="labelident" class="navbar-text"> {{user.name}} </span>
-      <a (click)="logOut()" data-title="Logout">
-        <i class="bi bi-box-arrow-right"></i>
-      </a>
+    <a class="navbar-brand" href="/">Predicción de ventas</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <a (click)="logOut()" data-title="Logout">
+          <i class="bi bi-box-arrow-right"></i>
+        </a>
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Predicción de ventas</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Productos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Configuración
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/profile">Modificar perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/adminProfiles">Administrar perfiles</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+      </div>
     </div>
   </div>
 </nav>
-
-<ul id= "navBar" class="navbar-nav mt-10 w-25" id="list" >
-  <li class="nav-item"><a class="nav-link" href="/profile">Perfil</a></li>
-  <li class="nav-item"><a class="nav-link" href="/products">Productos</a></li>
-  <li *ngIf="isAdmin()" class="nav-item"><a class="nav-link" href="/adminProfiles">Administrar Perfiles (administrador)</a></li>
-</ul>
+<br><br><br>

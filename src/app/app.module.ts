@@ -20,7 +20,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from './login/login.service';
 import { RegisterService } from './register/register.service';
-import { ProductsComponent } from './user/products/products.component';
+import { ProductsComponent } from './products/products.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { AdministrateComponent } from './user/administrate/administrate.component';
 

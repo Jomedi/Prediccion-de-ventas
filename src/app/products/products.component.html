@@ -1,0 +1,114 @@
+<app-user></app-user>
+
+<div *ngFor="let item of products; let i = index">
+  <div *ngIf="i % 4 == 0" align = "center" class="row">
+    <div class="card offset-lg-2 col-lg-2 col-sm-1">
+      <img class="card-img-top" src=" ../assets/images/{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+      <div class="card-body">
+        <h3 class="card-title">{{products[i].title}}</h3>
+        <!-- <p class="card-text">{{products[i].description}}</p> -->
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{products[i].price}}€</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">More info</a>
+        <a (click)="deleteProduct(products[i].title)" class="card-link">Delete Product</a>
+      </div>
+    </div>
+        <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
+          <img class="card-img-top" src=" ../assets/images/{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+          <div class="card-body">
+            <h3 class="card-title">{{products[i+1].title}}</h3>
+            <!-- <p class="card-text">{{products[i+1].description}}</p> -->
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{products[i+1].price}}€</li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+1].title)" class="card-link">Delete Product</a>
+          </div>
+        </div>
+        <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
+          <img class="card-img-top" src=" ../assets/images/{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+          <div class="card-body">
+            <h3 class="card-title">{{products[i+2].title}}</h3>
+            <!-- <p class="card-text">{{products[i+2].description}}</p> -->
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{products[i+2].price}}€</li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+2].title)" class="card-link">Delete Product</a>
+          </div>
+        </div>
+        <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
+          <img class="card-img-top" src=" ../assets/images/{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+          <div class="card-body">
+            <h3 class="card-title">{{products[i+3].title}}</h3>
+            <!-- <p class="card-text">{{products[i+2].description}}</p> -->
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{products[i+3].price}}€</li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+3].title)" class="card-link">Delete Product</a>
+          </div>
+        </div>
+  </div>
+</div>
+<br><br>
+
+<div align = "center"><button type="button" class="btn btn-secondary btn-lg" (click)="setAdd()">Add Product</button></div>
+
+
+<div *ngIf = "add" align = "center">
+  <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="col-2">
+    <h2>Registrar Producto</h2><br>
+    <input type="text" name="title" id="" placeholder="Título" ngModel required><br><br>
+    <textarea type="text" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
+    <br>
+    <input type="number" name="price" id="" placeholder="Price" ngModel><br><br>
+
+    <input class="form-control" name="img" type="file" id="formFile" ngModel>
+    <br>
+    <!-- <label class = "custom-file-upload">Product's Image File
+      <input type="file" name="img" accept="image/png, image/jpg, image/jpeg, image/gif" ngModel/>
+    </label> -->
+    <div class="row">
+      <button type="submit" class="offset-3 col-6 d-grid">Añadir Producto</button>
+    </div>
+  </form>
+</div>
+
+<!-- <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-2" id="sec-15e0">
+  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <div class="u-expanded-width u-list u-repeater u-list-1">
+      <div class="u-align-center u-container-style u-list-item u-repeater-item">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-1" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/88e5cf5d0e505330afc66f84/ws.jpg">
+          <h4 class="u-custom-font u-font-raleway u-text u-text-1">Audeze Headphones</h4>
+          <h3 class="u-text u-text-2">$399</h3>
+        </div>
+      </div>
+      <div class="u-align-center u-container-style u-list-item u-repeater-item">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-2" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/fbc290c86f7a5373b99a27e6/f.jpg">
+          <h4 class="u-custom-font u-font-raleway u-text u-text-default u-text-3">Focal Stellia HD 915</h4>
+          <h3 class="u-text u-text-4">$2,399</h3>
+        </div>
+      </div>
+      <div class="u-align-center u-container-style u-list-item u-repeater-item">
+        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-3" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/e2e8f8335b2c5804bbe4ef4e/g.jpg">
+          <h4 class="u-custom-font u-font-raleway u-text u-text-default u-text-5">Sennheiser HD 820</h4>
+          <h3 class="u-text u-text-6">$699</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</section> -->
