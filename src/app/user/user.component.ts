@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.email = this.loginService.getIdToken();
     this.getUserData(this.email);
-    console.log(this.loginService.getIdToken());
+    // console.log(this.loginService.getIdToken());
     this.noLoginCase();
   }
 

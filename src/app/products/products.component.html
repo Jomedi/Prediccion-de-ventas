@@ -1,5 +1,5 @@
 <app-user></app-user>
-
+<br>
 <div *ngFor="let item of products; let i = index">
   <div *ngIf="i % 4 == 0" align = "center" class="row">
     <div class="card offset-lg-2 col-lg-2 col-sm-1">
@@ -12,8 +12,8 @@
         <li class="list-group-item">{{products[i].price}}€</li>
       </ul>
       <div class="card-body">
-        <a href="#" class="card-link">More info</a>
-        <a (click)="deleteProduct(products[i].title)" class="card-link">Delete Product</a>
+        <a [routerLink] = "['/details',i]" class="card-link">More info</a>
+        <a (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
       </div>
     </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -26,8 +26,8 @@
             <li class="list-group-item">{{products[i+1].price}}€</li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+1].title)" class="card-link">Delete Product</a>
+            <a [routerLink] = "['/details',i+1]" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+1].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
           </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -40,8 +40,8 @@
             <li class="list-group-item">{{products[i+2].price}}€</li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+2].title)" class="card-link">Delete Product</a>
+            <a [routerLink] = "['/details',i+2]" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+2].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
           </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -54,15 +54,15 @@
             <li class="list-group-item">{{products[i+3].price}}€</li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+3].title)" class="card-link">Delete Product</a>
+            <a [routerLink] = "['/details',i+3]" class="card-link">More info</a>
+            <a (click)="deleteProduct(products[i+3].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
           </div>
         </div>
   </div>
 </div>
 <br><br>
 
-<div align = "center"><button type="button" class="btn btn-secondary btn-lg" (click)="setAdd()">Add Product</button></div>
+<div align = "center"><button type="button" class="btn btn-dark btn-lg" (click)="setAdd()">Add Product</button></div>
 
 
 <div *ngIf = "add" align = "center">
@@ -79,7 +79,7 @@
       <input type="file" name="img" accept="image/png, image/jpg, image/jpeg, image/gif" ngModel/>
     </label> -->
     <div class="row">
-      <button type="submit" class="offset-3 col-6 d-grid">Añadir Producto</button>
+      <button type="submit" class="btn btn-dark offset-3 col-6 d-grid ">Añadir Producto</button>
     </div>
   </form>
 </div>

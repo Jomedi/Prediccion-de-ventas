@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from '../data/data.service';
 import { Product } from './product';
 
@@ -10,7 +11,7 @@ import { Product } from './product';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor(private dataService:DataService) { }
+  constructor(private dataService:DataService, private router:Router) { }
 
   product = Product.emptyProduct()
   products : Product[] = []
@@ -24,20 +25,16 @@ export class ProductsComponent implements OnInit {
     var formValue = registerForm.value
     this.product = new Product(formValue["title"],formValue["description"],formValue["price"],formValue["img"].substring(12,formValue.length),"")
     
-    this.dataService.saveProduct(this.product);
-    registerForm.reset();
-
-  }
-
-  newProduct() {
-    this.product = new Product("mesa","desk for room",5,"no se","key")
-    this.dataService.saveProduct(this.product);
+    this.dataService.saveProduct(this.product)
+    registerForm.reset()
+    this.getProductData()
+    this.router.navigate(['/products'])
   }
 
   getProductData(){
     this.dataService.loadProducts().subscribe(dbProducts=>{
       this.products = Object.values(dbProducts);
-      console.log(this.products.length)
+      console.log("Products: " + this.products.length)
     } );
   }
 
@@ -45,8 +42,9 @@ export class ProductsComponent implements OnInit {
     let p = this.getProductByTitle(title)
     if (p != Product.emptyProduct()){
       this.dataService.deleteProduct(p)
+      this.getProductData()
+      this.router.navigate(['/products'])
     }
-    this.getProductData()
   }
 
   getProductByTitle(title:string){
@@ -61,6 +59,11 @@ export class ProductsComponent implements OnInit {
 
   setAdd(){
     this.add = !this.add;
+  }
+
+  getProductByIndex(i:number){
+    this.getProductData()
+    return this.products[i]
   }
 
 

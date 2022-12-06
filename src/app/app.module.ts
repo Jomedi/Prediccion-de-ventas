@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -23,6 +22,7 @@ import { RegisterService } from './register/register.service';
 import { ProductsComponent } from './products/products.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { AdministrateComponent } from './user/administrate/administrate.component';
+import { DetailsComponent } from './products/details/details.component';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
@@ -30,7 +30,9 @@ const appRoutes:Routes=[
   {path: 'register', component:RegisterComponent},
   {path: 'products', component:ProductsComponent},
   {path: 'profile', component:ProfileComponent},
-  {path: 'adminProfiles', component:AdministrateComponent}
+  {path: 'adminProfiles', component:AdministrateComponent},
+  {path: 'details/:id', component:DetailsComponent},
+  {path: '**', component:UserComponent}
 ]
 
 @NgModule({
@@ -41,7 +43,8 @@ const appRoutes:Routes=[
     UserComponent,
     ProductsComponent,
     ProfileComponent,
-    AdministrateComponent
+    AdministrateComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
