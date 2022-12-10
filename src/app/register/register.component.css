@@ -46,17 +46,11 @@ input[type=radio] {
     width: 15px;
 }
 
-input {
-    vertical-align: top;
-    background-color: #f8f9fa;
-    padding: 10px;
-    margin-bottom: 0.8rem;
-}
 
 input:focus {
     color: #333;
     background-color: #ffffff;
-    border: 2px solid #222268;
+    border: 2px solid #000000;
     outline: 0;
     box-shadow: none;
     transition: .3s;
@@ -85,21 +79,6 @@ input:focus {
 
 #CrearButton{
     margin-left:175px;
-}
-
-button {
-    font-size:95%;
-    padding: 0.6rem 1.2rem;
-    background: #222268;
-    border: 2px solid #222268;
-    color:#ffffff;
-    border-radius: 4px;
-}
-
-button:hover{
-    background-color: #585896;
-    border-color: #585896;
-    transition: .3s;
 }
 
 label {

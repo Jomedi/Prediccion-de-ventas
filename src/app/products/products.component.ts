@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { DataService } from '../data/data.service';
 import { Product } from './product';
+import { Storage, ref, uploadBytes } from '@angular/fire/storage';
+import { listAll } from 'firebase/storage';
 
 @Component({
   selector: 'app-products',
@@ -11,7 +14,7 @@ import { Product } from './product';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor(private dataService:DataService, private router:Router) { }
+  constructor(private dataService:DataService, private router:Router, private cookie:CookieService, private storage:Storage) { }
 
   product = Product.emptyProduct()
   products : Product[] = []
@@ -19,6 +22,33 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductData()
+    this.getImages()
+  }
+
+  uploadImage($event:any){
+    const file = $event.target.files[0]
+    console.log("File: ", file)
+
+    const imgRef = ref(this.storage, `images/${file.name}`)
+
+    uploadBytes(imgRef, file)
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+  }
+
+  getImages(){
+    const imagesRef = ref(this.storage, 'images')
+
+    listAll(imagesRef)
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+  }
+
+  isUserAdmin(){
+    if(this.cookie.get("email") == "a@a.es")
+      return true
+    else 
+      return false
   }
 
   saveProduct(registerForm: NgForm) {

@@ -31,10 +31,19 @@ export class DetailsComponent implements OnInit {
       console.log(this.products)
       this.route.params.subscribe(params=>{
         console.log(params['id'])
-        this.product = this.products[params['id']]
+        this.product = this.searchProductByKey(params['id'])
         console.log("Product caught: " + this.product.title)
       })
     } );
+  }
+
+  searchProductByKey(title:string){
+    let prod = Product.emptyProduct()
+    this.products.forEach(p =>{
+      if(p.title == title)
+        prod = p
+    })
+    return prod
   }
 
 }

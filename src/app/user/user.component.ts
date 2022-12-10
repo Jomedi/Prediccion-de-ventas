@@ -27,6 +27,10 @@ export class UserComponent implements OnInit {
     this.noLoginCase();
   }
 
+  isUserAdmin(){
+    return this.email === "a@a.es"
+  }
+
   getUserData(email:string){
     this.dataService.loadUsers().subscribe(dbUsers=>{
       this.users = Object.values(dbUsers);

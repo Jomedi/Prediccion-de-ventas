@@ -1,87 +1,107 @@
 <app-user></app-user>
 <br>
+<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Product</button></div>
+<br><br>
 <div *ngFor="let item of products; let i = index">
-  <div *ngIf="i % 4 == 0" align = "center" class="row">
-    <div class="card offset-lg-2 col-lg-2 col-sm-1">
-      <img class="card-img-top" src=" ../assets/images/{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-      <div class="card-body">
-        <h3 class="card-title">{{products[i].title}}</h3>
-        <!-- <p class="card-text">{{products[i].description}}</p> -->
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{products[i].price}}€</li>
-      </ul>
-      <div class="card-body">
-        <a [routerLink] = "['/details',i]" class="card-link">More info</a>
-        <a (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-      </div>
-    </div>
+    <div *ngIf="i % 4 == 0" align="center" class="row">
+        <div class="card offset-lg-2 col-lg-2 col-sm-1">
+            <img class="card-img-top" src=" ../assets/images/{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <div class="card-body">
+                <h3 class="card-title">{{products[i].title}}</h3>
+                <!-- <p class="card-text">{{products[i].description}}</p> -->
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h4>{{products[i].price}}€</h4>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a [routerLink]="['/details',products[i].title]" class="card-link">More info</a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+            </div>
+        </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
-          <img class="card-img-top" src=" ../assets/images/{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-          <div class="card-body">
-            <h3 class="card-title">{{products[i+1].title}}</h3>
-            <!-- <p class="card-text">{{products[i+1].description}}</p> -->
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{products[i+1].price}}€</li>
-          </ul>
-          <div class="card-body">
-            <a [routerLink] = "['/details',i+1]" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+1].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-          </div>
+            <img class="card-img-top" src=" ../assets/images/{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <div class="card-body">
+                <h3 class="card-title">{{products[i+1].title}}</h3>
+                <!-- <p class="card-text">{{products[i+1].description}}</p> -->
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h4>{{products[i+1].price}}€</h4>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a [routerLink]="['/details',products[i+1].title]" class="card-link">More info</a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+            </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
-          <img class="card-img-top" src=" ../assets/images/{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-          <div class="card-body">
-            <h3 class="card-title">{{products[i+2].title}}</h3>
-            <!-- <p class="card-text">{{products[i+2].description}}</p> -->
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{products[i+2].price}}€</li>
-          </ul>
-          <div class="card-body">
-            <a [routerLink] = "['/details',i+2]" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+2].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-          </div>
+            <img class="card-img-top" src=" ../assets/images/{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <div class="card-body">
+                <h3 class="card-title">{{products[i+2].title}}</h3>
+                <!-- <p class="card-text">{{products[i+2].description}}</p> -->
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h4>{{products[i+2].price}}€</h4>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a [routerLink]="['/details',products[i+2].title]" class="card-link">More info</a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+            </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
-          <img class="card-img-top" src=" ../assets/images/{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-          <div class="card-body">
-            <h3 class="card-title">{{products[i+3].title}}</h3>
-            <!-- <p class="card-text">{{products[i+2].description}}</p> -->
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{products[i+3].price}}€</li>
-          </ul>
-          <div class="card-body">
-            <a [routerLink] = "['/details',i+3]" class="card-link">More info</a>
-            <a (click)="deleteProduct(products[i+3].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-          </div>
+            <img class="card-img-top" src=" ../assets/images/{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <div class="card-body">
+                <h3 class="card-title">{{products[i+3].title}}</h3>
+                <!-- <p class="card-text">{{products[i+2].description}}</p> -->
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h4>{{products[i+3].price}}€</h4>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a [routerLink]="['/details',products[i+3].title]" class="card-link">More info</a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+            </div>
         </div>
-  </div>
+    </div>
 </div>
 <br><br>
 
-<div align = "center"><button type="button" class="btn btn-dark btn-lg" (click)="setAdd()">Add Product</button></div>
 
 
-<div *ngIf = "add" align = "center">
-  <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="col-2">
-    <h2>Registrar Producto</h2><br>
-    <input type="text" name="title" id="" placeholder="Título" ngModel required><br><br>
-    <textarea type="text" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
-    <br>
-    <input type="number" name="price" id="" placeholder="Price" ngModel><br><br>
 
-    <input class="form-control" name="img" type="file" id="formFile" ngModel>
-    <br>
-    <!-- <label class = "custom-file-upload">Product's Image File
-      <input type="file" name="img" accept="image/png, image/jpg, image/jpeg, image/gif" ngModel/>
-    </label> -->
-    <div class="row">
-      <button type="submit" class="btn btn-dark offset-3 col-6 d-grid ">Añadir Producto</button>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Registrar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="offset-1 col-10">
+                <br>
+                <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
+                <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
+                <input type="number" class="form-control col-10" name="price" id="" placeholder="Price" ngModel><br><br>
+                <label for="img">Imagen</label>
+                <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
+                <br>
+                <!-- <label class = "custom-file-upload">Product's Image File
+          <input type="file" name="img" accept="image/png, image/jpg, image/jpeg, image/gif" ngModel/>
+        </label> -->
+                <div class="row">
+                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Añadir Producto</button>
+
+                </div>
+                <br>
+            </form>
+        </div>
     </div>
-  </form>
 </div>
 
 <!-- <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-2" id="sec-15e0">

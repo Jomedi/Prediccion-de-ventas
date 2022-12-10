@@ -11,16 +11,6 @@ ul {
     list-style: none;
 }
 
-form {
-	width: 450px;
-	margin: 4em auto;
-	padding: 3em 2em 2em 2em;
-	background: #fafafa;
-	border: 1px solid #CCC;
-	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-    border-radius: 1em;
-}
-
 label span {
     display: inline-block;
     width: 120px;
@@ -33,7 +23,6 @@ label span {
 
 input, textarea{
     font-size: 95%;
-    width: 350px;
     box-sizing: border-box;
     border: 1px solid #999;
     color:#333;
@@ -58,7 +47,7 @@ input, textarea {
 input:focus, textarea:focus {
     color: #333;
     background-color: #ffffff;
-    border: 2px solid #222268;
+    border: 2px solid #000000;
     outline: 0;
     box-shadow: none;
     transition: .3s;
