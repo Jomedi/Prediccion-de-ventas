@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from '../data/data.service';
 import { Product } from './product';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
-import { listAll } from 'firebase/storage';
+import { getDownloadURL, listAll } from 'firebase/storage';
 
 @Component({
   selector: 'app-products',
@@ -22,7 +22,6 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductData()
-    this.getImages()
   }
 
   uploadImage($event:any){
@@ -36,12 +35,8 @@ export class ProductsComponent implements OnInit {
     .catch(error => console.log(error))
   }
 
-  getImages(){
+  getImageByName(name:string){
     const imagesRef = ref(this.storage, 'images')
-
-    listAll(imagesRef)
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
   }
 
   isUserAdmin(){
@@ -52,13 +47,27 @@ export class ProductsComponent implements OnInit {
   }
 
   saveProduct(registerForm: NgForm) {
+    const imagesRef = ref(this.storage, 'images')
     var formValue = registerForm.value
-    this.product = new Product(formValue["title"],formValue["description"],formValue["price"],formValue["img"].substring(12,formValue.length),"")
-    
-    this.dataService.saveProduct(this.product)
-    registerForm.reset()
-    this.getProductData()
-    this.router.navigate(['/products'])
+
+    let image = formValue["img"].substring(12,formValue.length)
+
+    listAll(imagesRef)
+    .then(async response => {
+      for(let item of response.items){
+        console.log(item.name + "==" + image)
+        if (item.name == image){
+          const url = await getDownloadURL(item)
+          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"")
+          this.dataService.saveProduct(this.product)
+          registerForm.reset()
+          this.getProductData()
+          this.router.navigate(['/products'])
+        }
+      }
+      })
+    .catch(error => console.log(error))
+
   }
 
   getProductData(){

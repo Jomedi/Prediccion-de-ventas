@@ -5,7 +5,7 @@
 <div *ngFor="let item of products; let i = index">
     <div *ngIf="i % 4 == 0" align="center" class="row">
         <div class="card offset-lg-2 col-lg-2 col-sm-1">
-            <img class="card-img-top" src=" ../assets/images/{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <img class="card-img-top" src="{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
             <div class="card-body">
                 <h3 class="card-title">{{products[i].title}}</h3>
                 <!-- <p class="card-text">{{products[i].description}}</p> -->
@@ -87,7 +87,7 @@
                 <br>
                 <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
                 <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
-                <input type="number" class="form-control col-10" name="price" id="" placeholder="Price" ngModel><br><br>
+                <input type="number" class="form-control col-10" name="price" id="" placeholder="Precio" ngModel> € <br><br>
                 <label for="img">Imagen</label>
                 <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
                 <br>
