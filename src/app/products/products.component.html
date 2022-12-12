@@ -5,23 +5,27 @@
 <div *ngFor="let item of products; let i = index">
     <div *ngIf="i % 4 == 0" align="center" class="row">
         <div class="card offset-lg-2 col-lg-2 col-sm-1">
-            <img align="center" class="card-img-top" src="{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <a [routerLink]="['/details',products[i].title]" class="card-link">
+                <img align="center" class="card-img-top col-12" src="{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            </a>
             <div class="card-body">
-                <h3 class="card-title">{{products[i].title}}</h3>
+                <h3 class="card-title col-12">{{products[i].title}}</h3>
                 <!-- <p class="card-text">{{products[i].description}}</p> -->
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush col-12">
                 <li class="list-group-item">
                     <h4>{{products[i].price}}€</h4>
                 </li>
             </ul>
-            <div class="card-body">
+            <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].title]" class="card-link">More info</a>
                 <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
-            <img align="center" class="card-img-top" src="{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <a [routerLink]="['/details',products[i + 1].title]" class="card-link">
+                <img align="center" class="card-img-top" src="{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            </a>
             <div class="card-body">
                 <h3 class="card-title">{{products[i+1].title}}</h3>
                 <!-- <p class="card-text">{{products[i+1].description}}</p> -->
@@ -37,7 +41,9 @@
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
-            <img align="center" class="card-img-top" src="{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <a [routerLink]="['/details',products[i + 2].title]" class="card-link">
+                <img align="center" class="card-img-top" src="{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            </a>
             <div class="card-body">
                 <h3 class="card-title">{{products[i+2].title}}</h3>
                 <!-- <p class="card-text">{{products[i+2].description}}</p> -->
@@ -53,7 +59,9 @@
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
-            <img class="card-img-top" src="{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            <a [routerLink]="['/details',products[i+3].title]" class="card-link">
+                <img class="card-img-top" src="{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+            </a>
             <div class="card-body">
                 <h3 class="card-title">{{products[i+3].title}}</h3>
                 <!-- <p class="card-text">{{products[i+2].description}}</p> -->
