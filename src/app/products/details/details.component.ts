@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../data/data.service';
 import { Product } from '../product';
+import { SafeUrl } from '@angular/platform-browser';
 // import { ProductsComponent } from '../products/products.component';
 
 @Component({
@@ -14,10 +15,17 @@ export class DetailsComponent implements OnInit {
   products : Product[] = []
   product = Product.emptyProduct()
 
+  public myAngularxQrCode: string = "";
+  public qrCodeDownloadLink: SafeUrl = "";
+
   constructor(private route: ActivatedRoute, private dataService:DataService, private router:Router) {
     this.route.params.subscribe(params=>{
       console.log(params['id'])
     })
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
   }
 
   ngOnInit(): void {
@@ -33,14 +41,17 @@ export class DetailsComponent implements OnInit {
         console.log(params['id'])
         this.product = this.searchProductByKey(params['id'])
         console.log("Product caught: " + this.product.title)
+        this.myAngularxQrCode = 'http://localhost:4200/details/' + this.product.key;
+        console.log("URL: " + this.myAngularxQrCode)
+        console.log(params)
       })
     } );
   }
 
-  searchProductByKey(title:string){
+  searchProductByKey(key:string){
     let prod = Product.emptyProduct()
     this.products.forEach(p =>{
-      if(p.title == title)
+      if(p.key == key)
         prod = p
     })
     return prod

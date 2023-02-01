@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user';
-import { DataService } from 'src/app/data/data.service';
+import { User } from '../user/user';
 import { LoginService } from '../login/login.service';
+import { DataService } from '../data/data.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-top-nav-bar',
+  templateUrl: './top-nav-bar.component.html',
+  styleUrls: ['./top-nav-bar.component.css']
 })
+export class TopNavBarComponent implements OnInit {
 
-export class UserComponent implements OnInit {
   users:User[]=[];
   user:User = User.emptyUser()
   email:string="";
@@ -47,7 +47,7 @@ export class UserComponent implements OnInit {
     this.email = email;
   }
 
-  public logOut(){
+  logOut(){
     this.loginService.logOut();
   }
 
@@ -73,6 +73,5 @@ export class UserComponent implements OnInit {
       return false
     }
   }
+
 }
-
-

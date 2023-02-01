@@ -23,6 +23,9 @@ import { ProductsComponent } from './products/products.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { AdministrateComponent } from './user/administrate/administrate.component';
 import { DetailsComponent } from './products/details/details.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
@@ -31,6 +34,7 @@ const appRoutes:Routes=[
   {path: 'products', component:ProductsComponent},
   {path: 'profile', component:ProfileComponent},
   {path: 'adminProfiles', component:AdministrateComponent},
+  {path: 'topNavBar', component:TopNavBarComponent},
   {path: 'details/:id', component:DetailsComponent},
   {path: '**', component:UserComponent}
 ]
@@ -44,7 +48,8 @@ const appRoutes:Routes=[
     ProductsComponent,
     ProfileComponent,
     AdministrateComponent,
-    DetailsComponent
+    DetailsComponent,
+    TopNavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +62,9 @@ const appRoutes:Routes=[
     provideStorage(() => getStorage()),
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
-
+    RouterModule.forRoot(appRoutes),
+    NgxScannerQrcodeModule,
+    QRCodeModule
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,DataService,CookieService,LoginService,RegisterService

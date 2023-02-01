@@ -1,4 +1,4 @@
-<app-user></app-user>
+<app-top-nav-bar></app-top-nav-bar>
 
 <br><br><br>
 <!-- Product section-->
@@ -20,6 +20,9 @@
                     Add to cart
                 </button>
             </div>
+            <br><br><br><br>
+            <button type="button" class="btn btn-success col-2 mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button>
+
         </div>
     </div>
 </div>
@@ -45,7 +48,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[0].title]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[0].key]">View details</a></div>
                 </div>
             </div>
         </div>
@@ -74,7 +77,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[1].title]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[1].key]">View details</a></div>
                 </div>
             </div>
         </div>
@@ -95,7 +98,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[2].title]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[2].key]">View details</a></div>
                 </div>
             </div>
         </div>
@@ -122,13 +125,28 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[3].title]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[3].key]">View details</a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <br><br>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{product.title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+            <qrcode class="offset-3" (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+            <a class="offset-10" [href]="qrCodeDownloadLink" download="qrcode"><i class="bi bi-download"></i></a>
+            <br>
+        </div>
+    </div>
+</div>
 
 <footer class="py-4 bg-dark">
     <div class="container">
