@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Register } from '../register/register';
 import { LoginService } from './login.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService, private router:Router) { }
+  constructor(private loginService:LoginService, private router:Router, private cookie:CookieService) { }
 
   ngOnInit(): void {
   }

@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-
-
-h2 { 
+h2 {
     color: #494747;
 }
 
@@ -17,19 +15,20 @@ label span {
     text-align: right;
 }
 
-::placeholder{
+::placeholder {
     font-size: 95%;
 }
 
-input, textarea{
+input,
+textarea {
     font-size: 95%;
     box-sizing: border-box;
     border: 1px solid #999;
-    color:#333;
+    color: #333;
 }
 
-textarea{
-    resize:none;
+textarea {
+    resize: none;
     height: 100px;
 }
 
@@ -37,14 +36,16 @@ input[type=radio] {
     width: 15px;
 }
 
-input, textarea {
+input,
+textarea {
     vertical-align: top;
     background-color: #f8f9fa;
     padding: 10px;
     margin-bottom: 0.8rem;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     color: #333;
     background-color: #ffffff;
     border: 2px solid #000000;
@@ -58,22 +59,20 @@ input:focus, textarea:focus {
     margin: 0 50px;
 }
 
-
-
-#LoginButton{
-    background:#f8f9fa;
+#LoginButton {
+    background: #f8f9fa;
     border: 2px solid #f8f9fa;
-    color:#333;
-    padding:0;
+    color: #333;
+    padding: 0;
 }
 
-#LoginButton:hover{
-    color:#da5767;
-    transition:.3s;
+#LoginButton:hover {
+    color: #da5767;
+    transition: .3s;
 }
 
 label {
-  position: relative;
+    position: relative;
 }
 
 .custom-file-upload {
@@ -83,13 +82,19 @@ label {
     cursor: pointer;
 }
 
-img{
+img {
     height: 270px;
     width: 270px;
 }
 
-a{
-    
+a {
     cursor: pointer;
-    
+}
+
+.bi-heart-fill {
+    color: red;
+}
+
+.bi-heart {
+    color: red;
 }

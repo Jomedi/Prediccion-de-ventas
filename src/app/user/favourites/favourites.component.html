@@ -1,7 +1,10 @@
 <app-top-nav-bar></app-top-nav-bar>
+
 <br>
-<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Product</button></div>
 <br><br>
+<div *ngIf="products.length == 0">
+    <h1 class="ml-5">No hay productos Favoritos</h1>
+</div>
 <div *ngFor="let item of products; let i = index">
     <div *ngIf="i % 4 == 0" align="center" class="row">
         <div class="card offset-lg-2 col-lg-2 col-sm-1">
@@ -19,9 +22,7 @@
             </ul>
             <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-                <a *ngIf="!isFavourite(products[i].key)" (click)="addFavouriteProduct(products[i].key)" class="card-link"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i].key)" (click)="addFavouriteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -39,9 +40,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+1].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-                <a *ngIf="!isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -59,9 +58,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+2].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-                <a *ngIf="!isFavourite(products[i+2].key)" (click)="addFavouriteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+2].key)" (click)="addFavouriteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -79,9 +76,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+3].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
-                <a *ngIf="!isFavourite(products[i+3].key)" (click)="addFavouriteProduct(products[i+3].key)" class="card-link"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+3].key)" (click)="addFavouriteProduct(products[i+3].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteProduct(products[i+3].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
     </div>
@@ -90,35 +85,6 @@
 
 
 
-
-
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Registrar Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="offset-1 col-10">
-                <br>
-                <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
-                <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
-                <input type="number" class="form-control col-10" name="price" id="" placeholder="Precio" ngModel> € <br><br>
-                <label for="img">Imagen</label>
-                <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
-                <br>
-                <!-- <label class = "custom-file-upload">Product's Image File
-          <input type="file" name="img" accept="image/png, image/jpg, image/jpeg, image/gif" ngModel/>
-        </label> -->
-                <div class="row">
-                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Añadir Producto</button>
-
-                </div>
-                <br>
-            </form>
-        </div>
-    </div>
-</div>
 <br><br><br>
 <!-- <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-2" id="sec-15e0">
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">

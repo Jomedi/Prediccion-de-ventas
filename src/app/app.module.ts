@@ -26,6 +26,7 @@ import { DetailsComponent } from './products/details/details.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { FavouritesComponent } from './user/favourites/favourites.component';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
@@ -36,6 +37,7 @@ const appRoutes:Routes=[
   {path: 'adminProfiles', component:AdministrateComponent},
   {path: 'topNavBar', component:TopNavBarComponent},
   {path: 'details/:id', component:DetailsComponent},
+  {path: 'favourites', component: FavouritesComponent},
   {path: '**', component:UserComponent}
 ]
 
@@ -49,7 +51,8 @@ const appRoutes:Routes=[
     ProfileComponent,
     AdministrateComponent,
     DetailsComponent,
-    TopNavBarComponent
+    TopNavBarComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,
