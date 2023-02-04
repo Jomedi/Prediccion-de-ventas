@@ -3,6 +3,7 @@ import { LoginService } from 'src/app/login/login.service';
 import { DataService } from 'src/app/data/data.service';
 import { User } from '../user';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-profile',
@@ -16,26 +17,20 @@ export class ProfileComponent implements OnInit {
   profileImage:string = "/assets/images/profileImage.png";
   editing:Boolean = false;
 
-  constructor(private loginService : LoginService, private dataService: DataService, private router:Router) {
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, private cookie:CookieService) {
   }
 
   ngOnInit(): void {
-    this.email = this.loginService.getIdToken();
-    this.getUserData(this.email);
-    console.log(this.loginService.getIdToken());
-    this.noLoginCase();
+    this.getUserData()
   }
 
-  getUserData(email:string){
-    this.dataService.loadUsers().subscribe(dbUsers=>{
-      this.users = Object.values(dbUsers);
-      for(let i = 0; i < this.users.length; i++){
-        if(this.users[i].email == email){
-          this.user = this.users[i];
-        }
-      }
-    } );
-    return this.user;
+  getUserData(){
+    this.user = this.userSession();
+  }
+
+  userSession(){
+    return new User(this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), 
+                    this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key") ,this.cookie.get("favouriteProducts").split(","))
   }
 
   setEmail(email:string){

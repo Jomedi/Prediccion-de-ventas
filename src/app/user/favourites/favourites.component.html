@@ -22,7 +22,7 @@
             </ul>
             <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].key]" class="card-link">More info</a>
-                <a (click)="deleteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -40,7 +40,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+1].key]" class="card-link">More info</a>
-                <a (click)="deleteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -58,7 +58,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+2].key]" class="card-link">More info</a>
-                <a (click)="deleteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -76,7 +76,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+3].key]" class="card-link">More info</a>
-                <a (click)="deleteProduct(products[i+3].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+3].key);" class="card-link"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
     </div>

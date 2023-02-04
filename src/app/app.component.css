@@ -1,11 +1,12 @@
 nav button {
-  padding: 1rem;
-  font-size: inherit;
+    padding: 1rem;
+    font-size: inherit;
 }
+
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }

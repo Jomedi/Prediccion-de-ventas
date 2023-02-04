@@ -7,6 +7,7 @@ import { getDownloadURL, listAll } from 'firebase/storage';
 import { DataService } from 'src/app/data/data.service';
 import { Product } from 'src/app/products/product';
 import { User } from '../user';
+import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-favourites',
@@ -17,14 +18,12 @@ export class FavouritesComponent implements OnInit {
 
   constructor(private dataService:DataService, private router:Router, private cookie:CookieService, private storage:Storage) { }
 
-  product = Product.emptyProduct()
   products : Product[] = []
-  favourites : string[] = []
-  users : User[] = []
+  favouriteProducts : string[] = []
   add : boolean = false
 
   ngOnInit(): void {
-    this.getProductData()
+    this.getFavouriteProducts()
   }
 
   uploadImage($event:any){
@@ -61,10 +60,10 @@ export class FavouritesComponent implements OnInit {
         console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
-          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"")
-          this.dataService.saveProduct(this.product)
+          let product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"")
+          this.dataService.saveProduct(product)
           registerForm.reset()
-          this.getProductData()
+          this.getFavouriteProducts()
           this.router.navigate(['/products'])
         }
       }
@@ -74,54 +73,38 @@ export class FavouritesComponent implements OnInit {
   }
 
   addFavouriteProduct(productKey:string){
-    this.dataService.loadUsers().subscribe(user=>{
-      let users = Object.values(user)
-      users.forEach(user => {
-        if(user.email == this.cookie.get("email")){
-          user.favourite_products.push(productKey)
-          this.dataService.updateUser(user)
-        }
-      });
-    })
+    let user = this.userSession()
+    user.favourite_products.push(productKey)
+    this.dataService.updateUser(user)
   }
 
-  getProductData(){
-    this.dataService.loadUsers().subscribe(user=>{
-      this.users = Object.values(user)
-      this.users.forEach(user => {
-        if(user.email == this.cookie.get("email")){
-          this.favourites = user.favourite_products
-        }   
+  getFavouriteProducts(){
+    this.favouriteProducts = this.cookie.get("favouriteProducts").split(",")
+    if(this.favouriteProducts.length > 0){
+      this.dataService.loadProducts().subscribe(dbProducts=>{
+        this.products = Object.values(dbProducts);
+        this.products = this.products.filter(product=>{
+          return this.favouriteProducts.includes(product.key)
+        })
+        console.log("Los productos favoritos son: " , this.products)
       });
-      if(this.favourites.length > 0){
-        this.dataService.loadProducts().subscribe(dbProducts=>{
-          this.products = Object.values(dbProducts);
-          this.products = this.products.filter(product=>{
-            return this.favourites.includes(product.key)
-          })
-          console.log("Los productos favoritos son: " , this.products)
-        });
-      }
-    })
+    }
   }
 
-  deleteProduct(productKey:string){
-    this.dataService.loadUsers().subscribe(user=>{
-      let users = Object.values(user)
-      users.forEach(user => {
-        if(user.email == this.cookie.get("email")){
-          this.favourites = user.favourite_products
-          this.favourites = this.favourites.filter(prod=>{
-            console.log(prod, " != ", productKey)
-            return prod != productKey
-          })
-          user.favourite_products = this.favourites
-          this.dataService.updateUser(user)
-          this.getProductData()
-          this.router.navigate(['/favourites'])
-        }
-      });
+  deleteFavouriteProduct(productKey:string){
+    let user = this.userSession()
+    this.favouriteProducts = user.favourite_products
+    this.favouriteProducts = this.favouriteProducts.filter(prod=>{
+      return prod != productKey
     })
+    this.cookie.set("favouriteProducts", this.favouriteProducts.toString())
+    user.favourite_products = this.favouriteProducts
+    this.dataService.updateUser(user)
+  }
+
+  userSession(){
+    return new User(this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), 
+                    this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key") ,this.cookie.get("favouriteProducts").split(","))
   }
 
   getProductByTitle(title:string){
@@ -139,14 +122,8 @@ export class FavouritesComponent implements OnInit {
   }
 
   getProductByIndex(i:number){
-    this.getProductData()
+    this.getFavouriteProducts()
     return this.products[i]
-  }
-
-
-
-  deleteFavourite(){
-
   }
 
 }

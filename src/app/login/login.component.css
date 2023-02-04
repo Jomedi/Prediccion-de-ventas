@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-
-*{
+* {
     font-family: 'PT Sans', sans-serif;
 }
 
-h2 { 
+h2 {
     color: #494747;
 }
 
@@ -15,12 +14,12 @@ ul {
 }
 
 form {
-	width: 450px;
-	margin: 4em auto;
-	padding: 3em 2em 2em 2em;
-	background: #fafafa;
-	border: 1px solid #CCC;
-	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+    width: 450px;
+    margin: 4em auto;
+    padding: 3em 2em 2em 2em;
+    background: #fafafa;
+    border: 1px solid #CCC;
+    box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
     border-radius: 1em;
 }
 
@@ -30,16 +29,16 @@ label span {
     text-align: right;
 }
 
-::placeholder{
+::placeholder {
     font-size: 95%;
 }
 
-input{
+input {
     font-size: 95%;
     width: 350px;
     box-sizing: border-box;
     border: 1px solid #999;
-    color:#333;
+    color: #333;
 }
 
 input[type=radio] {
@@ -68,38 +67,41 @@ input:focus {
 }
 
 .inline-buttons {
-    text-align:right !important; /* cambia"Center" a "left" o "right" si quieres la que alineación sea a la izquierda o derecha */
+    text-align: right !important;
+    /* cambia"Center" a "left" o "right" si quieres la que alineación sea a la izquierda o derecha */
 }
 
-#LoginButton{
-    background:#f8f9fa;
+#LoginButton {
+    background: #f8f9fa;
     border: 2px solid #f8f9fa;
-    color:#333;
-    padding:0;
+    color: #333;
+    padding: 0;
 }
 
-#LoginButton:hover{
-    color:#da5767;
-    transition:.3s;
+#LoginButton:hover {
+    color: #da5767;
+    transition: .3s;
 }
 
-#CrearButton{
-    margin-left:175px;
+#CrearButton {
+    margin-left: 175px;
 }
 
 button {
-    font-size:95%;
+    font-size: 95%;
     padding: 0.6rem 1.2rem;
-
-    color:#ffffff;
+    color: #ffffff;
     border-radius: 4px;
 }
 
-button:hover{
+button:hover {
     transition: .3s;
 }
 
 label {
-  position: relative;
+    position: relative;
 }
 
+i {
+    cursor: pointer
+}

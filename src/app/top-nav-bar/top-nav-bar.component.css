@@ -11,3 +11,7 @@ body {
     clear: both;
     padding-top: 20px;
 }
+
+i {
+    cursor: pointer
+}

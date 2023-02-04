@@ -1,3 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+h2 {
+    color: #494747;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+label span {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+
+::placeholder {
+    font-size: 95%;
+}
+
+input,
+textarea {
+    font-size: 95%;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    color: #333;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+input[type=radio] {
+    width: 15px;
+}
+
+input,
+textarea {
+    vertical-align: top;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 0.8rem;
+}
+
+input:focus,
+textarea:focus {
+    color: #333;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    outline: 0;
+    box-shadow: none;
+    transition: .3s;
+}
+
+.inline-buttons .et_pb_button_module_wrapper {
+    display: inline-block;
+    margin: 0 50px;
+}
+
+#LoginButton {
+    background: #f8f9fa;
+    border: 2px solid #f8f9fa;
+    color: #333;
+    padding: 0;
+}
+
+#LoginButton:hover {
+    color: #da5767;
+    transition: .3s;
+}
+
+label {
+    position: relative;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+img {
+    height: 270px;
+    width: 270px;
+}
+
 a {
     cursor: pointer;
 }
