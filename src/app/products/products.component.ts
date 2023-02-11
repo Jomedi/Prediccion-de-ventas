@@ -95,7 +95,7 @@ export class ProductsComponent implements OnInit {
         console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
-          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"")
+          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[])
           this.dataService.saveProduct(this.product)
           registerForm.reset()
           this.getProductData()

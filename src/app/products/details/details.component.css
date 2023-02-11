@@ -1,3 +1,21 @@
 i {
     font-size: xx-large;
 }
+
+a {
+    font-size: medium;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+table {
+    overflow: auto;
+}
+
+.bi-star-fill {
+    color: rgb(255, 208, 0);
+}
+
+.bi-star {
+    color: rgb(255, 208, 0);
+}

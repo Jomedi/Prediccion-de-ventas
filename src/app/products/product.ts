@@ -6,10 +6,13 @@ export class Product{
         public description: string,
         public price: number,
         public img: string,
-        public key: string
+        public key: string,
+        public userRating: string[],
+        public rating: string[],
+        public comment: string[]
       ) {  }
 
     static emptyProduct(): Product {
-        return new this("", "", 0, "", "");
+        return new this("", "", 0, "", "", [], [], []);
     }
 }
