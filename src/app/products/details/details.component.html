@@ -1,14 +1,21 @@
 <app-top-nav-bar></app-top-nav-bar>
 
 <br><br><br>
-<!-- Product section-->
 
+<!-- Product section-->
 <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.img}}" alt="..." /></div>
         <div class="col-md-6">
             <div class="small mb-1">SKU: {{product.key}}</div>
             <h1 class="display-5 fw-bolder">{{product.title}}</h1>
+            <div *ngIf="this.product.rating">
+                <div *ngFor="let val of valorations; index as j;">
+                    <div *ngIf="j < avgRating" class="bi-star-fill" style="float:left"></div>
+                    <div *ngIf="j >= avgRating" class="bi-star" style="float:left"></div>
+                </div>
+                <br>
+            </div>
             <div class="fs-5 mb-5">
                 <span>{{product.price}}€</span>
             </div>
@@ -21,8 +28,24 @@
                 </button>
             </div>
             <br><br><br><br>
-            <button type="button" class="btn btn-success col-2 mt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code fa-9x"></i></button>
+            <button type="button" class="btn btn-success col-2 mt-4" data-bs-toggle="modal" data-bs-target="#qrModal"><i class="bi bi-qr-code fa-9x"></i></button>
 
+        </div>
+    </div>
+</div>
+
+<!-- qrModal -->
+<div class="modal fade" id="qrModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{product.title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+            <qrcode class="offset-3" (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true"></qrcode>
+            <a class="offset-10" [href]="qrCodeDownloadLink" allowEmptyString="true" download="qrcode"><i class="bi bi-download"></i></a>
+            <br>
         </div>
     </div>
 </div>
@@ -32,36 +55,16 @@
 
 <br><br><br>
 
-<!-- <div class="contenido" style="background-color: white;">
-    <button type="button" name="añadirValoracion" class="btn btn-secondary offset-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Añadir Valoración</button>
-    <br><br>
-    <h1>Principales reseñas</h1>
-    <br><br>
-    <div *ngFor="let item of product.userRating; index as i;" class="offset-1">
-        <p class="user-data">
-            <b>{{product.userRating[i]}}</b>
-        </p>
-        <div *ngFor="let val of valorations; index as j;">
-            <div *ngIf="j < +product.rating[i]" class="bi-star-fill" style="float:left"></div>
-            <div *ngIf="j >= +product.rating[i]" class="bi-star" style="float:left"></div>
-        </div>
-        <br>
-        <div class="opinion">
-            <q>
-            {{product.comment[i]}}
-        </q>
-        </div>
-        <br><br>
-    </div>
-</div> -->
-
-
-<table class="table table-hover table-light table-repsonsive col-10">
+<!-- Ratings table -->
+<div *ngIf="!product.userRating || product.userRating.length == 0">
+    <button type="button" class="btn btn-primary offset-2" data-bs-toggle="modal" data-bs-target="#rateModal">Añadir Valoración</button>
+</div>
+<table *ngIf="product.userRating && product.userRating.length > 0" class="table table-hover table-light table-repsonsive col-10">
     <thead class="thead-dark">
         <tr>
             <th>
                 <tr>
-                    <th><button type="button" class="btn btn-secondary offset-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Añadir Valoración</button></th>
+                    <th><button type="button" class="btn btn-secondary offset-2" data-bs-toggle="modal" data-bs-target="#rateModal">Añadir Valoración</button></th>
                 </tr>
                 <br>
                 <br>
@@ -93,8 +96,8 @@
     </tbody>
 </table>
 
-<!-- Modal -->
-<div class="modal fade" id="delComment" tabindex="-1" aria-labelledby="delCommentLabel" aria-hidden="true">
+<!-- delComment Modal -->
+<div *ngIf="product.comment && product.comment.length > 0 && id > -1" class="modal fade" id="delComment" tabindex="-1" aria-labelledby="delCommentLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -103,21 +106,23 @@
             </div>
             <div class="modal-body">
                 <div *ngFor="let val of valorations; index as j;">
-                    <div *ngIf="j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
-                    <div *ngIf="j >= +product.rating[id]" class="bi-star" style="float:left"></div>
+                    <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
+                    <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
                 </div>
-                <br> {{product.comment[id]}}
-                <br>
+                <div>
+                    <br> {{product.comment[id]}}
+                    <br>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                <button (click)="deleteReview()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar valoración</button>
+                <button (click)="deleteReview()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar valoración</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- modComment Modal -->
 <div class="modal fade" id="modComment" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -158,8 +163,8 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- rateModal -->
+<div class="modal fade" id="rateModal" tabindex="-1" aria-labelledby="rateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -199,35 +204,10 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Registrar Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="offset-1 col-10">
-                <br>
-                <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
-                <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
-                <input type="number" class="form-control col-10" name="price" id="" placeholder="Precio" ngModel> € <br><br>
-                <label for="img">Imagen</label>
-                <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
-                <br>
-                <div class="row">
-                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Añadir Producto</button>
-
-                </div>
-                <br>
-            </form>
-        </div>
-    </div>
-</div> -->
-
 <br><br><br><br><br>
-<!-- Related items section-->
 
-<div class="container px-4 px-lg-5 mt-5">
+<!-- Related items section-->
+<div *ngIf="products.length > 0" class="container px-4 px-lg-5 mt-5">
     <h2 class="fw-bolder mb-4">Productos relacionados</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         <div class="col mb-5">
@@ -239,6 +219,13 @@
                     <div class="text-center">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[0].title}}</h5>
+                        <!-- Product rating-->
+                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
+                            <div *ngIf="j < calculateProductAverage(products[0])" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="j >= calculateProductAverage(products[0])" class="bi-star" style="float:left"></div>
+                        </div>
+                        <br>
+                        <br>
                         <!-- Product price-->
                         {{products[0].price}}€
                     </div>
@@ -249,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col mb-5">
+        <div *ngIf="products.length > 1" class="col mb-5">
             <div class="card h-100">
                 <!-- Sale badge-->
                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
@@ -260,14 +247,13 @@
                     <div class="text-center">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[1].title}}</h5>
-                        <!-- Product reviews-->
-                        <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
+                        <!-- Product rating-->
+                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
+                            <div *ngIf="j < calculateProductAverage(products[1])" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="j >= calculateProductAverage(products[1])" class="bi-star" style="float:left"></div>
                         </div>
+                        <br>
+                        <br>
                         <!-- Product price-->
                         {{products[1].price}}€
                     </div>
@@ -278,7 +264,7 @@
                 </div>
             </div>
         </div>
-        <div class="col mb-5">
+        <div *ngIf="products.length > 2" class="col mb-5">
             <div class="card h-100">
                 <!-- Sale badge-->
                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
@@ -289,6 +275,13 @@
                     <div class="text-center">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[2].title}}</h5>
+                        <!-- Product rating-->
+                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
+                            <div *ngIf="j < calculateProductAverage(products[2])" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="j >= calculateProductAverage(products[2])" class="bi-star" style="float:left"></div>
+                        </div>
+                        <br>
+                        <br>
                         <!-- Product price-->
                         {{products[2].price}}€
                     </div>
@@ -299,7 +292,7 @@
                 </div>
             </div>
         </div>
-        <div class="col mb-5">
+        <div *ngIf="products.length > 3" class="col mb-5">
             <div class="card h-100">
                 <!-- Product image-->
                 <img class="card-img-top" src="{{products[3].img}}" alt="..." />
@@ -308,14 +301,13 @@
                     <div class="text-center">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[3].title}}</h5>
-                        <!-- Product reviews-->
-                        <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
+                        <!-- Product rating-->
+                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
+                            <div *ngIf="j < calculateProductAverage(products[3])" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="j >= calculateProductAverage(products[3])" class="bi-star" style="float:left"></div>
                         </div>
+                        <br>
+                        <br>
                         <!-- Product price-->
                         {{products[3].price}}€
                     </div>
@@ -329,21 +321,6 @@
     </div>
 </div>
 <br><br>
-
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{product.title}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
-            <qrcode class="offset-3" (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-            <a class="offset-10" [href]="qrCodeDownloadLink" download="qrcode"><i class="bi bi-download"></i></a>
-            <br>
-        </div>
-    </div>
-</div>
 
 
 <footer class="py-4 bg-dark">

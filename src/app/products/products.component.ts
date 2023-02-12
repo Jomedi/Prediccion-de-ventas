@@ -6,6 +6,7 @@ import { DataService } from '../data/data.service';
 import { Product } from './product';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL, listAll } from 'firebase/storage';
+import { User } from '../user/user';
 
 @Component({
   selector: 'app-products',
@@ -22,6 +23,8 @@ export class ProductsComponent implements OnInit {
   add : boolean = false
   userProducts : string[] = []
   favourites : string[] = []
+
+  allUsers : User[] = []
 
   ngOnInit(): void {
     this.getProductData()
@@ -49,12 +52,51 @@ export class ProductsComponent implements OnInit {
           this.userProducts.push(productKey)
           user.favourite_products = this.userProducts
           this.dataService.updateUser(user)
+          this.cookie.set("favouriteProducts",user.favourite_products)
           console.log(user)
         }
       });
     })
   }
 
+  deleteFavouriteProduct(productKey:string){
+    this.dataService.loadUsers().subscribe(user=>{
+      let users = Object.values(user)
+      users.forEach(user => {
+        if(user.email == this.cookie.get("email")){
+          if(user.favourite_products && user.favourite_products.length > 0)
+            this.userProducts = user.favourite_products
+          this.userProducts = this.userProducts.filter(prod=>{
+            return prod != productKey
+          })
+          user.favourite_products = this.userProducts
+          this.dataService.updateUser(user)
+          this.cookie.set("favouriteProducts",user.favourite_products)
+          console.log(user)
+        }
+      });
+    })
+  }
+
+  deleteProduct(title:string){
+    let p = this.getProductByTitle(title)
+    this.dataService.deleteProduct(p)
+    if (p != Product.emptyProduct()){
+      this.dataService.loadUsers().subscribe(user=>{
+        this.allUsers = Object.values(user)
+        this.allUsers.forEach(user => {
+          user.favourite_products = user.favourite_products.filter(prod =>{
+            return prod != p.key
+          })
+          this.dataService.updateUser(user)
+          if(user.email == this.cookie.get("email"))
+            this.cookie.set("favouriteProducts", user.favourite_products.toString())
+        })
+        this.getProductData()
+        this.router.navigate(['/products'])
+      })
+    }
+  }
 
   getFavouritesData(){
     this.dataService.loadUsers().subscribe(user=>{
@@ -112,15 +154,6 @@ export class ProductsComponent implements OnInit {
       this.products = Object.values(dbProducts);
       console.log("Products: " + this.products.length)
     } );
-  }
-
-  deleteProduct(title:string){
-    let p = this.getProductByTitle(title)
-    if (p != Product.emptyProduct()){
-      this.dataService.deleteProduct(p)
-      this.getProductData()
-      this.router.navigate(['/products'])
-    }
   }
 
   getProductByTitle(title:string){

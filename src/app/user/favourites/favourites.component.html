@@ -22,7 +22,7 @@
             </ul>
             <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].key]" class="card-link">More info</a>
-                <a (click)="deleteFavouriteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -40,7 +40,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+1].key]" class="card-link">More info</a>
-                <a (click)="deleteFavouriteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -58,7 +58,7 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+2].key]" class="card-link">More info</a>
-                <a (click)="deleteFavouriteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+2].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -76,45 +76,32 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+3].key]" class="card-link">More info</a>
-                <a (click)="deleteFavouriteProduct(products[i+3].key);" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a (click)="deleteFavouriteProduct(products[i+3].key);" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
     </div>
 </div>
 <br><br>
 
-
+<!-- delFavProd Modal -->
+<div class="modal fade" id="delFavProd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delFavProdLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto eliminado de favoritos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Este producto ya no aparecerá en tu selección de productos favoritos
+            </div>
+            <div class="modal-footer">
+                <button onClick="window.location.reload();" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <br><br><br>
-<!-- <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-2" id="sec-15e0">
-  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-    <div class="u-expanded-width u-list u-repeater u-list-1">
-      <div class="u-align-center u-container-style u-list-item u-repeater-item">
-        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
-          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-1" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/88e5cf5d0e505330afc66f84/ws.jpg">
-          <h4 class="u-custom-font u-font-raleway u-text u-text-1">Audeze Headphones</h4>
-          <h3 class="u-text u-text-2">$399</h3>
-        </div>
-      </div>
-      <div class="u-align-center u-container-style u-list-item u-repeater-item">
-        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
-          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-2" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/fbc290c86f7a5373b99a27e6/f.jpg">
-          <h4 class="u-custom-font u-font-raleway u-text u-text-default u-text-3">Focal Stellia HD 915</h4>
-          <h3 class="u-text u-text-4">$2,399</h3>
-        </div>
-      </div>
-      <div class="u-align-center u-container-style u-list-item u-repeater-item">
-        <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
-          <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-3" src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/e2e8f8335b2c5804bbe4ef4e/g.jpg">
-          <h4 class="u-custom-font u-font-raleway u-text u-text-default u-text-5">Sennheiser HD 820</h4>
-          <h3 class="u-text u-text-6">$699</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-</section> -->
-
 
 <div *ngIf="4 >= products.length">
     <footer class="py-4 bg-dark fixed-bottom">

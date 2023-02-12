@@ -19,9 +19,9 @@
             </ul>
             <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i].key)" (click)="addFavouriteProduct(products[i].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i].key)" (click)="addFavouriteProduct(products[i].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isFavourite(products[i].key)" (click)="deleteFavouriteProduct(products[i].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -39,9 +39,9 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+1].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isFavourite(products[i+1].key)" (click)="deleteFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -59,9 +59,9 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+2].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i+2].key)" (click)="addFavouriteProduct(products[i+2].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+2].key)" (click)="addFavouriteProduct(products[i+2].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isFavourite(products[i+2].key)" (click)="deleteFavouriteProduct(products[i+2].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -79,15 +79,14 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+3].key]" class="card-link">More info</a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link"><i class="bi bi-trash3-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i+3].key)" (click)="addFavouriteProduct(products[i+3].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
-                <a *ngIf="isFavourite(products[i+3].key)" (click)="addFavouriteProduct(products[i+3].key)" class="card-link"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isFavourite(products[i+3].key)" (click)="deleteFavouriteProduct(products[i+3].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
             </div>
         </div>
     </div>
 </div>
 <br><br>
-
 
 
 <!-- Modal -->
@@ -117,6 +116,42 @@
 </div>
 <br><br><br>
 
+<!-- delFavProd Modal -->
+<div class="modal fade" id="delFavProd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delFavProdLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto eliminado de favoritos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Este producto ya no aparecerá en tu selección de productos favoritos
+            </div>
+            <div class="modal-footer">
+                <button onClick="window.location.reload();" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delModal -->
+<div class="modal fade" id="delModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto eliminado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Se ha eliminado el producto
+            </div>
+            <div class="modal-footer">
+                <button onClick="window.location.reload();" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -129,7 +164,7 @@
                 Puedes ir a favoritos para ver la lista de productos favoritos
             </div>
             <div class="modal-footer">
-                <button onClick="window.location.reload();" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                <button onClick="window.location.reload();" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

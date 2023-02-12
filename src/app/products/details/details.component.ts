@@ -17,8 +17,9 @@ export class DetailsComponent implements OnInit {
   valorations : string[] = ["","","","",""]
   products : Product[] = []
   product = Product.emptyProduct()
+  avgRating : number = -1
 
-  id: number = -1;
+  id: number = 0;
   public myAngularxQrCode: string = "";
   public qrCodeDownloadLink: SafeUrl = "";
 
@@ -29,7 +30,6 @@ export class DetailsComponent implements OnInit {
   }
 
   buttonAvailable(id : number){
-    console.log(this.cookie.get('email'), this.cookie.get('email') == 'a@a.es', this.cookie.get('email') == this.product.userRating[id])
     return this.cookie.get('email') === 'a@a.es' || this.cookie.get('email') === this.product.userRating[id]
   }
 
@@ -58,9 +58,30 @@ export class DetailsComponent implements OnInit {
         this.myAngularxQrCode = 'http://localhost:4200/details/' + this.product.key;
         console.log("URL: " + this.myAngularxQrCode)
         console.log(params)
+        this.calculateThisAverage()
       })
     } );
   }
+
+  calculateThisAverage(){
+    this.avgRating = this.calculateProductAverage(this.product)
+  }
+
+  calculateProductAverage(product:Product){
+    let sum = 0
+    let avg = 0
+
+    if(product.rating){
+      product.rating.forEach(rate=>{
+        let number = +rate
+        sum += number
+      })
+      avg = sum / this.product.rating.length
+    }
+
+    return avg
+  }
+
 
   deleteReview(){
     this.product.userRating.splice(this.id, 1);
