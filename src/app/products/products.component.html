@@ -101,13 +101,12 @@
                 <br>
                 <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
                 <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
-                <input type="number" class="form-control col-10" name="price" id="" placeholder="Precio" ngModel> € <br><br>
+                <input type="number" class="form-control col-8" name="price" id="" placeholder="Precio" ngModel> € <br><br>
                 <label for="img">Imagen</label>
                 <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
                 <br>
                 <div class="row">
                     <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Añadir Producto</button>
-
                 </div>
                 <br>
             </form>
@@ -170,19 +169,21 @@
     </div>
 </div>
 
-
+<!-- Footer -->
 <div *ngIf="4 >= products.length">
-    <footer class="py-4 bg-dark fixed-bottom">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Predicción de ventas 2022</p>
-        </div>
+    <footer class="py-2 bg-dark fixed-bottom">
+        <form (ngSubmit)="searchProduct(searchBar)" #searchBar="ngForm" class="d-flex col-4 offset-4" role="search">
+            <input class="form-control me-2" name="searchInput" type="search" placeholder="Search" aria-label="Search" ngModel requiered>
+            <button class="btn btn-success" type="submit" onClick="window.location.reload();">Search</button>
+        </form>
     </footer>
 </div>
 
 <div *ngIf="products.length > 4">
-    <footer class="py-4 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Predicción de ventas 2022</p>
-        </div>
+    <footer class="py-2 bg-dark">
+        <form (ngSubmit)="searchProduct(searchBar)" #searchBar="ngForm" class="d-flex col-4 offset-4" role="search">
+            <input class="form-control me-2" name="searchInput" type="search" placeholder="Search" aria-label="Search" ngModel requiered>
+            <button class="btn btn-success" type="submit" onClick="window.location.reload();">Search</button>
+        </form>
     </footer>
 </div>

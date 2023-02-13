@@ -19,10 +19,12 @@ export class ProductsComponent implements OnInit {
 
   product = Product.emptyProduct()
   products : Product[] = []
+  filteredProducts: Product[] = []
   favProducts : Product[] = []
   add : boolean = false
   userProducts : string[] = []
   favourites : string[] = []
+  searchQuery: string = ""
 
   allUsers : User[] = []
 
@@ -137,7 +139,7 @@ export class ProductsComponent implements OnInit {
         console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
-          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[])
+          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[],[])
           this.dataService.saveProduct(this.product)
           registerForm.reset()
           this.getProductData()
@@ -153,6 +155,9 @@ export class ProductsComponent implements OnInit {
     this.dataService.loadProducts().subscribe(dbProducts=>{
       this.products = Object.values(dbProducts);
       console.log("Products: " + this.products.length)
+      this.products = this.products.filter(prod => {
+        return prod.title.includes(this.cookie.get("searchQuery"))
+      })
     } );
   }
 
@@ -175,5 +180,11 @@ export class ProductsComponent implements OnInit {
     return this.products[i]
   }
 
+  searchProduct(searchBar: NgForm) {
+    var formValue = searchBar.value
+    console.log(formValue.searchInput)
+    this.searchQuery = formValue.searchInput
+    this.cookie.set("searchQuery", formValue.searchInput)
+  }
 
 }

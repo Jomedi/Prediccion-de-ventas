@@ -60,7 +60,7 @@ export class FavouritesComponent implements OnInit {
         console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
-          let product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[])
+          let product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[],[])
           this.dataService.saveProduct(product)
           registerForm.reset()
           this.getFavouriteProducts()

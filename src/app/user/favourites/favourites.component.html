@@ -2,8 +2,10 @@
 
 <br>
 <br><br>
+<h3 class="offset-1">Mis Favoritos</h3>
+<br>
 <div *ngIf="products.length == 0">
-    <h1 class="ml-5">No hay productos Favoritos</h1>
+    <h5 class="ml-5">No hay productos Favoritos</h5>
 </div>
 <div *ngFor="let item of products; let i = index">
     <div *ngIf="i % 4 == 0" align="center" class="row">

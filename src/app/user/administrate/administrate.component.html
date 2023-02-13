@@ -7,32 +7,70 @@
     </div>
 </div>
 
+<br><br>
+
+<!-- Ratings table -->
+<table class="table table-hover table-light table-responsive col-10 mt-2">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">E-mail</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of users; index as i;">
+            <th scope="row" style="width: 48%">{{u.email}}</th>
+            <td scope="row" style="width: 45%">{{u.date}}</td>
+            <td scope="row">
+                <a (click)="openModal(i); getUserDataByEmail(u.email)" data-bs-toggle="modal" data-bs-target="#modComment" style="cursor:pointer; " class="link-primary"><i class="bi-gear-fill" style="font-size:x-large"></i></a>
+                <a (click)="openModal(i); getUserDataByEmail(u.email)" data-bs-toggle="modal" data-bs-target="#modComment" style="cursor:pointer; margin-left: 2%; " class="link-primary"><i class="bi-trash-fill" style="font-size:x-large"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <ul id="myList"></ul>
 
-<div *ngIf="isEditing()" class="container rounded bg-white mt-5 mb-5 offset-lg-3 offset-sm-1">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><br><span class="font-weight-bold">Name: {{user.name}}</span><br>
-                <span class="text-black-50">Email: {{user.email}}</span><span> </span></div>
-        </div>
-        <div class="col-md-5 col-sm-2 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
-                </div>
-                <div class="row mt-2">
-                    <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" placeholder="{{ user.name }}" value="{{ user.name }}" [(ngModel)]='user.name'></div><br>
-                </div>
-                <div class="row mt-3">
-                    <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="{{ user.address }}" value="{{ user.address }}" [(ngModel)]='user.address'></div><br>
-                    <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Date</label><br><input type="date" class="form-control" placeholder="{{ user.date }}" value="{{ user.date }}" [(ngModel)]='user.date'></div><br>
-                    <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Gender</label><br><select name="pets" id="pet-select" class="form-control" value="{{ user.gender }}" [(ngModel)]='user.gender'>
+<div id="modComment" class="modal fade modal-lg" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-right">Profile Settings</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 border-right">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                            <br>
+                            <span class="font-weight-bold">Name: {{user.name}}</span>
+                            <br>
+                            <span class="text-black-50">Email: {{user.email}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-2 border-right">
+                        <div class="p-3 py-5">
+                            <div class="row mt-2">
+                                <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" placeholder="{{ user.name }}" value="{{ user.name }}" [(ngModel)]='user.name'></div><br>
+                            </div>
+                            <div class="row mt-3">
+                                <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="{{ user.address }}" value="{{ user.address }}" [(ngModel)]='user.address'></div><br>
+                                <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Date</label><br><input type="date" class="form-control" placeholder="{{ user.date }}" value="{{ user.date }}" [(ngModel)]='user.date'></div><br>
+                                <div *ngIf="isEditing()" class="col-md-12"><label class="labels">Gender</label><br><select name="pets" id="pet-select" class="form-control" value="{{ user.gender }}" [(ngModel)]='user.gender'>
                       <option value="Mujer">Mujer</option>
                       <option value="Hombre">Hombre</option>
                       </select>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div *ngIf="isEditing()" class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" id="updateUser" (click)="updateUser()">Save Profile</button></div>
+            </div>
+            <div class="modal-footer">
+                <div *ngIf="isEditing()" class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" id="updateUser" (click)="updateUser()" data-bs-dismiss="modal">Save Profile</button></div>
             </div>
         </div>
     </div>

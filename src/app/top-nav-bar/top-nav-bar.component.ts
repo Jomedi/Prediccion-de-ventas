@@ -3,6 +3,8 @@ import { User } from '../user/user';
 import { LoginService } from '../login/login.service';
 import { DataService } from '../data/data.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -17,7 +19,7 @@ export class TopNavBarComponent implements OnInit {
   profileImage:string = "/assets/images/profileImage.png";
   editing:Boolean = false;
 
-  constructor(private loginService : LoginService, private dataService: DataService, private router:Router) {
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, private cookie: CookieService) {
   }
 
   ngOnInit(): void {
@@ -35,9 +37,8 @@ export class TopNavBarComponent implements OnInit {
     this.dataService.loadUsers().subscribe(dbUsers=>{
       this.users = Object.values(dbUsers);
       for(let i = 0; i < this.users.length; i++){
-        if(this.users[i].email == email){
+        if(this.users[i].email == email)
           this.user = this.users[i];
-        }
       }
     } );
     return this.user;
@@ -60,18 +61,17 @@ export class TopNavBarComponent implements OnInit {
   }
 
   noLoginCase(){
-    if(this.email.length < 3){
+    if(this.email.length < 3)
       this.router.navigate(['login']);
-    }
   }
 
   isAdmin(){
-    if(this.user.email === "a@a.es"){
-      return true
-    }
-    else{
-      return false
-    }
+    return this.user.email === "a@a.es"
+  }
+
+  searchProduct(searchBar: NgForm) {
+    var formValue = searchBar.value
+    console.log(formValue.searchInput)
   }
 
 }

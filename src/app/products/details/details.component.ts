@@ -132,8 +132,30 @@ export class DetailsComponent implements OnInit {
 
     console.log(formValue["comment"])
     this.product.comment.push(formValue["comment"])
+
+    //date
+    if(!this.product.ratingDate || this.product.ratingDate.length == 0)
+      this.product.ratingDate = []
     
+    console.log(this.getCurrentDate())
+    this.product.ratingDate.push(this.getCurrentDate())
+
     console.log("this product: ", this.product)
     this.dataService.updateProduct(this.product)
+  }
+
+  getCurrentDate(){
+    const date = new Date()
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let currentDate = ""
+    if(month < 10)
+      currentDate = `${day}/0${month}/${year}`;
+    else
+      currentDate = `${day}/${month}/${year}`;
+
+    return currentDate
   }
 }

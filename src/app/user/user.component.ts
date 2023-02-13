@@ -3,9 +3,11 @@ import { User } from './user';
 import { DataService } from 'src/app/data/data.service';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-user',
+  template: ' <qr-code [value]="value" (decode)="onCodeDecode($event)"></qr-code>',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
@@ -16,8 +18,9 @@ export class UserComponent implements OnInit {
   email:string="";
   profileImage:string = "/assets/images/profileImage.png";
   editing:Boolean = false;
+  value: string = ""
 
-  constructor(private loginService : LoginService, private dataService: DataService, private router:Router) {
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, private qr:QRCodeModule) {
   }
 
   ngOnInit(): void {
@@ -25,6 +28,10 @@ export class UserComponent implements OnInit {
     this.getUserData(this.email);
     // console.log(this.loginService.getIdToken());
     this.noLoginCase();
+  }
+
+  onCodeDecode(result:Event) {
+    console.log(result);
   }
 
   isUserAdmin(){
