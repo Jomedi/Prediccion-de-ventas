@@ -59,34 +59,37 @@
 <div>
     <button type="button" class="btn btn-primary m-4" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
 </div>
-<table *ngIf="product.userRating && product.userRating.length > 0" class="table table-hover table-light table-responsive col-10 mt-2">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">E-mail</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Comentario</th>
-            <th scope="col">Valoración <br></th>
-            <th scope="col">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of product.userRating; index as i;">
-            <th>{{product.userRating[i]}}</th>
-            <td style="width: 7%" scope="row">{{product.ratingDate[i]}}</td>
-            <td style="width: 60%" scope="row">{{product.comment[i]}}</td>
-            <td>
-                <div *ngFor="let val of valorations; index as j;">
-                    <div *ngIf="j < +product.rating[i]" class="bi-star-fill" style="float:left"></div>
-                    <div *ngIf="j >= +product.rating[i]" class="bi-star" style="float:left"></div>
-                </div>
-            </td>
-            <td>
-                <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment"><i class="bi-gear-fill"></i></a>
-                <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#delComment"><i class="bi-trash3-fill"></i></a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table *ngIf="product.userRating && product.userRating.length > 0" class="table table-hover table-light col-10 mt-2">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">E-mail</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Comentario</th>
+                <th scope="col">Valoración <br></th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of product.userRating; index as i;">
+                <th>{{product.userRating[i]}}</th>
+                <td style="width: 7%" scope="row">{{product.ratingDate[i]}}</td>
+                <td style="width: 60%" scope="row">{{product.comment[i]}}</td>
+                <td>
+                    <div *ngFor="let val of valorations; index as j;">
+                        <div *ngIf="j < +product.rating[i]" class="bi-star-fill" style="float:left"></div>
+                        <div *ngIf="j >= +product.rating[i]" class="bi-star" style="float:left"></div>
+                    </div>
+                </td>
+                <td>
+                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment"><i class="bi-gear-fill"></i></a>
+                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#delComment"><i class="bi-trash3-fill"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 
 <!-- delComment Modal -->
 <div *ngIf="product.comment && product.comment.length > 0 && id > -1" class="modal fade" id="delComment" tabindex="-1" aria-labelledby="delCommentLabel" aria-hidden="true">
