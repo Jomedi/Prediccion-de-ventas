@@ -9,6 +9,10 @@ ul {
     list-style: none;
 }
 
+i {
+    font-size: x-large;
+}
+
 label span {
     display: inline-block;
     width: 120px;

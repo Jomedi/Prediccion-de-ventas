@@ -140,6 +140,7 @@ export class DetailsComponent implements OnInit {
     console.log(this.getCurrentDate())
     this.product.ratingDate.push(this.getCurrentDate())
 
+    // update rating
     console.log("this product: ", this.product)
     this.dataService.updateProduct(this.product)
   }

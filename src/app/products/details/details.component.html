@@ -1,7 +1,5 @@
 <app-top-nav-bar></app-top-nav-bar>
 
-<br><br><br>
-
 <!-- Product section-->
 <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
@@ -50,41 +48,31 @@
     </div>
 </div>
 
-<br><br><br><br>
-
-
-<br><br><br>
+<br><br><br><br><br><br><br>
 
 <!-- Ratings table -->
 <div>
-    <button type="button" class="btn btn-primary m-4" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
+    <button type="button" class="btn btn-primary offset-3" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
 </div>
-<div class="table-responsive">
+<div class="table-responsive col-6 offset-3">
     <table *ngIf="product.userRating && product.userRating.length > 0" class="table table-hover table-light col-10 mt-2">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">E-mail</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Comentario</th>
-                <th scope="col">Valoración <br></th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
         <tbody>
-            <tr *ngFor="let item of product.userRating; index as i;">
-                <th>{{product.userRating[i]}}</th>
-                <td style="width: 7%" scope="row">{{product.ratingDate[i]}}</td>
-                <td style="width: 60%" scope="row">{{product.comment[i]}}</td>
-                <td>
+            <tr *ngFor="let item of product.userRating; index as i;" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment" style="cursor:pointer">
+                <td style="width:13%">{{product.userRating[i]}}
+                    <br>
                     <div *ngFor="let val of valorations; index as j;">
                         <div *ngIf="j < +product.rating[i]" class="bi-star-fill" style="float:left"></div>
                         <div *ngIf="j >= +product.rating[i]" class="bi-star" style="float:left"></div>
-                    </div>
+                    </div><br> {{product.ratingDate[i]}}
                 </td>
-                <td>
-                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment"><i class="bi-gear-fill"></i></a>
-                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#delComment"><i class="bi-trash3-fill"></i></a>
+                <td style="width:40%; color: rgb(54, 54, 54);" scope="row" style="text-align: center;">{{product.comment[i]}}</td>
+                <td style="width: 11%;">
+                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment" class="link-primary"><i class="bi-gear-fill"></i></a>
+                    <a *ngIf="buttonAvailable(i)" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#delComment" class="link-primary"><i class="bi-trash3-fill"></i></a>
                 </td>
+            </tr>
+            <tr>
+
             </tr>
         </tbody>
     </table>
@@ -100,17 +88,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div *ngFor="let val of valorations; index as j;">
-                    <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
-                    <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
-                </div>
-                <div>
-                    <br> {{product.comment[id]}}
+                <div class="" style="text-align: center;">
+                    <b>{{product.userRating[id]}}</b> <br>
+                    <div style="margin: auto; width: 18%;">
+                        <div *ngFor="let val of valorations; index as j;">
+                            <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
+                        </div>
+                    </div>
                     <br>
+                    <br> <label for="">{{product.comment[id]}}</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button (click)="deleteReview()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar valoración</button>
             </div>
         </div>
@@ -118,29 +109,33 @@
 </div>
 
 <!-- modComment Modal -->
-<div class="modal fade" id="modComment" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="modComment" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Modificar Valoración</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <br>
             <div class="modal-body">
-                <b>{{product.userRating[id]}}</b> <br>
-                <div *ngFor="let val of valorations; index as j;">
-                    <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
-                    <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
+                <div class="" style="text-align: center;">
+                    <b>{{product.userRating[id]}}</b> <br>
+                    <div style="margin: auto; width: 11%;">
+                        <div *ngFor="let val of valorations; index as j;">
+                            <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
+                            <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <br> <label for="">{{product.comment[id]}}</label>
                 </div>
-                <br> {{product.comment[id]}}
             </div>
-            <div class="modal-body">
-                <form (ngSubmit)="modifyReview(registerMod)" #registerMod="ngForm" class="col-10">
+            <div *ngIf="buttonAvailable(id)" class="modal-body">
+                <form (ngSubmit)="modifyReview(registerMod)" #registerMod="ngForm" class="col-10 offset-1">
                     <div>
                         <br>
                         <label for="rating">Valoración:</label>
                         <br>
-                        <label for="rating1" class="offset-2">1 </label>
+                        <label for="rating1" class="offset-3">1 </label>
                         <input type="radio" id="rating1" name="rating" value="1" ngModel>
                         <label for="rating2" class="offset-1">2 </label>
                         <input type="radio" id="rating2" name="rating" value="2" ngModel>
@@ -154,15 +149,16 @@
 
                     <br>
                     <label for="comment">Comentario</label>
-                    <input type="textarea" class="form-control col-10" style="height: 80px;" name="comment" id="comment" ngModel required><br><br>
+                    <input type="textarea" class="form-control col-10" style="height: 80px;" name="comment" id="comment" placeholder="{{product.comment[id]}}" ngModel required><br><br>
 
                     <!-- <textarea type="text" class="form-control col-10" name="description" id="description" placeholder="Descripción sobre el producto" ngModel></textarea><br><br> -->
-                    <br>
-                    <div class="row">
-                        <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Modificar Valoración</button>
-                    </div>
-                    <br>
                 </form>
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button *ngIf="buttonAvailable(id)" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modificar Valoración</button>
+
             </div>
         </div>
     </div>

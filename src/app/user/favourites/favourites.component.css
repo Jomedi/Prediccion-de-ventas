@@ -87,6 +87,10 @@ img {
     width: 270px;
 }
 
+i {
+    font-size: x-large;
+}
+
 a {
     cursor: pointer;
 }
