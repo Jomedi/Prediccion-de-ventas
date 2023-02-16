@@ -3,7 +3,15 @@ import { User } from './user';
 import { DataService } from 'src/app/data/data.service';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
-import { QRCodeModule } from 'angularx-qrcode';
+import {
+  ScannerQRCodeConfig,
+  ScannerQRCodeSelectedFiles,
+  NgxScannerQrcodeService,
+  ScannerQRCodeResult,
+  NgxScannerQrcodeComponent
+} from 'ngx-scanner-qrcode';
+import { ViewChild, ElementRef} from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +21,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 
 export class UserComponent implements OnInit {
+  @ViewChild('closeButton') closeButton : any;
+
   users:User[]=[];
   user:User = User.emptyUser()
   email:string="";
@@ -20,7 +30,9 @@ export class UserComponent implements OnInit {
   editing:Boolean = false;
   value: string = ""
 
-  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, private qr:QRCodeModule) {
+  result:ScannerQRCodeResult[]=[]
+
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, public cookie:CookieService) {
   }
 
   ngOnInit(): void {
@@ -30,8 +42,33 @@ export class UserComponent implements OnInit {
     this.noLoginCase();
   }
 
-  onCodeDecode(result:Event) {
-    console.log(result);
+  startMethod(action : any){
+    action.start()
+  }
+
+  stopMethod(action: any){
+    action.stop()
+  }
+
+  onCodeDecodePrueba(){
+    this.value = "http://localhost:4200/details/-NJ5xumjTKwKncj8iVkT"
+    this.cookie.set("qrCode", this.value)
+    this.closeButton.nativeElement.click()
+    this.router.navigate([this.value.substring(22)])
+  }
+
+  onCodeDecode(result:ScannerQRCodeResult[], action : any) {
+    this.result = result
+    if (this.result && this.result.length > 0){
+      this.cookie.set("qrCode",this.result[0].value.substring(22))
+      this.closeButton.nativeElement.click()
+      this.router.navigate([this.cookie.get("qrCode")])
+    }
+    // if(this.result && this.result != null && result.length != 0){
+    //   this.cookie.set("qrCode", result.toString())
+    //   this.closeButton.nativeElement.click();
+    //   this.stopMethod(action)
+    // }
   }
 
   isUserAdmin(){

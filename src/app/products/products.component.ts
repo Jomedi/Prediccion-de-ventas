@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit {
   favourites : string[] = []
   searchQuery: string = ""
 
+  id:number=-1
+
   allUsers : User[] = []
 
   ngOnInit(): void {
@@ -127,7 +129,7 @@ export class ProductsComponent implements OnInit {
       return false
   }
 
-  saveProduct(registerForm: NgForm) {
+  addNewProduct(registerForm: NgForm) {
     const imagesRef = ref(this.storage, 'images')
     var formValue = registerForm.value
 
@@ -149,6 +151,39 @@ export class ProductsComponent implements OnInit {
       })
     .catch(error => console.log(error))
 
+  }
+
+  updateProduct(registerForm: NgForm) {
+    const imagesRef = ref(this.storage, 'images')
+    var formValue = registerForm.value
+
+    let image = formValue["img"].substring(12,formValue.length)
+
+    listAll(imagesRef)
+    .then(async response => {
+      for(let item of response.items){
+        console.log(item.name + "==" + image)
+        if (item.name == image){
+          const url = await getDownloadURL(item)
+          this.product = this.products[this.id]
+          this.product.title = formValue["title"]
+          this.product.description = formValue["description"]
+          this.product.price = formValue["price"]
+          this.product.img = url
+          console.log(this.product)
+          // this.dataService.updateProduct(this.product)
+          registerForm.reset()
+          this.getProductData()
+          this.router.navigate(['/products'])
+        }
+      }
+      })
+    .catch(error => console.log(error))
+
+  }
+
+  setId(i:number){
+    this.id = i
   }
 
   getProductData(){

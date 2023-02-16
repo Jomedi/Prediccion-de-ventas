@@ -1,30 +1,42 @@
 <app-top-nav-bar></app-top-nav-bar>
 
-<button type="button" class="btn btn-success col-2 offset-5 custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button>
+<div class="container">
+    <button type="button" class="btn btn-success col-2 offset-5 custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button>
 
-<div class="modal fade modal-xl modal-fullscreen" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Escanear Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade modal-xl modal-fullscreen" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Escanear Producto</h5>
+                    <button type="button" class="btn-close" (click)="stopMethod(action)" data-bs-dismiss="modal" aria-label="Close" #closeButton></button>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3 my-1 offset-xl-1">
+                    <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm">
+                      <option [value]="null" selected>Select device</option>
+                      <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">{{c.deviceId}}</option>
+                    </select>
+                </div>
+
+                <!-- For camera -->
+                <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecode($event, action)"></ngx-scanner-qrcode>
+                <!-- <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecodePrueba()"></ngx-scanner-qrcode> -->
+
+                <!-- data  -->
+                <span *ngIf="action.data.value">{{ action.data.value | json }}</span>
+                <!-- value -->
+                <span *ngIf="action.data">{{ action.data | async | json }}</span>
+                <!-- async -->
+                <span *ngIf="result[0]">{{result[0].value}}</span><br>
+
+                <!-- Loading -->
+                <p *ngIf="action.isLoading">⌛ Loading...</p>
+
+                <!-- start -->
+                <button class="btn btn-primary col-4 offset-4" (click)="action.isStart ? stopMethod(action) : startMethod(action)">{{action.isStart ? 'Stop' : 'Start'}}</button>
+                <br>
             </div>
-
-            <!-- For camera -->
-            <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
-
-            <!-- data  -->
-            <span *ngIf="action.data.value">{{ action.data.value | json }}</span>
-            <!-- value -->
-            <span *ngIf="action.data">{{ action.data | async | json }}</span>
-            <!-- async -->
-
-            <!-- Loading -->
-            <p *ngIf="action.isLoading">⌛ Loading...</p>
-
-            <!-- start -->
-            <button class="btn btn-primary col-4 offset-4" (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</button>
-            <br>
         </div>
     </div>
 </div>
+<br>

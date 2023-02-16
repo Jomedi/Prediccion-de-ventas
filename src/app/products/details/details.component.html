@@ -14,7 +14,7 @@
                 </div>
                 <br>
             </div>
-            <div class="fs-5 mb-5">
+            <div class="fs-5 mb-3">
                 <span>{{product.price}}€</span>
             </div>
             <p class="lead">{{product.description}}</p>
@@ -24,7 +24,6 @@
                     <i class="bi-cart-fill me-1"></i>
                     Add to cart
                 </button>
-
             </div>
             <button type="button" class="btn btn-success col-2 mt-4" data-bs-toggle="modal" data-bs-target="#qrModal"><i class="bi bi-qr-code fa-9x"></i></button>
 
@@ -52,10 +51,10 @@
 
 <!-- Ratings table -->
 <div>
-    <button type="button" class="btn btn-primary offset-3" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
+    <button type="button" class="btn btn-primary offset-1" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
 </div>
-<div class="table-responsive col-6 offset-3">
-    <table *ngIf="product.userRating && product.userRating.length > 0" class="table table-hover table-light col-10 mt-2">
+<div class="table-responsive col-10 offset-1">
+    <table *ngIf="product.userRating && product.userRating.length > 0" class="table table-light col-10 mt-2">
         <tbody>
             <tr *ngFor="let item of product.userRating; index as i;" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment" style="cursor:pointer">
                 <td style="width:13%">{{product.userRating[i]}}
@@ -90,11 +89,17 @@
             <div class="modal-body">
                 <div class="" style="text-align: center;">
                     <b>{{product.userRating[id]}}</b> <br>
-                    <div style="margin: auto; width: 18%;">
-                        <div *ngFor="let val of valorations; index as j;">
-                            <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
-                        </div>
+                    <div class="col-4 offset-4">
+                        <i *ngIf="id > -1 && 0 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 0 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 1 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 1 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 2 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 2 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 3 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 3 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 4 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 4 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
                     </div>
                     <br>
                     <br> <label for="">{{product.comment[id]}}</label>
@@ -102,14 +107,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button (click)="deleteReview()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar valoración</button>
+                <button (click)="deleteReview()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- modComment Modal -->
-<div class="modal fade modal-lg" id="modComment" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
+<div *ngIf="product.comment && product.comment.length > 0 && id > -1" class="modal fade modal-lg" id="modComment" tabindex="-1" aria-labelledby="modCommentLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -119,14 +124,19 @@
             <div class="modal-body">
                 <div class="" style="text-align: center;">
                     <b>{{product.userRating[id]}}</b> <br>
-                    <div style="margin: auto; width: 11%;">
-                        <div *ngFor="let val of valorations; index as j;">
-                            <div *ngIf="id > -1 && j < +product.rating[id]" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="id > -1 && j >= +product.rating[id]" class="bi-star" style="float:left"></div>
-                        </div>
+                    <div class="col-4 offset-4">
+                        <i *ngIf="id > -1 && 0 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 0 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 1 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 1 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 2 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 2 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 3 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 3 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 4 < +product.rating[id]" class="bi-star-fill" id="ratingStar"></i>
+                        <i *ngIf="id > -1 && 4 >= +product.rating[id]" class="bi-star" id="ratingStar"></i>
                     </div>
-                    <br>
-                    <br> <label for="">{{product.comment[id]}}</label>
+                    <br> <label class="col-10">{{product.comment[id]}}</label>
                 </div>
             </div>
             <div *ngIf="buttonAvailable(id)" class="modal-body">
@@ -149,16 +159,13 @@
 
                     <br>
                     <label for="comment">Comentario</label>
-                    <input type="textarea" class="form-control col-10" style="height: 80px;" name="comment" id="comment" placeholder="{{product.comment[id]}}" ngModel required><br><br>
-
-                    <!-- <textarea type="text" class="form-control col-10" name="description" id="description" placeholder="Descripción sobre el producto" ngModel></textarea><br><br> -->
+                    <textarea type="text" class="form-control col-10" style="height: 80px; resize: none;" name="comment" id="comment" placeholder="{{product.comment[id]}}" ngModel required></textarea><br><br>
+                    <br>
+                    <button *ngIf="buttonAvailable(id)" type="submit" class="btn btn-primary col-4 offset-4" data-bs-dismiss="modal">Modificar</button>
                 </form>
             </div>
             <div class="modal-footer">
-
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button *ngIf="buttonAvailable(id)" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modificar Valoración</button>
-
             </div>
         </div>
     </div>
@@ -197,7 +204,7 @@
                 <!-- <textarea type="text" class="form-control col-10" name="description" id="description" placeholder="Descripción sobre el producto" ngModel></textarea><br><br> -->
                 <br>
                 <div class="row">
-                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Publicar Valoración</button>
+                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Publicar</button>
                 </div>
                 <br>
             </form>
@@ -221,9 +228,17 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[0].title}}</h5>
                         <!-- Product rating-->
-                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
-                            <div *ngIf="j < calculateProductAverage(products[0])" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="j >= calculateProductAverage(products[0])" class="bi-star" style="float:left"></div>
+                        <div class="col-10 offset-1">
+                            <i *ngIf="id > -1 && 0 < calculateProductAverage(products[0])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 0 >= calculateProductAverage(products[0])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 < calculateProductAverage(products[0])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 >= calculateProductAverage(products[0])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 < calculateProductAverage(products[0])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 >= calculateProductAverage(products[0])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 < calculateProductAverage(products[0])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 >= calculateProductAverage(products[0])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 < calculateProductAverage(products[0])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 >= calculateProductAverage(products[0])" class="bi-star" id="ratingStar"></i>
                         </div>
                         <br>
                         <br>
@@ -233,7 +248,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[0].key]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="viewDetails(products[0].key)">View details</a></div>
                 </div>
             </div>
         </div>
@@ -249,9 +264,17 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[1].title}}</h5>
                         <!-- Product rating-->
-                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
-                            <div *ngIf="j < calculateProductAverage(products[1])" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="j >= calculateProductAverage(products[1])" class="bi-star" style="float:left"></div>
+                        <div class="col-10 offset-1">
+                            <i *ngIf="id > -1 && 0 < calculateProductAverage(products[1])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 0 >= calculateProductAverage(products[1])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 < calculateProductAverage(products[1])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 >= calculateProductAverage(products[1])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 < calculateProductAverage(products[1])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 >= calculateProductAverage(products[1])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 < calculateProductAverage(products[1])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 >= calculateProductAverage(products[1])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 < calculateProductAverage(products[1])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 >= calculateProductAverage(products[1])" class="bi-star" id="ratingStar"></i>
                         </div>
                         <br>
                         <br>
@@ -261,7 +284,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[1].key]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="viewDetails(products[1].key)">View details</a></div>
                 </div>
             </div>
         </div>
@@ -277,9 +300,17 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[2].title}}</h5>
                         <!-- Product rating-->
-                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
-                            <div *ngIf="j < calculateProductAverage(products[2])" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="j >= calculateProductAverage(products[2])" class="bi-star" style="float:left"></div>
+                        <div class="col-10 offset-1">
+                            <i *ngIf="id > -1 && 0 < calculateProductAverage(products[2])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 0 >= calculateProductAverage(products[2])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 < calculateProductAverage(products[2])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 >= calculateProductAverage(products[2])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 < calculateProductAverage(products[2])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 >= calculateProductAverage(products[2])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 < calculateProductAverage(products[2])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 >= calculateProductAverage(products[2])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 < calculateProductAverage(products[2])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 >= calculateProductAverage(products[2])" class="bi-star" id="ratingStar"></i>
                         </div>
                         <br>
                         <br>
@@ -289,7 +320,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[2].key]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="viewDetails(products[2].key)">View details</a></div>
                 </div>
             </div>
         </div>
@@ -298,14 +329,22 @@
                 <!-- Product image-->
                 <img class="card-img-top" src="{{products[3].img}}" alt="..." />
                 <!-- Product details-->
-                <div class="card-body p-4">
+                <div class="card-body">
                     <div class="text-center">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{products[3].title}}</h5>
                         <!-- Product rating-->
-                        <div *ngFor="let val of valorations; index as j;" class="offset-4">
-                            <div *ngIf="j < calculateProductAverage(products[3])" class="bi-star-fill" style="float:left"></div>
-                            <div *ngIf="j >= calculateProductAverage(products[3])" class="bi-star" style="float:left"></div>
+                        <div class="col-10 offset-1">
+                            <i *ngIf="id > -1 && 0 < calculateProductAverage(products[3])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 0 >= calculateProductAverage(products[3])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 < calculateProductAverage(products[3])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 1 >= calculateProductAverage(products[3])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 < calculateProductAverage(products[3])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 2 >= calculateProductAverage(products[3])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 < calculateProductAverage(products[3])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 3 >= calculateProductAverage(products[3])" class="bi-star" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 < calculateProductAverage(products[3])" class="bi-star-fill" id="ratingStar"></i>
+                            <i *ngIf="id > -1 && 4 >= calculateProductAverage(products[3])" class="bi-star" id="ratingStar"></i>
                         </div>
                         <br>
                         <br>
@@ -315,7 +354,7 @@
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" [routerLink]="['/details',products[3].key]">View details</a></div>
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="viewDetails(products[3].key)">View details</a></div>
                 </div>
             </div>
         </div>

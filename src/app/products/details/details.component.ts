@@ -71,12 +71,12 @@ export class DetailsComponent implements OnInit {
     let sum = 0
     let avg = 0
 
-    if(product.rating){
+    if(product.rating && product.rating.length > 0){
       product.rating.forEach(rate=>{
         let number = +rate
         sum += number
       })
-      avg = sum / this.product.rating.length
+      avg = sum / product.rating.length
     }
 
     return avg
@@ -87,6 +87,7 @@ export class DetailsComponent implements OnInit {
     this.product.userRating.splice(this.id, 1);
     this.product.rating.splice(this.id,1)
     this.product.comment.splice(this.id,1)
+    this.product.ratingDate.splice(this.id,1)
     this.dataService.updateProduct(this.product)
   }
 
@@ -94,7 +95,9 @@ export class DetailsComponent implements OnInit {
     var formValue = registerMod.value
     this.product.rating[this.id] = formValue.rating
     this.product.comment[this.id] = formValue.comment
-    this.dataService.updateProduct(this.product)
+    if(formValue.rating && formValue.comment)
+      this.dataService.updateProduct(this.product)
+    registerMod.reset()
   }
 
   searchProductByKey(key:string){
@@ -158,5 +161,10 @@ export class DetailsComponent implements OnInit {
       currentDate = `${day}/${month}/${year}`;
 
     return currentDate
+  }
+
+  async viewDetails(key:string){
+    await this.router.navigate(['/details/' + key])
+    window.location.reload()
   }
 }

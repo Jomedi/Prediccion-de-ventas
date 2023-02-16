@@ -1,6 +1,6 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br>
-<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Add Product</button></div>
+<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#addProduct">Add Product</button></div>
 <br><br>
 <div *ngFor="let item of products; let i = index">
     <div *ngIf="i % 4 == 0" align="center" class="row">
@@ -19,9 +19,10 @@
             </ul>
             <div class="card-body col-12">
                 <a [routerLink]="['/details',products[i].key]" class="card-link"><i class="bi bi-info-circle-fill"></i></a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i].key)" (click)="addFavouriteProduct(products[i].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
                 <a *ngIf="isFavourite(products[i].key)" (click)="deleteFavouriteProduct(products[i].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="setId(i)" class="card-link" data-bs-toggle="modal" data-bs-target="#updateProduct"><i class="bi bi-gear-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
@@ -39,9 +40,10 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+1].key]" class="card-link"><i class="bi bi-info-circle-fill"></i></a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
-                <a *ngIf="!isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
                 <a *ngIf="isFavourite(products[i+1].key)" (click)="deleteFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="!isFavourite(products[i+1].key)" (click)="addFavouriteProduct(products[i+1].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="setId(i)" class="card-link" data-bs-toggle="modal" data-bs-target="#updateProduct"><i class="bi bi-gear-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
@@ -59,9 +61,10 @@
             </ul>
             <div class="card-body">
                 <a [routerLink]="['/details',products[i+2].key]" class="card-link"><i class="bi bi-info-circle-fill"></i></a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i+2].key)" (click)="addFavouriteProduct(products[i+2].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
                 <a *ngIf="isFavourite(products[i+2].key)" (click)="deleteFavouriteProduct(products[i+2].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="setId(i)" class="card-link" data-bs-toggle="modal" data-bs-target="#updateProduct"><i class="bi bi-gear-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
             </div>
         </div>
         <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
@@ -81,7 +84,8 @@
                 <a [routerLink]="['/details',products[i+3].key]" class="card-link"><i class="bi bi-info-circle-fill"></i></a>
                 <a *ngIf="!isFavourite(products[i+3].key)" (click)="addFavouriteProduct(products[i+3].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-heart"></i></a>
                 <a *ngIf="isFavourite(products[i+3].key)" (click)="deleteFavouriteProduct(products[i+3].key)" class="card-link" data-bs-toggle="modal" data-bs-target="#delFavProd"><i class="bi bi-heart-fill"></i></a>
-                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delModal"><i class="bi bi-trash3-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="setId(i)" class="card-link" data-bs-toggle="modal" data-bs-target="#updateProduct"><i class="bi bi-gear-fill"></i></a>
+                <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+3].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
             </div>
         </div>
     </div>
@@ -89,15 +93,15 @@
 <br><br>
 
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- addProduct Modal -->
+<div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Registrar Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form (ngSubmit)="saveProduct(registerForm)" #registerForm="ngForm" class="offset-1 col-10">
+            <form (ngSubmit)="addNewProduct(registerForm)" #registerForm="ngForm" class="offset-1 col-10">
                 <br>
                 <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
                 <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
@@ -114,6 +118,31 @@
     </div>
 </div>
 <br><br><br>
+
+<!-- updateProduct Modal -->
+<div class="modal fade" id="updateProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modificar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form (ngSubmit)="updateProduct(updateForm)" #updateForm="ngForm" class="offset-1 col-10">
+                <br>
+                <input type="text" class="form-control col-10" name="title" id="" placeholder="Título" ngModel required><br><br>
+                <textarea type="text" class="form-control col-10" name="description" id="" placeholder="Descripción sobre el producto" ngModel></textarea><br><br>
+                <input type="number" class="form-control col-8" name="price" id="" placeholder="Precio" ngModel> € <br><br>
+                <label for="img">Imagen</label>
+                <input (change)="uploadImage($event)" class="form-control" name="img" type="file" id="formFile" ngModel>
+                <br>
+                <div class="row">
+                    <button type="submit" class="btn btn-dark offset-3 col-6 d-grid " data-bs-dismiss="modal">Modificar Producto</button>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- delFavProd Modal -->
 <div class="modal fade" id="delFavProd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delFavProdLabel" aria-hidden="true">
@@ -133,8 +162,8 @@
     </div>
 </div>
 
-<!-- delModal -->
-<div class="modal fade" id="delModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+<!-- delProduct Modal -->
+<div class="modal fade" id="delProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
