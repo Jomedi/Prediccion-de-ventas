@@ -30,6 +30,9 @@ export class UserComponent implements OnInit {
   editing:Boolean = false;
   value: string = ""
 
+  selectedDevice = 'rear';
+
+
   result:ScannerQRCodeResult[]=[]
 
   constructor(private loginService : LoginService, private dataService: DataService, private router:Router, public cookie:CookieService) {
@@ -42,8 +45,10 @@ export class UserComponent implements OnInit {
     this.noLoginCase();
   }
 
-  startMethod(action : any){
-    action.start()
+  async startMethod(action : any){
+    await action.start()
+    if(action.devices && action.devices.length > 1)
+      action.playDevice(action.devices.value[1])
   }
 
   stopMethod(action: any){
@@ -64,6 +69,8 @@ export class UserComponent implements OnInit {
       this.closeButton.nativeElement.click()
       this.router.navigate([this.cookie.get("qrCode")])
     }
+    if(action.devices && action.devices.length > 1)
+      action.playDevice(action.devices.value[1])
     // if(this.result && this.result != null && result.length != 0){
     //   this.cookie.set("qrCode", result.toString())
     //   this.closeButton.nativeElement.click();

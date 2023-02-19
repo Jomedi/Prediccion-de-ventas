@@ -18,8 +18,9 @@ export class TopNavBarComponent implements OnInit {
   email:string="";
   profileImage:string = "/assets/images/profileImage.png";
   editing:Boolean = false;
+  searchQuery: string = ""
 
-  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, private cookie: CookieService) {
+  constructor(private loginService : LoginService, private dataService: DataService, private router:Router, public cookie: CookieService) {
   }
 
   ngOnInit(): void {
@@ -72,6 +73,8 @@ export class TopNavBarComponent implements OnInit {
   searchProduct(searchBar: NgForm) {
     var formValue = searchBar.value
     console.log(formValue.searchInput)
+    this.searchQuery = formValue.searchInput
+    this.cookie.set("searchQuery", formValue.searchInput)
   }
 
 }

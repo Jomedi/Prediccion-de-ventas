@@ -1,42 +1,166 @@
 <app-top-nav-bar></app-top-nav-bar>
 
-<div class="container">
-    <button type="button" class="btn btn-success col-2 offset-5 custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button>
+<div class="modal fade modal-xl modal-fullscreen" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Escanear Producto</h5>
+                <button type="button" class="btn-close" (click)="stopMethod(action)" data-bs-dismiss="modal" aria-label="Close" #closeButton></button>
+            </div>
 
-    <div class="modal fade modal-xl modal-fullscreen" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Escanear Producto</h5>
-                    <button type="button" class="btn-close" (click)="stopMethod(action)" data-bs-dismiss="modal" aria-label="Close" #closeButton></button>
-                </div>
 
-                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3 my-1 offset-xl-1">
-                    <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm">
+            <div class="col-xs-12 col-md-6 col-lg-4 col-xl-6 my-1 offset-xl-3">
+                <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm">
                       <option [value]="null" selected>Select device</option>
                       <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">{{c.deviceId}}</option>
                     </select>
-                </div>
-
-                <!-- For camera -->
-                <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecode($event, action)"></ngx-scanner-qrcode>
-                <!-- <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecodePrueba()"></ngx-scanner-qrcode> -->
-
-                <!-- data  -->
-                <span *ngIf="action.data.value">{{ action.data.value | json }}</span>
-                <!-- value -->
-                <span *ngIf="action.data">{{ action.data | async | json }}</span>
-                <!-- async -->
-                <span *ngIf="result[0]">{{result[0].value}}</span><br>
-
-                <!-- Loading -->
-                <p *ngIf="action.isLoading">⌛ Loading...</p>
-
-                <!-- start -->
-                <button class="btn btn-primary col-4 offset-4" (click)="action.isStart ? stopMethod(action) : startMethod(action)">{{action.isStart ? 'Stop' : 'Start'}}</button>
-                <br>
             </div>
+
+            <!-- For camera -->
+            <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecode($event, action)" (device)='selectedDevice'></ngx-scanner-qrcode>
+            <!-- <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecodePrueba()"></ngx-scanner-qrcode> -->
+
+            <!-- data  -->
+            <!-- <span *ngIf="action.data.value">{{ action.data.value | json }}</span> -->
+            <!-- value -->
+            <!-- <span *ngIf="action.data">{{ action.data | async | json }}</span> -->
+            <!-- async -->
+            <!-- <span *ngIf="result[0]">{{result[0].value}}</span><br> -->
+
+            <!-- Loading -->
+            <p *ngIf="action.isLoading">⌛ Loading...</p>
+
+            <!-- start -->
+            <button class="btn btn-primary col-4 offset-4" (click)="action.isStart ? stopMethod(action) : startMethod(action)">{{action.isStart ? 'Stop' : 'Start'}}</button>
+            <br>
         </div>
     </div>
 </div>
-<br>
+<main>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 fw-normal">Tienda física S.L</h1>
+            <p class="lead fw-normal">Escanea el código QR de cualquier producto de nuestra tienda física para obtener información más detallada</p>
+            <br><br><br>
+            <a class="btn btn-success" href="/" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></a>
+            <!-- <button type="button" class="btn btn-success col-2 custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button> -->
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 p-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 p-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+        <div class="bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 p-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 p-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">Another headline</h2>
+                <p class="lead">And an even wittier subheading.</p>
+            </div>
+            <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+        </div>
+    </div>
+</main>
+
+<footer class="container py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
+            <small class="d-block mb-3 text-muted">&copy; 2017–2021</small>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Cool stuff</a></li>
+                <li><a class="link-secondary" href="#">Random feature</a></li>
+                <li><a class="link-secondary" href="#">Team feature</a></li>
+                <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Resource name</a></li>
+                <li><a class="link-secondary" href="#">Resource</a></li>
+                <li><a class="link-secondary" href="#">Another resource</a></li>
+                <li><a class="link-secondary" href="#">Final resource</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Business</a></li>
+                <li><a class="link-secondary" href="#">Education</a></li>
+                <li><a class="link-secondary" href="#">Government</a></li>
+                <li><a class="link-secondary" href="#">Gaming</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Team</a></li>
+                <li><a class="link-secondary" href="#">Locations</a></li>
+                <li><a class="link-secondary" href="#">Privacy</a></li>
+                <li><a class="link-secondary" href="#">Terms</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

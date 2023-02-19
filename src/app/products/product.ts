@@ -10,10 +10,11 @@ export class Product{
         public userRating: string[],
         public rating: string[],
         public comment: string[],
-        public ratingDate: string[]
+        public ratingDate: string[],
+        public userViews: string[]
       ) {  }
 
     static emptyProduct(): Product {
-        return new this("", "", 0, "", "", [], [], [], []);
+        return new this("", "", 0, "", "", [], [], [], [], []);
     }
 }

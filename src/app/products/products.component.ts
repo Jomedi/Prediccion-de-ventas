@@ -141,7 +141,7 @@ export class ProductsComponent implements OnInit {
         console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
-          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[],[])
+          this.product = new Product(formValue["title"],formValue["description"],formValue["price"],url,"",[],[],[],[],[])
           this.dataService.saveProduct(this.product)
           registerForm.reset()
           this.getProductData()
@@ -159,10 +159,8 @@ export class ProductsComponent implements OnInit {
 
     let image = formValue["img"].substring(12,formValue.length)
 
-    listAll(imagesRef)
-    .then(async response => {
+    listAll(imagesRef).then(async response => {
       for(let item of response.items){
-        console.log(item.name + "==" + image)
         if (item.name == image){
           const url = await getDownloadURL(item)
           this.product = this.products[this.id]

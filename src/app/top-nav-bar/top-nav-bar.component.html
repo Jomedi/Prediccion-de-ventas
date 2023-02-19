@@ -3,7 +3,11 @@
 </div> -->
 <nav class="navbar navbar-dark bg-dark fixed-top bg-custom-2">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Predicción de ventas</a>
+        <a class="navbar-brand" href="/">Home</a>
+        <form (ngSubmit)="searchProduct(searchBar)" #searchBar="ngForm" class="d-flex col-5" role="search">
+            <input class="form-control me-2" name="searchInput" type="search" placeholder="Search" aria-label="Search" ngModel requiered>
+            <button class="btn btn-success" type="submit" onClick="window.location.reload();"><i class="bi bi-search"></i></button>
+        </form>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,7 +16,7 @@
                 <a (click)="logOut()" data-title="Logout">
                     <i class="bi bi-box-arrow-right"></i>
                 </a>
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Predicción de ventas</h5>
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><a class="navbar-brand" href="/profile">{{cookie.get("email")}}</a></h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -45,4 +49,3 @@
         </div>
     </div>
 </nav>
-<br><br><br>

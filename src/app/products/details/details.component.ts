@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
   products : Product[] = []
   product = Product.emptyProduct()
   avgRating : number = -1
+  userViews: string[] = []
 
   id: number = 0;
   public myAngularxQrCode: string = "";
@@ -44,6 +45,27 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductData()
+    this.addNewUserView()
+  }
+
+  addNewUserView(){
+    if(this.cookie.get("qrCode") == this.product.key){
+      this.cookie.set("qrCode","")
+      this.dataService.loadUsers().subscribe(user=>{
+        let users = Object.values(user)
+        users.forEach(user => {
+          if(user.email == this.cookie.get("email")){
+            if(user.favourite_products && user.favourite_products.length > 0)
+              this.userViews = user.userViews
+            this.userViews.push(this.cookie.get("key"))
+            user.userViews = this.userViews
+            this.dataService.updateUser(user)
+            this.cookie.set("userViews",user.userViews)
+            console.log(user)
+          }
+        });
+      })
+    }
   }
 
   getProductData(){
