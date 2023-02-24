@@ -5,6 +5,8 @@ import { Product } from '../product';
 import { SafeUrl } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Sale } from './sale';
+import { User } from 'src/app/user/user';
 // import { ProductsComponent } from '../products/products.component';
 
 @Component({
@@ -19,6 +21,7 @@ export class DetailsComponent implements OnInit {
   product = Product.emptyProduct()
   avgRating : number = -1
   userViews: string[] = []
+  users: User[] = []
 
   id: number = 0;
   public myAngularxQrCode: string = "";
@@ -44,8 +47,9 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllUsers()
     this.getProductData()
-    this.addNewUserView()
+    this.addNewUserView() 
   }
 
   addNewUserView(){
@@ -68,6 +72,20 @@ export class DetailsComponent implements OnInit {
     }
   }
 
+  registerNewSale(salesForm: NgForm){
+    var formValue = salesForm.value
+    let sale = Sale.emptySale()
+
+    sale.date = this.getCurrentDate()
+    sale.email = formValue.email
+    sale.quantity = formValue.quantity
+    sale.price = this.product.price
+    sale.title = this.product.title
+    sale.product_key = this.product.key
+
+    this.dataService.saveSale(sale)
+  }
+
   getProductData(){
     this.dataService.loadProducts().subscribe(dbProducts=>{
       this.products = Object.values(dbProducts);
@@ -83,6 +101,14 @@ export class DetailsComponent implements OnInit {
         this.calculateThisAverage()
       })
     } );
+  }
+
+  getAllUsers(){
+    this.dataService.loadUsers().subscribe(dbUsers=>{
+      this.users = Object.values(dbUsers)
+      console.log("All users are: " , this.users)
+    })
+    
   }
 
   calculateThisAverage(){

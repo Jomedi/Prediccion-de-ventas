@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { User } from "src/app/user/user";
 import { LoginService } from "../login/login.service";
 import { Product } from "../products/product";
+import { Sale } from "../products/details/sale";
 
 @Injectable()
 
@@ -43,6 +44,28 @@ export class DataService{
             },
             error=>console.error("Error saving user: " + user.email + ' -> ' + error)
         );
+    }
+
+    saveSale(sale:Sale){
+        this.httpClient.post('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas.json', sale).subscribe(
+            response=> {
+                console.log("Correct sale save: " + sale.email + " " + sale.title + " " + sale.price)
+                // @ts-ignore
+                sale.key = response['name']
+                this.updateSale(sale)
+            },
+            error=>console.error("Error saving sale: " + sale.email + " " + sale.title + " " + sale.price + " -> " + error)
+        ); 
+    }
+
+    updateSale(sale:Sale){
+        if(sale.key) {
+            this.httpClient.put('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas/' + sale.key + '/.json', sale).subscribe(
+                response=>console.log("Correct sale update: " + sale.email + " " + sale.title + " " + sale.price),
+                error=>console.error("Error updating sale: " + sale.email + " " + sale.title + " " + sale.price)
+            );
+        }else 
+            alert("Trying to update with empty key for sale: " + sale.email + " " + sale.title + " " + sale.price)
     }
 
     updateProduct(product:Product){

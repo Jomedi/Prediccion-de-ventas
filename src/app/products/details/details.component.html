@@ -20,13 +20,50 @@
             <p class="lead">{{product.description}}</p>
             <div class="d-flex">
                 <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                <button class="btn btn-outline-dark flex-shrink-0" type="button" data-bs-toggle="modal" data-bs-target="#salesModal">
                     <i class="bi-cart-fill me-1"></i>
                     Add to cart
                 </button>
             </div>
             <button type="button" class="btn btn-success col-2 mt-4" data-bs-toggle="modal" data-bs-target="#qrModal"><i class="bi bi-qr-code fa-9x"></i></button>
 
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br>
+
+<!-- salesModal -->
+<div class="modal fade" id="salesModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="salesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{product.title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+            <div class="modal-body">
+                <form (ngSubmit)="registerNewSale(salesForm)" #salesForm="ngForm" class="offset-1 col-10">
+                    <select required name="email" class="form-control" ngModel>
+                        <option value="" selected disabled>Elige comprador</option>
+                        <option *ngFor="let u of users" [value]="u.email">
+                            {{u.email}}
+                        </option>
+                        
+                    </select>
+                    <br>
+                    <label for="quantity">Quantity</label>
+                    <br>
+                    <div class="col-2">
+                        <input type="number" name="quantity" id="quantity" class="form-control col-3" ngModel required>
+                    </div>
+
+                    <br><br>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" style="float:left">Cerrar</button>
+                    <button type="submit" class="btn btn-success d-grid offset-7" data-bs-dismiss="modal">Registrar Venta</button>
+                </form>
+            </div>
+            <br>
         </div>
     </div>
 </div>
@@ -47,7 +84,6 @@
     </div>
 </div>
 
-<br><br><br><br><br><br><br>
 
 <!-- Ratings table -->
 <div>
