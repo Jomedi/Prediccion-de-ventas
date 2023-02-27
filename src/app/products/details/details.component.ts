@@ -5,7 +5,7 @@ import { Product } from '../product';
 import { SafeUrl } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { Sale } from './sale';
+import { Sale } from '../sales/sale';
 import { User } from 'src/app/user/user';
 // import { ProductsComponent } from '../products/products.component';
 
@@ -23,11 +23,13 @@ export class DetailsComponent implements OnInit {
   userViews: string[] = []
   users: User[] = []
 
+  quantity:number = 1
+
   id: number = 0;
   public myAngularxQrCode: string = "";
   public qrCodeDownloadLink: SafeUrl = "";
 
-  constructor(private route: ActivatedRoute, private dataService:DataService, private router:Router, private cookie:CookieService) {
+  constructor(private route: ActivatedRoute, private dataService:DataService, private router:Router, public cookie:CookieService) {
     this.route.params.subscribe(params=>{
       console.log(params['id'])
     })
@@ -39,7 +41,6 @@ export class DetailsComponent implements OnInit {
 
   openModal(id: number) {
     this.id = id;
-    console.log(this.id)
   }
 
   onChangeURL(url: SafeUrl) {
@@ -77,7 +78,12 @@ export class DetailsComponent implements OnInit {
     let sale = Sale.emptySale()
 
     sale.date = this.getCurrentDate()
-    sale.email = formValue.email
+
+    if(formValue.email)
+      sale.email = formValue.email
+    else
+      sale.email = this.cookie.get("email")
+    
     sale.quantity = formValue.quantity
     sale.price = this.product.price
     sale.title = this.product.title
@@ -214,5 +220,9 @@ export class DetailsComponent implements OnInit {
   async viewDetails(key:string){
     await this.router.navigate(['/details/' + key])
     window.location.reload()
+  }
+
+  isUserAdmin(){
+    return this.cookie.get("email") == "a@a.es"
   }
 }

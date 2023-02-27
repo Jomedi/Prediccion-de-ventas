@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { User } from "src/app/user/user";
 import { LoginService } from "../login/login.service";
 import { Product } from "../products/product";
-import { Sale } from "../products/details/sale";
+import { Sale } from "../products/sales/sale";
 
 @Injectable()
 
@@ -20,6 +20,11 @@ export class DataService{
     loadUsers(){
         const token = this.loginService.getIdToken();
         return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios.json?auth=' + token);
+    }
+
+    loadSales(){
+        const token = this.loginService.getIdToken();
+        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas.json?auth=' + token);
     }
 
     saveProduct(product:Product){
@@ -101,6 +106,13 @@ export class DataService{
         this.httpClient.delete('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/usuarios/' + user.key + '/.json').subscribe(
             response=>console.log("Correct deletion of user " + user.email),
             error=>console.error("Error on user deletion: " + user.email + ' -> ' + error)
+        );
+    }
+
+    deleteSale(sale:Sale){
+        this.httpClient.delete('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas/' + sale.key + '/.json').subscribe(
+            response=>console.log("Correct deletion of sale " + sale.email),
+            error=>console.error("Error on user deletion: " + sale.email + ' -> ' + error)
         );
     }
 

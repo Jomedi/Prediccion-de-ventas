@@ -19,8 +19,12 @@
             </div>
             <p class="lead">{{product.description}}</p>
             <div class="d-flex">
-                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                <button class="btn btn-outline-dark flex-shrink-0" type="button" data-bs-toggle="modal" data-bs-target="#salesModal">
+                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" [(ngModel)]='quantity' style="max-width: 3rem" />
+                <button *ngIf="isUserAdmin()" class="btn btn-outline-dark flex-shrink-0" type="button" data-bs-toggle="modal" data-bs-target="#salesAdminModal">
+                    <i class="bi-cart-fill me-1"></i>
+                    Add to cart
+                </button>
+                <button *ngIf="!isUserAdmin()" class="btn btn-outline-dark flex-shrink-0" type="button" data-bs-toggle="modal" data-bs-target="#salesModal">
                     <i class="bi-cart-fill me-1"></i>
                     Add to cart
                 </button>
@@ -44,6 +48,42 @@
             <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
             <div class="modal-body">
                 <form (ngSubmit)="registerNewSale(salesForm)" #salesForm="ngForm" class="offset-1 col-10">
+                    <label for="">{{cookie.get("email")}}</label>
+                    <br>
+                    <br>
+                    <label for="quantity">Unidades</label>
+                    <div class="row">
+                        <div class="col-3">
+
+                            <input type="number" name="quantity" id="quantity" [(ngModel)]='quantity' class="form-control col-3" ngModel required>
+                        </div>
+
+                        <div class="col-4 offset-5">
+                            <label>Total </label> <b> {{quantity * product.price}}€</b>
+                        </div>
+
+                    </div>
+                    <br><br>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" style="float:left">Cerrar</button>
+                    <button type="submit" class="btn btn-success d-grid offset-7" data-bs-dismiss="modal">Registrar Venta</button>
+                </form>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<!-- salesAdminModal -->
+<div class="modal fade" id="salesAdminModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="salesAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{product.title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+            <div class="modal-body">
+                <form (ngSubmit)="registerNewSale(salesForm)" #salesForm="ngForm" class="offset-1 col-10">
                     <select required name="email" class="form-control" ngModel>
                         <option value="" selected disabled>Elige comprador</option>
                         <option *ngFor="let u of users" [value]="u.email">
@@ -52,12 +92,20 @@
                         
                     </select>
                     <br>
-                    <label for="quantity">Quantity</label>
-                    <br>
-                    <div class="col-2">
-                        <input type="number" name="quantity" id="quantity" class="form-control col-3" ngModel required>
-                    </div>
 
+                    <br>
+                    <label for="quantity">Unidades</label>
+                    <div class="row">
+                        <div class="col-3">
+
+                            <input type="number" name="quantity" id="quantity" [(ngModel)]='quantity' class="form-control col-3" ngModel required>
+                        </div>
+
+                        <div class="col-4 offset-5">
+                            <label>Total </label> <b> {{quantity * product.price}}€</b>
+                        </div>
+
+                    </div>
                     <br><br>
                     <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" style="float:left">Cerrar</button>
                     <button type="submit" class="btn btn-success d-grid offset-7" data-bs-dismiss="modal">Registrar Venta</button>
@@ -399,8 +447,49 @@
 <br><br>
 
 
-<footer class="py-4 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Predicción de ventas 2022</p>
+<footer class="container py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
+            <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Productos</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/products">Catálogo</a></li>
+                <li><a class="link-secondary" href="/favourites">Mis Favoritos</a></li>
+                <li><a *ngIf="isUserAdmin()" class="link-secondary" href="/sales">Ventas</a></li>
+                <!-- <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li> -->
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Cuenta</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/profile">Perfil</a></li>
+                <li><a *ngIf="isUserAdmin()" class="link-secondary" href="/adminProfiles">Administrar perfiles</a></li>
+                <!-- <li><a class="link-secondary" href="#">Another resource</a></li>
+                <li><a class="link-secondary" href="#">Final resource</a></li> -->
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Enlaces</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="https://angular.io/docs" target="_blank">Angular</a></li>
+                <li><a class="link-secondary" href="https://getbootstrap.com/docs/5.2/examples/" target="_blank">Bootstrap</a></li>
+                <li><a class="link-secondary" href="https://www.npmjs.com/package/ngx-scanner-qrcode" target="_blank">Qr Scanner</a></li>
+                <li><a class="link-secondary" href="https://betterprogramming.pub/how-to-convert-your-angular-application-to-a-native-mobile-app-android-and-ios-c212b38976df" target="_blank">Capacitor (Conversor a móvil)</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Team</a></li>
+                <li><a class="link-secondary" href="#">Locations</a></li>
+                <li><a class="link-secondary" href="#">Privacy</a></li>
+                <li><a class="link-secondary" href="#">Terms</a></li>
+            </ul>
+        </div>
     </div>
 </footer>
