@@ -145,4 +145,8 @@ export class SalesComponent implements OnInit {
   openModal(id: number) {
     this.id = id;
   }
+
+  isUserAdmin(){
+    return this.cookie.get("email") == "a@a.es"
+  }
 }
