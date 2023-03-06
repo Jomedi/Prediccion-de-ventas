@@ -25,9 +25,12 @@ export class SalesComponent implements OnInit {
   quantity:number=1
 
   ngOnInit(): void {
-    this.getAllSales()
-    this.getAllProducts()
-    this.getAllUsers()
+    if(this.isUserAdmin()){
+      this.getAllSales()
+      this.getAllProducts()
+      this.getAllUsers()
+    }else
+      this.getUserSales()
   }
 
   onChange(deviceValue:any) {
@@ -140,6 +143,16 @@ export class SalesComponent implements OnInit {
     this.dataService.loadUsers().subscribe(dbProducts =>{
       this.users = Object.values(dbProducts)
     })
+  }
+
+  getUserSales(){
+    this.dataService.loadSales().subscribe(dbProducts=>{
+      this.sales = Object.values(dbProducts)
+      this.sales = this.sales.filter(sale=>{
+        return sale.email == this.cookie.get("email")
+      })
+      this.calculateTotalEarned()
+    })    
   }
 
   openModal(id: number) {
