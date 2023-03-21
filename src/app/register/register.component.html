@@ -1,5 +1,9 @@
-<form (ngSubmit)="newRegister(registerForm)" #registerForm="ngForm">
-    <h2>Crear cuenta</h2><br>
+<form (ngSubmit)="newRegister(registerForm)" #registerForm="ngForm" class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="col-4 offset-4">
+        <img align="center" class="card-img-top" src="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9" alt="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9"
+            onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+    </div>
+    <h3 style="text-align:center" class="mt-5">Crear cuenta</h3><br>
     <input type="email" name="email" id="" placeholder="E-mail" class="form-control" ngModel required><br>
     <input type="password" name="password" id="" class="form-control" placeholder="Contraseña" ngModel required><br>
     <input type="password" name="passwordr" class="form-control" id="" placeholder="Repetir contraseña" ngModel required><br>
@@ -71,5 +75,5 @@
     </select>
     <br><br>
     <button id="LoginButton" type="button" (click)="routeToLogin()">Login</button>
-    <button type="submit" id="CrearButton" class="btn btn-dark">Crear cuenta</button>
+    <button type="submit" id="CrearButton" class="btn btn-primary">Crear cuenta</button>
 </form>

@@ -28,6 +28,7 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { FavouritesComponent } from './user/favourites/favourites.component';
 import { SalesComponent } from './products/sales/sales.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
@@ -40,6 +41,7 @@ const appRoutes:Routes=[
   {path: 'details/:id', component:DetailsComponent},
   {path: 'favourites', component: FavouritesComponent},
   {path: 'sales', component: SalesComponent},
+  {path: 'feedback', component: FeedbackComponent},
   {path: '**', component:UserComponent}
 ]
 
@@ -55,7 +57,8 @@ const appRoutes:Routes=[
     DetailsComponent,
     TopNavBarComponent,
     FavouritesComponent,
-    SalesComponent
+    SalesComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

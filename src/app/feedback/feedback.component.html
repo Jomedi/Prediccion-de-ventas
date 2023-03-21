@@ -1,0 +1,65 @@
+<app-top-nav-bar></app-top-nav-bar>
+<br><br><br><br>
+<div class="offset-2">
+    <h2>Encuestas</h2>
+    <br>
+
+    <!-- 
+    Crear una página que tenga botones y tipos de input para agregar al formulario:
+    tipos: Valoración, input, multivalor.
+
+    Se deja una línea para escribir el título de la pregunta y a continuación se añade otra línea con el tipo de input escogido.
+
+    El formulario termina cuando el usuario le da click a submit (automáticamente se manda a todos los usuarios de la aplicación).
+    El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
+-->
+
+
+    <div class="preguntas col-10">
+        <div *ngFor="let pregunta of preguntas">
+            <label>{{pregunta.titulo}}</label>
+            <div [ngSwitch]="pregunta.tipo">
+                <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-control">
+                <input *ngSwitchCase="'text'" type="text" class="form-control">
+                <select *ngSwitchCase="'mul'" class="form-control">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                </select>
+                <div *ngSwitchDefault>El tipo de pregunta "{{pregunta.tipo}}" no es válido.</div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <a class="offset-5" style="font-size:x-large; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill"></i></a>
+</div>
+
+<div class="modal fade moda-dialog-centered" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva pregunta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="addQuestion(questionForm)" #questionForm="ngForm">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Título:</label>
+                        <input type="text" class="form-control" id="title" name="title" ngModel>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Tipo:</label>
+                        <select class="form-control" name="type" ngModel>
+                            <option value="val">Valoración</option>
+                            <option value="text">Entrada de Texto</option>
+                            <option value="mul">Multivalor</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Añadir Pregunta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
