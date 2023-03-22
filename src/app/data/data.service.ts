@@ -4,6 +4,7 @@ import { User } from "src/app/user/user";
 import { LoginService } from "../login/login.service";
 import { Product } from "../products/product";
 import { Sale } from "../products/sales/sale";
+import { Feedback } from "../feedback/feedback";
 
 @Injectable()
 
@@ -25,6 +26,11 @@ export class DataService{
     loadSales(){
         const token = this.loginService.getIdToken();
         return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas.json?auth=' + token);
+    }
+
+    loadFeedbacks(){
+        const token = this.loginService.getIdToken();
+        return this.httpClient.get('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/encuestas.json?auth=' + token);
     }
 
     saveProduct(product:Product){
@@ -61,6 +67,28 @@ export class DataService{
             },
             error=>console.error("Error saving sale: " + sale.email + " " + sale.title + " " + sale.price + " -> " + error)
         ); 
+    }
+
+    saveFeedback(feed:Feedback){
+        this.httpClient.post('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/encuestas.json', feed).subscribe(
+            response=> {
+                console.log("Correct survey save: " + feed)
+                // @ts-ignore
+                sale.key = response['name']
+                this.updateFeedback(feed)
+            },
+            error=>console.error("Error saving feedback: " + feed + " -> " + error)
+        ); 
+    }
+
+    updateFeedback(feed:Feedback){
+        if(feed.key) {
+            this.httpClient.put('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas/' + feed.key + '/.json', feed).subscribe(
+                response=>console.log("Correct feedback update: " + feed),
+                error=>console.error("Error updating feedback: " + feed + " -> " + error)
+            );
+        }else 
+            alert("Trying to update with empty key for sale: " + feed)
     }
 
     updateSale(sale:Sale){
@@ -113,6 +141,13 @@ export class DataService{
         this.httpClient.delete('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas/' + sale.key + '/.json').subscribe(
             response=>console.log("Correct deletion of sale " + sale.email),
             error=>console.error("Error on user deletion: " + sale.email + ' -> ' + error)
+        );
+    }
+
+    deleteFeedback(feed:Feedback){
+        this.httpClient.delete('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/encuestas/' + feed.key + '/.json').subscribe(
+            response=>console.log("Correct deletion of sale " + feed),
+            error=>console.error("Error on user deletion: " + feed + ' -> ' + error)
         );
     }
 

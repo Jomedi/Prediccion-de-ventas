@@ -1,15 +1,18 @@
 import * as internal from "stream";
 
-export class Survey{
+export class Feedback{
     constructor(
+        public key: string,
         public title: string,
         public description: string,
+        public questions: any[],
+        // usuario / respuesta
         public answers: string[][],
         public answerDate: string[],
-        public userAnswers: number
+        public userAnswers: number,
       ) {  }
 
-    static emptySurvey(): Survey {
-        return new this("", "", [], [], 0);
+    static emptyFeedback(): Feedback {
+        return new this("", "", "", [], [], [], 0)
     }
 }

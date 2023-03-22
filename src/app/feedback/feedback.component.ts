@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Feedback } from './feedback';
+import { DataService } from '../data/data.service';
 
 @Component({
   selector: 'app-feedback',
@@ -7,24 +9,29 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./feedback.component.css']
 })
 export class FeedbackComponent implements OnInit {
-  preguntas:any = []
-  constructor() { }
+  feedBack:Feedback = Feedback.emptyFeedback()
+
+  constructor(private dataService : DataService) { }
 
   ngOnInit(): void {
-    this.insertQuestion("Qué piensas del producto valoración?","val")
-    this.insertQuestion("Qué piensas del producto input?","text")
-    this.insertQuestion("Qué piensas del producto multivalor?","mul")
+    // this.insertQuestion("¿Qué piensas del producto valoración?","val")
+    // this.insertQuestion("¿Qué piensas del producto input?","text")
+    // this.insertQuestion("¿Qué piensas del producto multivalor?","mul")
   }
 
-  insertQuestion(titulo: string, tipo: string) {
-    const pregunta = { titulo, tipo };
-    this.preguntas.push(pregunta);
+  insertQuestion(title: string, type: string) {
+    const pregunta = { title, type };
+    this.feedBack.questions.push(pregunta);
   }
 
   addQuestion(ngForm : NgForm) {
     var formValue = ngForm.value
     this.insertQuestion(formValue.title,formValue.type)
-    console.log("formvalue is: ", formValue.title)
+  }
+
+  saveFeedback(){
+    this.dataService.saveFeedback(this.feedBack)
+    this.feedBack = Feedback.emptyFeedback();
   }
 
 }
