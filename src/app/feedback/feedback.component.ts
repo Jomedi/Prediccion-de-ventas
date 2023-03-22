@@ -10,10 +10,12 @@ import { DataService } from '../data/data.service';
 })
 export class FeedbackComponent implements OnInit {
   feedBack:Feedback = Feedback.emptyFeedback()
+  allFeedbacks:Feedback[] = []
 
   constructor(private dataService : DataService) { }
 
   ngOnInit(): void {
+    this.loadFeedbacks()
     // this.insertQuestion("¿Qué piensas del producto valoración?","val")
     // this.insertQuestion("¿Qué piensas del producto input?","text")
     // this.insertQuestion("¿Qué piensas del producto multivalor?","mul")
@@ -30,8 +32,39 @@ export class FeedbackComponent implements OnInit {
   }
 
   saveFeedback(){
-    this.dataService.saveFeedback(this.feedBack)
-    this.feedBack = Feedback.emptyFeedback();
+    //ALGO FALLA DE AQUÍ
+    if(this.feedbackExists())
+      this.dataService.updateFeedback(this.feedBack)
+    else
+      this.dataService.saveFeedback(this.feedBack)
+
+    this.feedBack = Feedback.emptyFeedback()
+  }
+
+  loadFeedbacks(){
+    this.dataService.loadFeedbacks().subscribe(feedbacksData =>{
+      this.allFeedbacks =  Object.values(feedbacksData)
+    })
+  }
+
+  loadFeedback(i : number){
+    this.feedBack = this.allFeedbacks[i]
+    console.log("These are all feedbacks: ", this.allFeedbacks)
+    console.log(this.feedBack)
+  }
+
+  feedbackExists(){
+    let found = false
+    this.allFeedbacks.forEach(fb=>{
+      if(fb.key == this.feedBack.key){
+        found = true
+      }   
+    })
+    return found
+  }
+
+  setEmptyFeedback(){
+    this.feedBack = Feedback.emptyFeedback()
   }
 
 }

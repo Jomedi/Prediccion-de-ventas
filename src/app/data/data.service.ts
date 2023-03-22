@@ -74,7 +74,7 @@ export class DataService{
             response=> {
                 console.log("Correct survey save: " + feed)
                 // @ts-ignore
-                sale.key = response['name']
+                feed.key = response['name']
                 this.updateFeedback(feed)
             },
             error=>console.error("Error saving feedback: " + feed + " -> " + error)

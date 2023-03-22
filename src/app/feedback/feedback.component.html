@@ -1,7 +1,7 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br><br><br><br>
-<div class="offset-2">
-    <h2>Encuestas</h2>
+<div>
+    <h2 class="offset-4">Encuestas</h2>
     <br>
 
     <!-- 
@@ -14,27 +14,41 @@
     El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
 -->
 
+    <div class="row">
+        <div class="offset-1 col-1">
+            <div class="row">
+                <button class="btn btn-primary mt-1" (click)="setEmptyFeedback()">New Feedback</button>
+            </div>
+            <div *ngFor="let feedback of allFeedbacks; let i = index" class="row">
+                <button class="btn btn-secondary mt-1" (click)="loadFeedback(i)">Feedback {{i}}</button>
+            </div>
 
-    <div class="preguntas col-10">
-        <div *ngFor="let question of feedBack.questions">
-            <label>{{question.title}}</label>
-            <div [ngSwitch]="question.type">
-                <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" disabled>
-                <input *ngSwitchCase="'text'" type="text" class="form-control" disabled>
-                <select *ngSwitchCase="'mul'" class="form-select" disabled>
+        </div>
+        <div class="offset-1 vr vr-blurry" style="height: 500px;"></div>
+        <div class="offset-1 col-6">
+            <div *ngFor="let question of feedBack.questions">
+                <label>{{question.title}}</label>
+                <div [ngSwitch]="question.type">
+                    <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" disabled>
+                    <input *ngSwitchCase="'text'" type="text" class="form-control" disabled>
+                    <select *ngSwitchCase="'mul'" class="form-select" disabled>
                     <option value="opcion1">Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
                 </select>
-                <div *ngSwitchDefault>El tipo de pregunta "{{question.tipo}}" no es válido.</div>
-                <br>
+                    <div *ngSwitchDefault>El tipo de pregunta "{{question.tipo}}" no es válido.</div>
+                    <br>
+                </div>
             </div>
+            <a class="offset-6" style="font-size:x-large; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill"></i></a>
+            <br><br><br>
+
+            <br><br>
+            <button class="btn btn-primary col-2 offset-10" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Save Form</button>
         </div>
+
     </div>
-    <br><br><br>
-    <a class="offset-5" style="font-size:x-large; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill"></i></a>
-    <br><br>
-    <button class="btn btn-primary offset-9" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Save Form</button>
+
 </div>
 
 <!-- addQuestion Modal -->
