@@ -15,7 +15,7 @@ export class FeedbackComponent implements OnInit {
   constructor(private dataService : DataService) { }
 
   ngOnInit(): void {
-    this.loadFeedbacks()
+    this.loadAllFeedbacks()
     // this.insertQuestion("¿Qué piensas del producto valoración?","val")
     // this.insertQuestion("¿Qué piensas del producto input?","text")
     // this.insertQuestion("¿Qué piensas del producto multivalor?","mul")
@@ -32,19 +32,29 @@ export class FeedbackComponent implements OnInit {
   }
 
   saveFeedback(){
-    //ALGO FALLA DE AQUÍ
     if(this.feedbackExists())
       this.dataService.updateFeedback(this.feedBack)
     else
       this.dataService.saveFeedback(this.feedBack)
 
+    this.allFeedbacks.push(this.feedBack)
     this.feedBack = Feedback.emptyFeedback()
   }
 
-  loadFeedbacks(){
+  loadAllFeedbacks(){
     this.dataService.loadFeedbacks().subscribe(feedbacksData =>{
       this.allFeedbacks =  Object.values(feedbacksData)
     })
+  }
+
+  deleteFeedback(i : number){
+    let feed = this.allFeedbacks[i]
+
+    this.allFeedbacks = this.allFeedbacks.filter(fb=>{
+      return fb.key != feed.key
+    })
+
+    this.dataService.deleteFeedback(feed)
   }
 
   loadFeedback(i : number){
@@ -65,6 +75,10 @@ export class FeedbackComponent implements OnInit {
 
   setEmptyFeedback(){
     this.feedBack = Feedback.emptyFeedback()
+  }
+
+  reloadPage(){
+    window.location.reload()
   }
 
 }

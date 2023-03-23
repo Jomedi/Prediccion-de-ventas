@@ -5,22 +5,24 @@
     <br>
 
     <!-- 
-    Crear una página que tenga botones y tipos de input para agregar al formulario:
-    tipos: Valoración, input, multivalor.
+        Crear una página que tenga botones y tipos de input para agregar al formulario:
+        tipos: Valoración, input, multivalor.
 
-    Se deja una línea para escribir el título de la pregunta y a continuación se añade otra línea con el tipo de input escogido.
+        Se deja una línea para escribir el título de la pregunta y a continuación se añade otra línea con el tipo de input escogido.
 
-    El formulario termina cuando el usuario le da click a submit (automáticamente se manda a todos los usuarios de la aplicación).
-    El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
--->
+        El formulario termina cuando el usuario le da click a submit (automáticamente se manda a todos los usuarios de la aplicación).
+        El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
+    -->
 
     <div class="row">
         <div class="offset-1 col-1">
             <div class="row">
-                <button class="btn btn-primary mt-1" (click)="setEmptyFeedback()">New Feedback</button>
+                <button class="btn btn-primary mt-1" (click)="setEmptyFeedback()">Nueva Encuesta</button>
             </div>
+            <br>
             <div *ngFor="let feedback of allFeedbacks; let i = index" class="row">
-                <button class="btn btn-secondary mt-1" (click)="loadFeedback(i)">Feedback {{i}}</button>
+                <button class="btn btn-secondary mt-1" (click)="loadFeedback(i)">Encuesta {{i}}</button>
+                <a class="link-primary" (click)="deleteFeedback(i)" data-bs-toggle="modal" data-bs-target="#exampleModal3" style="cursor:pointer;"><i class="bi-trash3-fill m-1 mt-2"></i></a>
             </div>
 
         </div>
@@ -44,7 +46,7 @@
             <br><br><br>
 
             <br><br>
-            <button class="btn btn-primary col-2 offset-10" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Save Form</button>
+            <button class="btn btn-primary col-2 offset-10" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Guardar Encuesta</button>
         </div>
 
     </div>
@@ -89,6 +91,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModal2Label">Formulario guardado correctamente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary offset-5" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- eliminateForm Modal -->
+<div class="modal fade moda-dialog-centered" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal3Label">Formulario eliminado correctamente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">

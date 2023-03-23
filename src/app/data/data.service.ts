@@ -83,7 +83,7 @@ export class DataService{
 
     updateFeedback(feed:Feedback){
         if(feed.key) {
-            this.httpClient.put('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/ventas/' + feed.key + '/.json', feed).subscribe(
+            this.httpClient.put('https://prediccion-de-ventas-default-rtdb.europe-west1.firebasedatabase.app/encuestas/' + feed.key + '/.json', feed).subscribe(
                 response=>console.log("Correct feedback update: " + feed),
                 error=>console.error("Error updating feedback: " + feed + " -> " + error)
             );
