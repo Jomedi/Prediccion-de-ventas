@@ -7,10 +7,11 @@ export class User{
         public gender: string,
         public password: string,
         public key: string,
-        public favourite_products: string[]
+        public favourite_products: string[],
+        public sharedFeedbacks: string[]
       ) {  }
 
     static emptyUser(): User {
-        return new this("", "", "", "", "", "", "", []);
+        return new this("", "", "", "", "", "", "", [], []);
     }
 }

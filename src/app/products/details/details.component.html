@@ -125,8 +125,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- <qrcode [qrdata]="'http://localhost:4200/details/{{product.title}}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
-            <qrcode class="offset-3" (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true"></qrcode>
-            <a class="offset-10" [href]="qrCodeDownloadLink" allowEmptyString="true" download="qrcode"><i class="bi bi-download"></i></a>
+            <div class="modal-body">
+                <div class="row">
+                    <qrcode class="offset-2" (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true"></qrcode>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a [href]="qrCodeDownloadLink" allowEmptyString="true" download="qrcode"><i class="bi bi-download"></i></a>
+            </div>
             <br>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br><br><br><br>
 <div>
-    <h2 class="offset-4">Encuestas</h2>
+    <h2 class="offset-1">Encuestas</h2>
     <br>
 
     <!-- 
@@ -14,26 +14,17 @@
         El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
     -->
 
-    <div class="row">
-        <div class="offset-1 col-1">
-            <div class="row">
-                <button class="btn btn-primary mt-1" (click)="setEmptyFeedback()">Nueva Encuesta</button>
-            </div>
-            <br>
-            <div *ngFor="let feedback of allFeedbacks; let i = index" class="row">
-                <button class="btn btn-secondary mt-1" (click)="loadFeedback(i)">Encuesta {{i}}</button>
-                <a class="link-primary" (click)="deleteFeedback(i)" data-bs-toggle="modal" data-bs-target="#exampleModal3" style="cursor:pointer;"><i class="bi-trash3-fill m-1 mt-2"></i></a>
-            </div>
+    <div class="col">
 
-        </div>
-        <div class="offset-1 vr vr-blurry" style="height: 500px;"></div>
-        <div class="offset-1 col-6">
-            <div *ngFor="let question of feedBack.questions">
+        <div *ngIf="this.feedBack.title" class="offset-1 col-10 border rounded" style="background-color: rgb(235, 246, 255);">
+            <h6 class="m-3">{{feedBack.title}}</h6>
+            <br>
+            <div *ngFor="let question of feedBack.questions" class="m-4">
                 <label>{{question.title}}</label>
                 <div [ngSwitch]="question.type">
-                    <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" disabled>
-                    <input *ngSwitchCase="'text'" type="text" class="form-control" disabled>
-                    <select *ngSwitchCase="'mul'" class="form-select" disabled>
+                    <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range">
+                    <input *ngSwitchCase="'text'" type="text" class="form-control">
+                    <select *ngSwitchCase="'mul'" class="form-select">
                     <option value="opcion1">Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
@@ -42,50 +33,80 @@
                     <br>
                 </div>
             </div>
-            <a class="offset-6" style="font-size:x-large; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill"></i></a>
-            <br><br><br>
-
             <br><br>
-            <button class="btn btn-primary col-2 offset-10" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Guardar Encuesta</button>
+            <br>
+            <div class="row m-1">
+                <button class="btn btn-success col-4 offset-4" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">Añadir Campo</button>
+            </div>
+            <br>
         </div>
-
+        <div *ngIf="!this.feedBack.title" class="offset-1">
+            <br><br>
+            <button class="btn btn-success col-4" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal4">Nueva Encuesta</button>
+        </div>
+        <br>
+        <div class="offset-1 col-10">
+            <div class="row m-1">
+                <button *ngIf="this.feedBack.title" class="btn btn-secondary col-5" (click)="saveFeedback()" data-bs-toggle="modal" data-bs-target="#exampleModal2">Guardar Encuesta</button>
+                <button *ngIf="this.feedBack.title" class="btn btn-dark col-5 offset-2" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal5">Publicar Encuesta</button>
+            </div>
+        </div>
+        <div class="offset-1 hr"></div>
+        <br><br>
+        <br><br>
+        <div class="nav-item dropdown offset-1">
+            <a class="btn btn-secondary dropdown-toggle" type="button" href="#" data-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown">
+              Encuestas Guardadas
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark">
+                <a (click)="setEmptyFeedback()" class="dropdown-item " style="cursor:pointer">Nueva Encuesta</a>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <a *ngFor="let feedback of allFeedbacks; let i = index" class="dropdown-item" (click)="loadFeedback(i)" style="cursor:pointer">{{feedback.title}} <a class="link-primary" (click)="deleteFeedback(i)" data-bs-toggle="modal" data-bs-target="#exampleModal3" style="cursor:pointer;"><i class="bi-trash3-fill m-1 mt-2"></i></a></a>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br>
     </div>
-
 </div>
 
-<!-- addQuestion Modal -->
+<!-- exampleModal addQuestion -->
 <div class="modal fade moda-dialog-centered" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva pregunta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="addQuestion(questionForm)" #questionForm="ngForm">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Título:</label>
-                        <input type="text" class="form-control" id="title" name="title" ngModel>
-                    </div>
+            <form (ngSubmit)="addQuestion(questionForm)" #questionForm="ngForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva Pregunta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Tipo:</label>
-                        <select class="form-control" name="type" ngModel>
+                        <select class="form-select" name="type" ngModel>
                             <option value="val">Valoración</option>
                             <option value="text">Entrada de Texto</option>
                             <option value="mul">Multivalor</option>
                         </select>
                     </div>
-                    <div class="row">
-                        <button type="button" class="col-2 btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="col-3 btn btn-primary offset-5">Añadir</button>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Título:</label>
+                        <input type="text" class="form-control" id="title" name="title" ngModel>
                     </div>
-                </form>
-            </div>
+
+                    <br><br>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary ">Añadir</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- saveForm Modal -->
+<!-- exampleModal2 saveForm -->
 <div class="modal fade moda-dialog-centered" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,7 +121,7 @@
     </div>
 </div>
 
-<!-- eliminateForm Modal -->
+<!-- exampleModal3 eliminateForm -->
 <div class="modal fade moda-dialog-centered" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -111,6 +132,57 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary offset-5" data-bs-dismiss="modal">Aceptar</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- exampleModal4 addTitle -->
+<div class="modal fade moda-dialog-centered" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
+    <form (ngSubmit)="addTitle(titleForm)" #titleForm="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal2Label">Añade el Título de la Encuesta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Título:</label>
+                        <input type="text" class="form-control" id="title" name="title" ngModel>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="col-2 btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="col-2 btn btn-success" data-bs-dismiss="modal">Añadir</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!-- exampleModal5 Publish Form -->
+<div class="modal fade moda-dialog-centered" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModal5Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form (ngSubmit)="insertUser(publishForm)" #publishForm="ngForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal5Label">Publicar Encuesta </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-select" name="emails" id="emails" ngModel>
+                        <option value="">Selecciona Grupo de Usuarios</option>
+                        <option value="allUsers">Todos los Usuarios</option>
+                        <option value="{{products[i].key}}" *ngFor="let product of products; let i = index">{{products[i].title}}</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Publicar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

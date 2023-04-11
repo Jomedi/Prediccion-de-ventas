@@ -104,7 +104,7 @@ export class FavouritesComponent implements OnInit {
 
   userSession(){
     return new User(this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), 
-                    this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key") ,this.cookie.get("favouriteProducts").split(","))
+                    this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key") ,this.cookie.get("favouriteProducts").split(","),[])
   }
 
   getProductByTitle(title:string){

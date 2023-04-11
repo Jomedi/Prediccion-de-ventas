@@ -73,13 +73,6 @@ input:focus {
     float: right;
 }
 
-button {
-    font-size: 95%;
-    padding: 0.6rem 1.2rem;
-    color: #ffffff;
-    border-radius: 4px;
-}
-
 button:hover {
     transition: .3s;
 }
