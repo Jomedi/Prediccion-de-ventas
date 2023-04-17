@@ -1,9 +1,27 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br><br><br><br>
 <div>
-    <h2 class="offset-1">Encuestas</h2>
     <br>
+    <nav class="navbar navbar-expand navbar-light bg-light offset-1">
+        <a class="navbar-brand" style="cursor:pointer">Encuestas</a>
 
+        <div class="navbar" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li *ngIf="table == 'crear'" class="nav-item active">
+                    <a class="nav-link disabled" style="cursor:pointer">Crear Encuesta</a>
+                </li>
+                <li *ngIf="table != 'crear'" class="nav-item">
+                    <a class="nav-link" style="cursor:pointer" (click)="changeTable()">Crear Encuesta</a>
+                </li>
+                <li *ngIf="table != 'respuestas'" class="nav-item">
+                    <a class="nav-link" style="cursor:pointer" (click)="changeTable()">Respuestas</a>
+                </li>
+                <li *ngIf="table == 'respuestas'" class="nav-item active">
+                    <a class="nav-link disabled" style="cursor:pointer">Respuestas</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <!-- 
         Crear una página que tenga botones y tipos de input para agregar al formulario:
         tipos: Valoración, input, multivalor.
@@ -14,12 +32,52 @@
         El usuario recibe una alerta cuando el admin crea un nuevo formulario (correo con link al formulario y app).
     -->
 
-    <div class="col">
+    <div class="col-10 offset-1" *ngIf="table == 'respuestas'">
 
+        <table *ngIf="answeredFeedbacks && answeredFeedbacks.length > 0" class="table table-light table-hover" style="border-collapse: collapse;
+            border-radius: 0.5em;
+            overflow: hidden;">
+            <!-- <thead class="table-dark">
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Fecha de Publicación</th>
+                </tr>
+            </thead> -->
+            <tbody>
+                <!-- Abrir un modal o una página donde aparezca el formulario a resolver -->
+                <tr *ngFor="let feedback of answeredFeedbacks; let i = index" style="cursor:pointer" (click)="loadFeedbackAns(i)">
+                    <th style="width:1%"> </th>
+                    <th style="width:19%">{{feedback.title}}</th>
+                    <td style="width:72%">{{feedback.description}}</td>
+                    <td style="width:8%">{{feedback.publishDate}}
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="feedbackAns && feedbackAns.answers.length > 0 && table == 'respuestas'">
+        <br><br><br>
+        <div>
+            <div class="nav-item dropdown offset-1">
+                <a class="btn btn-secondary dropdown-toggle" type="button" href="#" data-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown">
+              {{feedbackAns.title}}
+            </a>
+                <div class="dropdown-menu dropdown-menu-dark">
+                    <a *ngFor="let answer of feedbackAns.answers; let i = index" class="dropdown-item" (click)="loadAnswer(answer)" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#exampleModal6">{{answer[i]}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="table == 'crear'" class="col">
         <div *ngIf="this.feedBack.title" class="offset-1 col-10 border rounded" style="background-color: rgb(235, 246, 255);">
             <h6 class="m-3">{{feedBack.title}}</h6>
+            <p class="m-4">{{feedBack.description}}</p>
             <br>
-            <div *ngFor="let question of feedBack.questions" class="m-4">
+            <div *ngFor="let question of feedBack.questions" class="m-5">
                 <label>{{question.title}}</label>
                 <div [ngSwitch]="question.type">
                     <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range">
@@ -68,6 +126,7 @@
         </div>
         <br><br><br><br><br><br><br>
     </div>
+
 </div>
 
 <!-- exampleModal addQuestion -->
@@ -146,10 +205,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Título:</label>
                         <input type="text" class="form-control" id="title" name="title" ngModel>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Descripción:</label>
+                        <textarea type="text" class="form-control" id="description" name="description" rows="2" ngModel style="resize:none"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -162,15 +224,16 @@
 
 </div>
 
-<!-- exampleModal5 Publish Form -->
+<!-- exampleModal5 publishForm -->
 <div class="modal fade moda-dialog-centered" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModal5Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form (ngSubmit)="insertUser(publishForm)" #publishForm="ngForm">
+            <form (ngSubmit)="publish(publishForm)" #publishForm="ngForm">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModal5Label">Publicar Encuesta </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <p class="offset-1">El formulario se guardará automáticamente al publicarlo</p>
                 <div class="modal-body">
                     <select class="form-select" name="emails" id="emails" ngModel>
                         <option value="">Selecciona Grupo de Usuarios</option>
@@ -183,6 +246,43 @@
                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Publicar</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- exampleModal6 -->
+<div class="modal fade moda-dialog-centered" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModal6Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{feedbackAns.title}}</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="m-4">{{feedbackAns.description}}</p>
+                <br>
+                <div *ngFor="let question of feedbackAns.questions; let i = index" class="m-5">
+                    <label><b>{{question.title}}</b></label>
+                    <br>
+                    <!-- <div [ngSwitch]="question.type">
+                        <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" name="{{i}}" ngModel>
+                        <input *ngSwitchCase="'text'" type="text" class="form-control" name="{{i}}" ngModel>
+                        <select *ngSwitchCase="'mul'" class="form-select" name="{{i}}" ngModel>
+                            <option value="opcion1">Opción 1</option>
+                            <option value="opcion2">Opción 2</option>
+                            <option value="opcion3">Opción 3</option>
+                        </select>
+                        <div *ngSwitchDefault>El tipo de pregunta "{{question.tipo}}" no es válido.</div>
+                        <br>
+                    </div> -->
+                    <label>{{answer[i + 1]}}</label>
+                    <br><br>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark " data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-success " data-bs-dismiss="modal">Enviar</button>
+            </div>
         </div>
     </div>
 </div>

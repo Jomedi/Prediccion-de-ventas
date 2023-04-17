@@ -9,10 +9,12 @@ export class Feedback{
         // usuario / respuesta
         public answers: string[][],
         public answerDate: string[],
+        public publishDate: string,
         public userAnswers: number,
+        public saved: Boolean
       ) {  }
 
     static emptyFeedback(): Feedback {
-        return new this("", "", "", [], [], [], 0)
+        return new this("", "", "", [], [], [], "", 0, true)
     }
 }

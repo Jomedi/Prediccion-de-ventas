@@ -29,8 +29,10 @@ export class ProfileComponent implements OnInit {
   }
 
   userSession(){
-    return new User(this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), 
-                    this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key") ,this.cookie.get("favouriteProducts").split(","),[])
+    let user = User.emptyUser()
+    user.email, user.name, user.date, user.address, user.gender, user.password, user.key = this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key")
+    user.favourite_products = this.cookie.get("favouriteProducts").split(",")
+    return user
   }
 
   setEmail(email:string){

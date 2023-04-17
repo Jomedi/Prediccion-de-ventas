@@ -34,7 +34,8 @@ export class RegisterComponent implements OnInit {
 
   newRegister(registerForm: NgForm) {
     var formValue = registerForm.value
-    this.user = new User(formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"],formValue["password"],"", [], [])
+    this.user = User.emptyUser()
+    this.user.email,this.user.name,this.user.date,this.user.address,this.user.gender,this.user.password = formValue["email"],formValue["name"],formValue["date"],formValue["address"],formValue["gender"],formValue["password"]
     
     if(this.validatePassword(formValue["password"],formValue["passwordr"])){
       this.registerService.register(formValue).then(response => {

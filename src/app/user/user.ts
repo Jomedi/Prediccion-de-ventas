@@ -8,10 +8,13 @@ export class User{
         public password: string,
         public key: string,
         public favourite_products: string[],
-        public sharedFeedbacks: string[]
+        public sharedFeedbacks: string[],
+        public publishDate: string[],
+        public feedbackDone: Boolean[],
+        public feedbackOpened: Boolean[]
       ) {  }
 
     static emptyUser(): User {
-        return new this("", "", "", "", "", "", "", [], []);
+        return new this("", "", "", "", "", "", "", [], [], [], [], []);
     }
 }
