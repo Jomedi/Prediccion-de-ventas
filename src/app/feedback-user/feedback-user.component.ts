@@ -39,6 +39,8 @@ export class FeedbackUserComponent implements OnInit {
 
   loadTable(){
     let i = 0
+    this.respondidos = []
+    this.pendientes = []
     this.feedbacks.forEach(feed=>{
       if(this.user.feedbackDone[i]){
         this.respondidos.push(feed)
@@ -118,20 +120,20 @@ export class FeedbackUserComponent implements OnInit {
   }
 
   formResponse(ngForm:NgForm){
-    var formValue = ngForm.value
-
+    var formValue = ngForm.value 
     var list = []
     list.push(this.user.email)
-
-    if(!this.feedbacks[this.index].answers)
-      this.feedbacks[this.index].answers=[]
-    this.feedbacks[this.index].answers.push(list)
     
     let i = 0
     this.feedbacks[this.index].questions.forEach(q=>{
-      this.feedbacks[this.index].answers[0].push(formValue[i])
+      list.push(formValue[i])
       i++
     })
+
+    if(!this.feedbacks[this.index].answers)
+      this.feedbacks[this.index].answers=[]
+
+    this.feedbacks[this.index].answers.push(list)
 
     this.user.feedbackDone[this.index] = true
     console.log("User data: ", this.user)

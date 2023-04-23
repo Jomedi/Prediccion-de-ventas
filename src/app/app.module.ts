@@ -30,6 +30,7 @@ import { FavouritesComponent } from './user/favourites/favourites.component';
 import { SalesComponent } from './products/sales/sales.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedbackUserComponent } from './feedback-user/feedback-user.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 const appRoutes:Routes=[
   {path: '', component:UserComponent  },
@@ -76,7 +77,8 @@ const appRoutes:Routes=[
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     NgxScannerQrcodeModule,
-    QRCodeModule
+    QRCodeModule,
+    HighchartsChartModule
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,DataService,CookieService,LoginService,RegisterService

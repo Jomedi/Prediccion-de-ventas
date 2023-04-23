@@ -92,9 +92,9 @@
                             <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" name="{{i}}" ngModel>
                             <input *ngSwitchCase="'text'" type="text" class="form-control" name="{{i}}" ngModel>
                             <select *ngSwitchCase="'mul'" class="form-select" name="{{i}}" ngModel>
-                                <option value="opcion1">Opción 1</option>
-                                <option value="opcion2">Opción 2</option>
-                                <option value="opcion3">Opción 3</option>
+                                <option value="Ns/Nc">-</option>
+                                <option value="Si">Sí</option>
+                                <option value="No">No</option>
                             </select>
                             <div *ngSwitchDefault>El tipo de pregunta "{{question.tipo}}" no es válido.</div>
                             <br>
