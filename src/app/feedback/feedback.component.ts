@@ -4,6 +4,7 @@ import { Feedback } from './feedback';
 import { DataService } from '../data/data.service';
 import { User } from '../user/user';
 import { Product } from '../products/product';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-feedback',
@@ -20,7 +21,7 @@ export class FeedbackComponent implements OnInit {
   feedbackAns:Feedback= Feedback.emptyFeedback()
   answer:string[]=[]
 
-  constructor(private dataService : DataService) { }
+  constructor(private dataService : DataService, private cookie:CookieService) { }
 
   ngOnInit(): void {
     this.loadAllFeedbacks()
@@ -31,6 +32,10 @@ export class FeedbackComponent implements OnInit {
 
   loadAnswer(answer:string[]){
     this.answer = answer
+  }
+
+  isUserAdmin(){
+    return this.cookie.get("email") == "a@a.es"
   }
 
   changeTable(){

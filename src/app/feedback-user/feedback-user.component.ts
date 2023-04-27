@@ -61,6 +61,16 @@ export class FeedbackUserComponent implements OnInit {
     console.log("This user is: ", this.user)
   }
 
+  feedbackAnswered(title:string){
+
+    
+
+    this.feedbacks.forEach(feed=>{
+      feed.answers
+    })
+
+  }
+
   feedbackOpened(title:string){
     let i = 0
     let index = 0

@@ -30,9 +30,19 @@ export class ProfileComponent implements OnInit {
 
   userSession(){
     let user = User.emptyUser()
-    user.email, user.name, user.date, user.address, user.gender, user.password, user.key = this.cookie.get("email"), this.cookie.get("name"), this.cookie.get("date"), this.cookie.get("address"), this.cookie.get("gender"), this.cookie.get("password"),this.cookie.get("key")
+    user.email = this.cookie.get("email")
+    user.name = this.cookie.get("name")
+    user.date = this.cookie.get("date")
+    user.address = this.cookie.get("address")
+    user.gender = this.cookie.get("gender")
+    user.password = this.cookie.get("password")
+    user.key = this.cookie.get("key")
     user.favourite_products = this.cookie.get("favouriteProducts").split(",")
     return user
+  }
+
+  isUserAdmin(){
+    return this.cookie.get("email") == "a@a.es"
   }
 
   setEmail(email:string){

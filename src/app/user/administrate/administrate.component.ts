@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data/data.service';
 import { LoginService } from 'src/app/login/login.service';
 import { User } from '../user';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-administrate',
@@ -15,13 +16,14 @@ export class AdministrateComponent implements OnInit {
   email:string = ""
   id:number=-1
 
-  constructor(private dataService:DataService, private loginService:LoginService) { }
+  constructor(private dataService:DataService, private loginService:LoginService, private cookie:CookieService) { }
 
   ngOnInit(): void {
     this.getAllUsers()
   }
 
   getUserData(){
+    this.email = this.cookie.get("email")
     this.dataService.loadUsers().subscribe(dbUsers=>{
       this.users = Object.values(dbUsers);
       for(let i = 0; i < this.users.length; i++){
@@ -47,8 +49,13 @@ export class AdministrateComponent implements OnInit {
 
   getAllUsers(){
     this.dataService.loadUsers().subscribe(dbUsers=>{
-      this.users = Object.values(dbUsers);
+      this.users = Object.values(dbUsers)
+      this.users
     })
+  }
+
+  isUserAdmin(){
+    return this.cookie.get("email") == "a@a.es"
   }
 
   updateUser(){

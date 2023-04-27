@@ -7,7 +7,8 @@ import {
   ScannerQRCodeSelectedFiles,
   NgxScannerQrcodeService,
   ScannerQRCodeResult,
-  NgxScannerQrcodeComponent
+  NgxScannerQrcodeComponent,
+  NgxScannerQrcodeModule
 } from 'ngx-scanner-qrcode';
 import { ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
@@ -53,6 +54,8 @@ export class UserComponent implements OnInit {
   runRateUnits: number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
   allSalesInYear:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
   allUnitsInYear:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
+  lastYearFactors:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
+  seasonalLastYear:number[]=[0,0,0,0,0,0,0,0,0,0,0,0]
 
   productViews : any = []
   productNames:string[]=[]
@@ -228,6 +231,7 @@ export class UserComponent implements OnInit {
     this.yearUnitsSold(this.year)
     this.runRateMethod()
     this.seasonalMethod()
+    this.lastYearSeasonalMethod()
   }
 
   async startMethod(action : any){
@@ -293,6 +297,54 @@ export class UserComponent implements OnInit {
     this.linechart.series.push({name: "RunRate", data: runRate, type: "line"})
   } 
 
+  lastYearSeasonalMethod(){
+    let allSalesInYear=[0,0,0,0,0,0,0,0,0,0,0,0]
+    let allUnitsInYear=[0,0,0,0,0,0,0,0,0,0,0,0]
+    let seasonalLastYear = [0,0,0,0,0,0,0,0,0,0,0,0]
+    let seasonalUnitsLastYear=[0,0,0,0,0,0,0,0,0,0,0,0]
+    let lastYearFactors=[0,0,0,0,0,0,0,0,0,0,0,0]
+
+    console.log("This year sales: ", this.sales)
+
+    let lastySales = this.sales.filter(sale=>{
+      let y = "0"
+      if (sale.date){ 
+        let arrDate = sale.date.split("/")
+        console.log("Date: ", arrDate)
+        y = arrDate[2]
+      }
+      console.log("Date: ", sale.date)
+      return (parseInt(this.year) - 1).toString() == y
+    })
+
+    console.log("yearSales", this.ySales)
+
+    let total = 0
+    lastySales.forEach(sale => {
+      total += sale.price*sale.quantity
+      let arrDate = sale.date.split("/")
+      let m = arrDate[1]
+      allSalesInYear[parseInt(m) - 1] += sale.quantity * sale.price
+      allUnitsInYear[parseInt(m) - 1] += sale.quantity
+    })
+
+    let i = 0
+    allSalesInYear.forEach(sale=>{
+      lastYearFactors[i] = (sale / total)
+      i++
+    })
+
+    for(let i = this.getActualMonth(); i < 12; i++){
+      seasonalLastYear[i] = lastYearFactors[i] * this.runRate[i] * 10
+      seasonalUnitsLastYear[i] = lastYearFactors[i] * this.runRateUnits[i] * 10
+    }
+
+    this.linechart.series.push({name: "Seasonal(Last Year)", data: seasonalLastYear})
+    this.linechart2.series.push({name: "Seasonal(Last Year)", data: seasonalUnitsLastYear})
+
+    console.log("lastYearFactors: ", this.lastYearFactors)
+  }
+
   seasonalMethod(){
     //Basado en datos de una tienda online real de Amazon Seller
 
@@ -330,8 +382,8 @@ export class UserComponent implements OnInit {
       seasonal[i] = factor * this.runRate[i]
       seasonalUnits[i] = factor * this.runRateUnits[i]
     }
-    this.linechart2.series.push({name: "Seasonal", data: seasonalUnits, color: "#EEBB4A"})
-    this.linechart.series.push({name: "Seasonal", data: seasonal, color: "#EEBB4A"})
+    this.linechart2.series.push({name: "Seasonal(Standard)", data: seasonalUnits, color: "#EEBB4A"})
+    this.linechart.series.push({name: "Seasonal(Standard)", data: seasonal, color: "#EEBB4A"})
   }
 
   getActualMonth(){
@@ -441,5 +493,3 @@ export class UserComponent implements OnInit {
   }
   
 }
-
-
