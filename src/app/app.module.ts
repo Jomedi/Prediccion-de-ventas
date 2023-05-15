@@ -27,7 +27,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { FavouritesComponent } from './user/favourites/favourites.component';
-import { SalesComponent } from './products/sales/sales.component';
+import { SalesComponent } from './sales/sales.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedbackUserComponent } from './feedback-user/feedback-user.component';
 import { HighchartsChartModule } from 'highcharts-angular';

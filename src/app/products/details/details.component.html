@@ -1,11 +1,11 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br><br><br>
 <!-- Product section-->
-<div class="container px-4 px-lg-5 my-5">
+<div class="container px-4 px-lg-5 my-5 border-bottom">
     <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.img}}" alt="..." /></div>
         <div class="col-md-6">
-            <div class="small mb-1">SKU: {{product.key}}</div>
+            <!-- <div class="small mb-1">SKU: {{product.key}}</div> -->
             <h1 class="display-5 fw-bolder">{{product.title}}</h1>
             <div *ngIf="this.product.rating">
                 <div *ngFor="let val of valorations; index as j;">
@@ -33,9 +33,10 @@
 
         </div>
     </div>
+    <br><br>
 </div>
 
-<br><br><br><br><br><br><br>
+<br><br><br><br><br>
 
 <!-- salesModal -->
 <div class="modal fade" id="salesModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="salesModalLabel" aria-hidden="true">
@@ -142,9 +143,9 @@
 
 <!-- Ratings table -->
 <div>
-    <button type="button" class="btn btn-primary offset-1" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
-</div>
-<div class="table-responsive col-10 offset-1">
+    <button type="button" class="btn btn-outline-dark offset-1" data-bs-toggle="modal" data-bs-target="#addComment">Añadir Valoración</button>
+</div><br>
+<div class="table-responsive col-10 offset-1 border-top">
     <table *ngIf="product.userRating && product.userRating.length > 0" class="table table-light col-10 mt-2">
         <tbody>
             <tr *ngFor="let item of product.userRating; index as i;" (click)="openModal(i);" data-bs-toggle="modal" data-bs-target="#modComment" style="cursor:pointer">
@@ -454,9 +455,9 @@
 <br><br>
 
 
-<footer class="container py-5">
+<footer class="container py-5 border-top">
     <div class="row">
-        <div class="col-10 col-md">
+        <div class="offset-1 col-10 col-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
             <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
         </div>

@@ -18,12 +18,16 @@ export class FeedbackUserComponent implements OnInit {
   users:User[]=[]
   user:User=User.emptyUser()
   feedbacks:Feedback[]=[]
-  index:number=0
+  ind:number=0
+  indPendientes:number=0
+  indRespondidas:number=0
+  ansInd:number=0
   table:string="Pendientes"
   pend = {}
   pendientes:Feedback[]=[]
   respondidos:Feedback[]=[]
   actualTable:Feedback[]=[]
+  answers:any[]=[]
 
   changeTable(){
     if(this.table == "Pendientes")
@@ -58,17 +62,21 @@ export class FeedbackUserComponent implements OnInit {
     else
       this.actualTable = this.respondidos
 
+    this.feedbackAnswers()
     console.log("This user is: ", this.user)
   }
 
-  feedbackAnswered(title:string){
-
-    
-
-    this.feedbacks.forEach(feed=>{
-      feed.answers
+  feedbackAnswers(){
+    this.respondidos.forEach(respuesta=>{
+      respuesta.answers.forEach(answer=>{
+        if(answer && answer[0] == this.cookie.get("email"))
+          this.answers.push(answer)
+      })
     })
 
+    console.log("this pendientes: ", this.pendientes)
+    console.log("this respondidos: ", this.respondidos)
+    console.log("this answers: ", this.answers)
   }
 
   feedbackOpened(title:string){
@@ -90,15 +98,50 @@ export class FeedbackUserComponent implements OnInit {
   keepIndex(title:string){
     let i = 0
     this.feedbacks.forEach(feed => {
-      if(feed.title == title)
-        this.index = i
+      if(feed.title == title){
+        this.ind = i
+        if(feed.answers){
+          feed.answers.forEach(answer=>{
+            let j = 0
+            if(answer[0] == this.cookie.get("email"))
+              this.ansInd = j
+              j++
+          })
+        }  
+      } 
       i++
     })
 
-    if(!this.user.feedbackOpened[this.index]){
-      this.user.feedbackOpened[this.index] = true
+    console.log("This ind: ", this.ind)
+    console.log("Ans ind: ", this.ansInd)
+
+    if(!this.user.feedbackOpened[this.ind]){
+      this.user.feedbackOpened[this.ind] = true
       this.dataService.updateUser(this.user)
     }  
+  }
+
+  keepIndexPendientes(title:string){
+    let i = 0
+    this.pendientes.forEach(feed=>{
+      if(feed.title == title)
+        this.indPendientes = i
+      i++
+    }) 
+    console.log("Index pendientes: ", this.indPendientes)
+    this.keepIndex(title)
+  }
+
+  keepIndexRespondidas(title:string){
+    
+    let i = 0
+    this.respondidos.forEach(feed=>{
+      if(feed.title == title)
+        this.indRespondidas = i
+      i++
+    })
+    console.log("Index respondidas: ", this.indRespondidas)
+    this.keepIndex(title)
   }
 
   getUserData(){
@@ -115,6 +158,7 @@ export class FeedbackUserComponent implements OnInit {
   getFeedbackData(){
     this.dataService.loadFeedbacks().subscribe(dbFeed=>{
       this.feedbacks = Object.values(dbFeed)
+      console.log("All feedbacks are: " + this.feedbacks)
       console.log("Shared feedbacks are: " + this.user.sharedFeedbacks)
       this.feedbacks = this.feedbacks.filter(feedback=>{
         return this.user.sharedFeedbacks.includes(feedback.title)
@@ -135,22 +179,22 @@ export class FeedbackUserComponent implements OnInit {
     list.push(this.user.email)
     
     let i = 0
-    this.feedbacks[this.index].questions.forEach(q=>{
+    this.feedbacks[this.ind].questions.forEach(q=>{
       list.push(formValue[i])
       i++
     })
 
-    if(!this.feedbacks[this.index].answers)
-      this.feedbacks[this.index].answers=[]
+    if(!this.feedbacks[this.ind].answers)
+      this.feedbacks[this.ind].answers=[]
 
-    this.feedbacks[this.index].answers.push(list)
+    this.feedbacks[this.ind].answers.push(list)
 
-    this.user.feedbackDone[this.index] = true
+    this.user.feedbackDone[this.ind] = true
     console.log("User data: ", this.user)
     
     this.loadTable()
 
-    this.dataService.updateFeedback(this.feedbacks[this.index])
+    this.dataService.updateFeedback(this.feedbacks[this.ind])
     this.dataService.updateUser(this.user)
     // this.user.feedbackDone
     // this.feedbacks[this.index].answers[answers].push

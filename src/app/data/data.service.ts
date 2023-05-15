@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { User } from "src/app/user/user";
 import { LoginService } from "../login/login.service";
 import { Product } from "../products/product";
-import { Sale } from "../products/sales/sale";
+import { Sale } from "../sales/sale";
 import { Feedback } from "../feedback/feedback";
 
 @Injectable()

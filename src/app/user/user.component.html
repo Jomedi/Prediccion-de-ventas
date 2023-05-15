@@ -3,22 +3,22 @@
 
 <div>
     <div class="modal fade modal-xl modal-fullscreen" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Escanear Producto</h5>
                     <button type="button" class="btn-close" (click)="stopMethod(action)" data-bs-dismiss="modal" aria-label="Close" #closeButton></button>
                 </div>
 
-                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-6 my-1 offset-xl-3">
-                    <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm">
-                      <option [value]="null" selected>Select device</option>
-                      <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">{{c.deviceId}}</option>
+                <div class=" col-10 offset-1 py-1">
+                    <select [ngModel]="null" (ngModelChange)="action.playDevice($event)" class="form-select form-select-sm col-10">
+                      <option [value]="null">Elige Cámara</option>
+                      <option *ngFor="let c of action.devices.value; let i = index" [ngValue]="c.deviceId" [selected]="i == action.deviceActive">Cámara {{i+1}}</option>
                     </select>
                 </div>
 
                 <!-- For camera -->
-                <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecode($event, action)" (device)='selectedDevice'></ngx-scanner-qrcode>
+                <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecode($event, action)" [fps]="120" [deviceActive]=1 [deviceActive]="1" [config]="{deviceActive:1}"></ngx-scanner-qrcode>
                 <!-- <ngx-scanner-qrcode #action="scanner" (event)="onCodeDecodePrueba()"></ngx-scanner-qrcode> -->
 
                 <!-- data  -->
@@ -32,11 +32,12 @@
             </div>
         </div>
     </div>
+
     <main>
-        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light border-bottom">
             <div class="col-md-5 p-lg-5 mx-auto my-5">
                 <br><br>
-                <h1 class="display-4 fw-normal">Tienda física S.L</h1>
+                <h1 class="display-4 fw-normal">Lector QR</h1>
                 <p class="lead fw-normal">Escanea el código QR de cualquier producto de nuestra tienda física para obtener información más detallada</p>
                 <br><br><br>
                 <a class="btn btn-success" href="/" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></a>
@@ -45,51 +46,98 @@
             </div>
             <div class="product-device shadow-sm d-none d-md-block"></div>
             <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+            <br><br><br><br><br><br><br><br><br><br>
         </div>
+
     </main>
 </div>
 
 <div *ngIf="isAdmin()">
     <br><br><br>
-    <div class="container-fluid">
+    <div class="container-fluid border-bottom">
         <div class="row">
 
             <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                     <div *ngIf="display">
                         <h1 class="h2">Dashboards</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <!-- <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div> -->
-                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        Year
-                        </button> -->
-
-                            <!-- <div class="nav-item dropdown offset-1">
-                            <a class="btn btn-outline-secondary dropdown-toggle" type="button" href="#" data-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown">
-                            Year
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-dark">
-                                <a *ngFor="let year of yearsOfSales; let i = index" class="dropdown-item" (click)="loadYear(year)" style="cursor:pointer">{{year}}</a>
-                            </div>
-                        </div> -->
-                        </div>
                     </div>
                 </div>
 
-                <div *ngIf="!display" class="text-center">
-                    <br><br><br><br><br><br>
-                    <button type="button" class="btn btn-outline-danger " (click)="loadChart(true)">Realizar Predicción</button>
-                    <br><br><br><br><br><br>
+                <div *ngIf="display" class="btn-toolbar mb-2 mb-md-0 offset-9 col-2">
+                    <!-- <div class="btn-group me-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                </div> -->
+                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                Year
+                </button> -->
+
+                    <div class="nav-item dropdown">
+                        <a class="btn btn-outline-secondary dropdown-toggle" type="button" href="#" data-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        Modo
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark">
+                            <a class="dropdown-item" (click)="mode = 'ventas'" style="cursor:pointer">Ventas</a>
+                            <a class="dropdown-item" (click)="mode = 'unidades'" style="cursor:pointer">Unidades</a>
+                            <a class="dropdown-item" (click)="mode = 'visitas'" style="cursor:pointer">Visitas</a>
+                            <a class="dropdown-item" (click)="mode = 'todos'" style="cursor:pointer">Mostrar Todo</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+
+                <!-- <nav class="navbar navbar-expand navbar-light bg-light">
+                    <a class="navbar-brand" style="cursor:pointer">Dashboards</a>
+                    <div class="navbar" id="navbarTogglerDemo03">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li *ngIf="mode != 'ventas'" class="nav-item active offset-1">
+                                <a class="dropdown-item" (click)="mode = 'ventas'" style="cursor:pointer">Ventas</a>
+                            </li>
+                            <li *ngIf="mode == 'ventas'" class="nav-item offset-1">
+                                <a class="nav-link disabled" style="cursor:pointer">Ventas</a>
+                            </li>
+                            <li *ngIf="mode != 'unidades'" class="nav-item offset-1">
+                                <a class="dropdown-item" (click)="mode = 'unidades'" style="cursor:pointer">Unidades</a>
+                            </li>
+                            <li *ngIf="mode == 'unidades'" class="nav-item active offset-1">
+                                <a class="nav-link disabled" style="cursor:pointer">Unidades</a>
+                            </li>
+                            <li *ngIf="mode != 'visitas'" class="nav-item offset-1">
+                                <a class="dropdown-item" (click)="mode = 'visitas'" style="cursor:pointer">Visitas</a>
+                            </li>
+                            <li *ngIf="mode == 'visitas'" class="nav-item active offset-1">
+                                <a class="nav-link disabled" style="cursor:pointer">Visitas</a>
+                            </li>
+                            <li *ngIf="mode != 'todos'" class="nav-item offset-1">
+                                <a class="dropdown-item" (click)="mode = 'todos'" style="cursor:pointer">Todo</a>
+                            </li>
+                            <li *ngIf="mode == 'todos'" class="nav-item active offset-1">
+                                <a class="nav-link disabled" style="cursor:pointer">Todo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav> -->
+
+                <div *ngIf="!display" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+                    <div class="col-md-5 p-lg-5 mx-auto my-5">
+                        <br><br>
+                        <h1 class="display-4 fw-normal">Predicción de Ventas</h1>
+                        <p class="lead fw-normal">Obtén una predicción de ventas basada en la tendencia de ventas del año actual y anterior por cada temporada</p>
+                        <br><br><br>
+                        <a class="btn btn-danger" (click)="loadChart(true)"><i class="bi bi-clipboard-data-fill fa-9x"></i></a>
+                        <br><br><br>
+                        <!-- <button type="button" class="btn btn-success col-2 custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan fa-9x"></i></button> -->
+                    </div>
+                    <br><br><br><br><br><br><br><br><br><br>
                 </div>
 
-                <highcharts-chart *ngIf="display" [Highcharts]="Highcharts" [options]="linechart" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
-                <br><br>
-                <highcharts-chart *ngIf="display" [Highcharts]="Highcharts" [options]="linechart2" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
-                <br><br>
-                <highcharts-chart *ngIf="display" [Highcharts]="Highcharts" [options]="linechart3" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+                <highcharts-chart *ngIf="display && (mode == 'ventas' || mode == 'todos')" [Highcharts]="Highcharts" [options]="linechart" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+                <br *ngIf="mode == 'todos'"><br *ngIf="mode == 'todos'">
+                <highcharts-chart *ngIf="display && (mode == 'unidades' || mode == 'todos') " [Highcharts]="Highcharts" [options]="linechart2" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+                <br *ngIf="mode == 'todos'"><br *ngIf="mode == 'todos'">
+                <highcharts-chart *ngIf="display && (mode == 'visitas' || mode == 'todos') " [Highcharts]="Highcharts" [options]="linechart3" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
                 <br><br>
                 <div *ngIf="display">
 
@@ -119,14 +167,16 @@
                     </div>
                 </div>
             </main>
+
         </div>
+        <br><br><br>
     </div>
 
 </div>
 
 <footer class="container py-5">
     <div class="row">
-        <div class="col-10 col-md">
+        <div class="offset-1 col-10 col-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
             <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
         </div>
@@ -135,7 +185,7 @@
             <ul class="list-unstyled text-small">
                 <li><a class="link-secondary" href="/products">Catálogo</a></li>
                 <li><a class="link-secondary" href="/favourites">Mis Favoritos</a></li>
-                <li><a *ngIf="isAdmin()" class="link-secondary" href="/sales">Ventas</a></li>
+                <li><a *ngIf="isUserAdmin()" class="link-secondary" href="/sales">Ventas</a></li>
                 <!-- <li><a class="link-secondary" href="#">Stuff for developers</a></li>
                 <li><a class="link-secondary" href="#">Another one</a></li>
                 <li><a class="link-secondary" href="#">Last time</a></li> -->
@@ -145,7 +195,7 @@
             <h5>Cuenta</h5>
             <ul class="list-unstyled text-small">
                 <li><a class="link-secondary" href="/profile">Perfil</a></li>
-                <li><a *ngIf="isAdmin()" class="link-secondary" href="/adminProfiles">Administrar perfiles</a></li>
+                <li><a *ngIf="isUserAdmin()" class="link-secondary" href="/adminProfiles">Administrar perfiles</a></li>
                 <!-- <li><a class="link-secondary" href="#">Another resource</a></li>
                 <li><a class="link-secondary" href="#">Final resource</a></li> -->
             </ul>

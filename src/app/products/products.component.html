@@ -1,15 +1,18 @@
 <app-top-nav-bar></app-top-nav-bar>
 <br><br><br><br>
-<h2 class="offset-2">Catálogo</h2>
-<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#addProduct">Add Product</button></div>
+<h2 class="offset-1">Catálogo</h2>
+<br>
+<div *ngIf="isUserAdmin()" align="center"><button type="button" class="btn btn-light col-2" data-bs-toggle="modal" data-bs-target="#addProduct"><i class="bi bi-plus-lg"></i></button></div>
 <br><br>
-<div>
+<div class="container-fluid col-md-10 col-xs-10">
     <div *ngFor="let item of products; let i = index">
         <div *ngIf="i % 4 == 0" align="center" class="row">
-            <div class="card offset-lg-2 col-lg-2 col-sm-1">
-                <a [routerLink]="['/details',products[i].key]" class="card-link">
-                    <img align="center" class="card-img-top" src="{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-                </a>
+            <div class="card offset-lg-2 col-lg-2 col-sm-8 col-xs-8 col-md-8" style="padding:2em;margin-bottom: 1em;">
+                <div>
+                    <a [routerLink]="['/details',products[i].key]" class="card-link">
+                        <img align="center" class="card-img-top" src="{{products[i].img}}" alt="{{products[i].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+                    </a>
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">{{products[i].title}}</h3>
                     <!-- <p class="card-text">{{products[i].description}}</p> -->
@@ -27,10 +30,12 @@
                     <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
                 </div>
             </div>
-            <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-1">
-                <a [routerLink]="['/details',products[i + 1].key]" class="card-link">
-                    <img align="center" class="card-img-top" src="{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-                </a>
+            <div *ngIf="i + 1 < products.length" class="card col-lg-2 col-sm-8 col-xs-8 col-md-8" style="padding:2em;margin-bottom:1em">
+                <div>
+                    <a [routerLink]="['/details',products[i + 1].key]" class="card-link">
+                        <img align="center" class="card-img-top" src="{{products[i+1].img}}" alt="{{products[i+1].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+                    </a>
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">{{products[i+1].title}}</h3>
                     <!-- <p class="card-text">{{products[i+1].description}}</p> -->
@@ -48,10 +53,12 @@
                     <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+1].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
                 </div>
             </div>
-            <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-1">
-                <a [routerLink]="['/details',products[i + 2].key]" class="card-link">
-                    <img align="center" class="card-img-top" src="{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-                </a>
+            <div *ngIf="i + 2 < products.length" class="card col-lg-2 col-sm-8 col-xs-8 col-md-8" style="padding:2em;margin-bottom:1em">
+                <div>
+                    <a [routerLink]="['/details',products[i + 2].key]" class="card-link">
+                        <img align="center" class="card-img-top" src="{{products[i+2].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+                    </a>
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">{{products[i+2].title}}</h3>
                     <!-- <p class="card-text">{{products[i+2].description}}</p> -->
@@ -69,10 +76,12 @@
                     <a *ngIf="isUserAdmin()" (click)="deleteProduct(products[i+2].title)" class="card-link" data-bs-toggle="modal" data-bs-target="#delProduct"><i class="bi bi-trash3-fill"></i></a>
                 </div>
             </div>
-            <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-1">
-                <a [routerLink]="['/details',products[i+3].key]" class="card-link">
-                    <img class="card-img-top" src="{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-                </a>
+            <div *ngIf="i + 3 < products.length" class="card col-lg-2 col-sm-8 col-xs-8 col-md-8" style="padding:2em;margin-bottom:1em">
+                <div>
+                    <a [routerLink]="['/details',products[i+3].key]" class="card-link">
+                        <img class="card-img-top" src="{{products[i+3].img}}" alt="{{products[i+2].img}}" onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+                    </a>
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">{{products[i+3].title}}</h3>
                     <!-- <p class="card-text">{{products[i+2].description}}</p> -->
@@ -237,9 +246,9 @@
     </footer>
 </div> -->
 
-<footer class="container py-5">
+<footer class="container py-5 border-top">
     <div class="row">
-        <div class="col-10 col-md">
+        <div class="offset-1 col-10 col-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
             <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
         </div>

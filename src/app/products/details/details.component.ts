@@ -5,7 +5,7 @@ import { Product } from '../product';
 import { SafeUrl } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { Sale } from '../sales/sale';
+import { Sale } from '../../sales/sale';
 import { User } from 'src/app/user/user';
 // import { ProductsComponent } from '../products/products.component';
 

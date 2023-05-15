@@ -33,7 +33,7 @@
                 </tr>
             </thead> -->
             <tbody>
-                <tr *ngFor="let feedback of pendientes; let i = index" style="cursor:pointer" (click)="keepIndex(feedback.title)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <tr *ngFor="let feedback of pendientes; let i = index" style="cursor:pointer" (click)="keepIndexPendientes(feedback.title)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <th *ngIf="!feedbackOpened(feedback.title)" style="width:1%"> </th>
                     <th *ngIf="!feedbackOpened(feedback.title)" style="width:19%">{{feedback.title}}</th>
                     <td *ngIf="!feedbackOpened(feedback.title)" style="width:72%">{{feedback.description}}</td>
@@ -59,7 +59,7 @@
             </thead> -->
             <tbody>
                 <!-- Abrir un modal o una página donde aparezca el formulario a resolver -->
-                <tr *ngFor="let feedback of respondidos; let i = index" style="cursor:pointer" (click)="keepIndex(feedback.title)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <tr *ngFor="let feedback of respondidos; let i = index" style="cursor:pointer" (click)="keepIndexRespondidas(feedback.title)" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                     <th *ngIf="!feedbackOpened(feedback.title)" style="width:1%"> </th>
                     <th *ngIf="!feedbackOpened(feedback.title)" style="width:19%">{{feedback.title}}</th>
                     <td *ngIf="!feedbackOpened(feedback.title)" style="width:72%">{{feedback.description}}</td>
@@ -75,18 +75,18 @@
 </div>
 
 <!-- exampleModal addQuestion -->
-<div *ngIf="feedbacks" class="modal modal-fullscreen" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div *ngIf="pendientes && ind >= 0 && pendientes.length > 0" class="modal modal-fullscreen" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form (ngSubmit)="formResponse(feedbackForm)" #feedbackForm="ngForm">
                 <div class="modal-header">
-                    <h6 class="modal-title">{{feedbacks[index].title}}</h6>
+                    <h6 class="modal-title">{{pendientes[indPendientes].title}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="m-4">{{feedbacks[index].description}}</p>
+                    <p class="m-4">{{pendientes[indPendientes].description}}</p>
                     <br>
-                    <div *ngFor="let question of feedbacks[index].questions; let i = index" class="m-5">
+                    <div *ngFor="let question of pendientes[indPendientes].questions; let i = index" class="m-5">
                         <label>{{question.title}}</label>
                         <div [ngSwitch]="question.type">
                             <input *ngSwitchCase="'val'" type="range" min="1" max="5" class="form-range" name="{{i}}" ngModel>
@@ -109,12 +109,36 @@
         </div>
     </div>
 </div>
+
+<!-- exampleModal2 addQuestion -->
+<div *ngIf="respondidos && respondidos.length > 0" class="modal modal-fullscreen" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{respondidos[indRespondidas].title}}</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="m-4">{{respondidos[indRespondidas].description}}</p>
+                <br>
+                <div *ngFor="let question of feedbacks[ind].questions; let i = index" class="m-5">
+                    <label><b>{{question.title}}</b></label>
+                    <br>
+                    <label>{{answers[indRespondidas][i + 1]}}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark " data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <br><br><br><br><br><br><br><br><br><br><br>
 
 
-<footer class="container py-5">
+<footer class="container py-5 border-top">
     <div class="row">
-        <div class="col-10 col-md">
+        <div class="offset-1 col-10 col-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
             <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
         </div>

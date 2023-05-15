@@ -27,17 +27,6 @@ label span {
     text-align: right;
 }
 
-input {
-    vertical-align: top;
-    background-color: #f8f9fa;
-    padding: 10px;
-    margin-bottom: 0.8rem;
-}
-
-input[type=radio] {
-    width: 15px;
-}
-
 input:focus {
     color: #333;
     background-color: #ffffff;

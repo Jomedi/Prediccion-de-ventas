@@ -14,7 +14,7 @@ import { ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import * as Highcharts from 'highcharts';
-import { Sale } from '../products/sales/sale';
+import { Sale } from '../sales/sale';
 import { Product } from '../products/product';
 
 
@@ -61,6 +61,7 @@ export class UserComponent implements OnInit {
   productNames:string[]=[]
   productChart:any=[]
 
+  mode:string="ventas"
 
   Highcharts: typeof Highcharts = Highcharts
   linechart: any = {
@@ -182,10 +183,10 @@ export class UserComponent implements OnInit {
       let y = "0"
       if (sale.date){ 
         let arrDate = sale.date.split("/")
-        console.log("Date: ", arrDate)
+        // console.log("Date: ", arrDate)
         y = arrDate[2]
       }
-      console.log("Date: ", sale.date)
+      // console.log("Date: ", sale.date)
       return year == y
     })
 
@@ -235,9 +236,17 @@ export class UserComponent implements OnInit {
   }
 
   async startMethod(action : any){
-    await action.start()
-    if(action.devices && action.devices.length > 1)
-      action.playDevice(action.devices.value[1])
+    action.start()
+    action.play()
+    action.torcher()
+  }
+
+  playMethod(action : any){
+    action.play()
+  }
+
+  torcherMethod(action:any){
+    action.torcher()
   }
 
   loadSales(){
@@ -335,7 +344,7 @@ export class UserComponent implements OnInit {
     })
 
     for(let i = this.getActualMonth(); i < 12; i++){
-      seasonalLastYear[i] = lastYearFactors[i] * this.runRate[i] * 10
+      seasonalLastYear[i] = Math.round(lastYearFactors[i] * this.runRate[i] * 10)
       seasonalUnitsLastYear[i] = lastYearFactors[i] * this.runRateUnits[i] * 10
     }
 
@@ -379,7 +388,7 @@ export class UserComponent implements OnInit {
         factor = 1.80
       }
 
-      seasonal[i] = factor * this.runRate[i]
+      seasonal[i] = Math.round(factor * this.runRate[i])
       seasonalUnits[i] = factor * this.runRateUnits[i]
     }
     this.linechart2.series.push({name: "Seasonal(Standard)", data: seasonalUnits, color: "#EEBB4A"})
@@ -436,13 +445,6 @@ export class UserComponent implements OnInit {
       this.closeButton.nativeElement.click()
       this.router.navigate([this.cookie.get("qrCode")])
     }
-    if(action.devices && action.devices.length > 1)
-      action.playDevice(action.devices.value[1])
-    // if(this.result && this.result != null && result.length != 0){
-    //   this.cookie.set("qrCode", result.toString())
-    //   this.closeButton.nativeElement.click();
-    //   this.stopMethod(action)
-    // }
   }
 
   isUserAdmin(){

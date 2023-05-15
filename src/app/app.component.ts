@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as Highcharts from 'highcharts';
 
 export type EditorType = 'register' | 'login' | 'user';
 
@@ -8,6 +9,7 @@ export type EditorType = 'register' | 'login' | 'user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
   // editor: EditorType = 'login';
 
 
@@ -27,3 +29,4 @@ export class AppComponent {
   //   this.editor = type;
   // }
 }
+

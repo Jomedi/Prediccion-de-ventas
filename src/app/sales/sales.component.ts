@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data/data.service';
 import { Sale } from './sale';
-import { Product } from '../product';
+import { Product } from '../products/product';
 import { User } from 'src/app/user/user';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -17,12 +17,18 @@ export class SalesComponent implements OnInit {
 
   id : number = -1
   sales : Sale[] = []
+  filteredSales:Sale[]=[]
   products : Product[] = []
   users: User[] = []
   total : number = 0
+  totalUnits : number = 0
+  years: number [] = []
+  year: number = -1
 
   price:number=0
   quantity:number=1
+
+  months: string[]=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
 
   ngOnInit(): void {
     if(this.isUserAdmin()){
@@ -35,6 +41,32 @@ export class SalesComponent implements OnInit {
 
   onChange(deviceValue:any) {
     console.log(deviceValue);
+  }
+
+  filterSales(year : number){
+    this.year = year
+    if(year != -1){
+      this.filteredSales = this.sales.filter(sale=>{
+        return parseInt(sale.date.split("/")[2]) == year
+      })
+    }else
+      this.filteredSales = this.sales
+
+    this.calculateTotalEarned()
+  }
+
+  filterSalesMonth(month:number){
+    if(month == -1){
+      this.filteredSales = this.sales.filter(sale=>{
+        return parseInt(sale.date.split("/")[2]) == this.year
+      })
+    }else{
+      this.filteredSales = this.sales.filter(sale=>{
+        return parseInt(sale.date.split("/")[2]) == this.year && parseInt(sale.date.split("/")[1]) == month + 1
+      })
+    }
+
+    this.calculateTotalEarned()
   }
 
   getOption() {
@@ -107,14 +139,26 @@ export class SalesComponent implements OnInit {
   getAllSales(){
     this.dataService.loadSales().subscribe(dbProducts=>{
       this.sales = Object.values(dbProducts)
+      this.filteredSales = this.sales
       this.calculateTotalEarned()
+      this.getAllYears()
+    })
+  }
+
+  getAllYears(){
+    this.sales.forEach(sale=>{
+      let year = parseInt(sale.date.split("/")[2])
+      if(!this.years.includes(year))
+        this.years.push(year)
     })
   }
 
   calculateTotalEarned(){
     this.total = 0
-    this.sales.forEach(sale=>{
+    this.totalUnits = 0
+    this.filteredSales.forEach(sale=>{
       this.total += (sale.price * sale.quantity)
+      this.totalUnits += sale.quantity
     })
   }
 

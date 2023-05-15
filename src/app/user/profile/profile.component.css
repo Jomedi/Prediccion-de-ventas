@@ -3,6 +3,10 @@
     border-color: #222268
 }
 
+h2 {
+    color: #494747;
+}
+
 #deleteUser {
     font-size: 95%;
     padding: 0.6rem 1.2rem;

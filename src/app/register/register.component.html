@@ -1,17 +1,22 @@
-<form (ngSubmit)="newRegister(registerForm)" #registerForm="ngForm" class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
-    <div class="col-4 offset-4">
-        <img align="center" class="card-img-top" src="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9" alt="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9"
-            onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
-    </div>
-    <h3 style="text-align:center" class="mt-5">Crear cuenta</h3><br>
-    <input type="email" name="email" id="" placeholder="E-mail" class="form-control" ngModel required><br>
-    <input type="password" name="password" id="" class="form-control" placeholder="Contraseña" ngModel required><br>
-    <input type="password" name="passwordr" class="form-control" id="" placeholder="Repetir contraseña" ngModel required><br>
-    <input type="text" name="name" id="" class="form-control" placeholder="Nombre" ngModel required><br><br>
-    <label class="label" for="date">Fecha de nacimiento: </label>
-    <input type="date" name="date" id="" class="form-control" ngModel><br>
-    <label class="label" for="address">Provincia: </label>
-    <select required name="address" class="form-control" ngModel>
+<div>
+    <form (ngSubmit)="newRegister(registerForm)" #registerForm="ngForm" class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+        <div class="col-4 offset-4">
+            <img align="center" class="card-img-top" src="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9" alt="https://firebasestorage.googleapis.com/v0/b/prediccion-de-ventas.appspot.com/o/images%2Fbusiness.png?alt=media&token=74ee2a32-97a0-43c0-8413-d35827ae28a9"
+                onerror="this.onerror=null; this.src='../assets/images/profileImage.png'">
+        </div>
+        <h3 style="text-align:center" class="mt-5">Crear cuenta</h3><br>
+        <label class="label" for="email">E-mail </label>
+        <input type="email" name="email" placeholder="E-mail" class="form-control" ngModel required><br>
+        <label class="label" for="password">Contraseña </label>
+        <input type="password" name="password" class="form-control" placeholder="Contraseña" ngModel required><br>
+        <label class="label" for="passwordr">Repetir Contraseña </label>
+        <input type="password" name="passwordr" class="form-control" placeholder="Repetir contraseña" ngModel required><br>
+        <label for="name">Nombre</label>
+        <input type="text" name="name" class="form-control" placeholder="Nombre" ngModel required><br><br>
+        <label class="label" for="date">Fecha de nacimiento </label>
+        <input type="date" name="date" class="form-control" ngModel><br>
+        <label class="label" for="address">Provincia </label>
+        <select required name="address" class="form-select" ngModel>
         <option value="">Elige Provincia</option>
         <option value="Álava/Araba">Álava/Araba</option>
         <option value="Albacete">Albacete</option>
@@ -66,15 +71,16 @@
         <option value="Zamora">Zamora</option>
         <option value="Zaragoza">Zaragoza</option>
     </select>
-    <br>
-    <label class="label" for="gender">Género: </label>
-    <select name="gender" id="genero" class="form-control" required ngModel>
+        <br>
+        <label class="label" for="gender">Género </label>
+        <select name="gender" id="genero" class="form-select" required ngModel>
         <option value="">Género</option>
         <option value="Hombre">Hombre</option>
         <option value="Mujer">Mujer</option>
     </select>
-    <br><br>
-    <button id="LoginButton" type="button" (click)="routeToLogin()">Login</button>
-    <button type="submit" id="CrearButton" class="btn btn-success">Crear cuenta</button>
-</form>
+        <br><br>
+        <button id="LoginButton" type="button" (click)="routeToLogin()">Login</button>
+        <button type="submit" id="CrearButton" class="btn btn-success">Crear cuenta</button>
+    </form>
+</div>
 <br><br><br>

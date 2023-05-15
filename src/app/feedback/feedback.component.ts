@@ -20,6 +20,7 @@ export class FeedbackComponent implements OnInit {
   answeredFeedbacks:Feedback[]=[]
   feedbackAns:Feedback= Feedback.emptyFeedback()
   answer:string[]=[]
+  index:number = 0
 
   constructor(private dataService : DataService, private cookie:CookieService) { }
 
@@ -38,6 +39,10 @@ export class FeedbackComponent implements OnInit {
     return this.cookie.get("email") == "a@a.es"
   }
 
+  getIndex(index:number){
+    this.index = index
+  }
+
   changeTable(){
     if(this.table == "crear")
       this.table = "respuestas"
@@ -46,6 +51,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   loadFeedbackAns(i:number){
+    this.answer = []
     this.feedbackAns = this.answeredFeedbacks[i]
     console.log("These are all feedbacks: ", this.answeredFeedbacks)
     console.log(this.feedBack)

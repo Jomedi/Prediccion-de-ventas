@@ -5,6 +5,7 @@ import { DataService } from '../data/data.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Feedback } from '../feedback/feedback';
 
 @Component({
   selector: 'app-top-nav-bar',
@@ -19,16 +20,31 @@ export class TopNavBarComponent implements OnInit {
   profileImage:string = "/assets/images/profileImage.png";
   editing:Boolean = false;
   searchQuery: string = ""
+  feedbacks: Feedback[]=[]
+  pendingFeedbacks:number= 0
 
   constructor(private loginService : LoginService, private dataService: DataService, private router:Router, public cookie: CookieService) {
   }
 
   ngOnInit(): void {
-    this.email = this.loginService.getIdToken();
-    this.getUserData(this.email);
+    this.email = this.loginService.getIdToken()
+    this.getUserData(this.email)
     // console.log(this.loginService.getIdToken());
-    this.noLoginCase();
+    this.noLoginCase()
+
   }
+
+  countPendingFeedbacks(){
+    if(this.user.feedbackOpened.length > 0){
+      this.user.feedbackOpened.forEach(feed=>{
+        if (feed == false)
+          this.pendingFeedbacks++
+      })
+      console.log("Pending feedbacks: ", this.pendingFeedbacks)
+    }
+    
+  }
+
 
   isUserAdmin(){
     return this.email === "a@a.es"
@@ -36,13 +52,13 @@ export class TopNavBarComponent implements OnInit {
 
   getUserData(email:string){
     this.dataService.loadUsers().subscribe(dbUsers=>{
-      this.users = Object.values(dbUsers);
+      this.users = Object.values(dbUsers)
       for(let i = 0; i < this.users.length; i++){
         if(this.users[i].email == email)
-          this.user = this.users[i];
+          this.user = this.users[i]
       }
-    } );
-    return this.user;
+      this.countPendingFeedbacks()
+    } )
   }
 
   setEmail(email:string){

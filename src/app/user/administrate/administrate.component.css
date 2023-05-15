@@ -18,6 +18,10 @@
     transition: .3s;
 }
 
+h2 {
+    color: #494747;
+}
+
 .labels {
     font-size: 11px
 }
